@@ -79,6 +79,13 @@ public class TypeFragment extends Fragment {
                     Toast.makeText(getActivity(), "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                for(int i =0;i<arrayList.size();i++){
+                    Type type1 = arrayList.get(i);
+                    if(edNameTypeAdd.getText().toString().equals(type1.getName())){
+                        Toast.makeText(getActivity(), "Đã có dữ liệu", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 Type type1 = new Type(edNameTypeAdd.getText().toString());
                 if(typeDAO.insert(type1)){
                     arrayList.clear();

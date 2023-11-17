@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp"
+    android:background="#ffffff">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thêm phòng"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"/>
+    <Spinner
+        android:id="@+id/spinnerTypeAdd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/radius"/>
+    <EditText
+        android:id="@+id/edNumberRoomAdd"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Số phòng"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        android:background="@drawable/radius"/>
+    <EditText
+        android:id="@+id/edPriceRoomAdd"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Giá phòng"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        android:background="@drawable/radius"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+        <Button
+            android:id="@+id/btnAddRoomNew"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="THÊM"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#000000"
+            android:layout_marginRight="20dp"/>
+        <Button
+            android:id="@+id/btnCancelRoomNew"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="HỦY"
+            android:textSize="18sp"
+            android:backgroundTint="#000000"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</LinearLayout>

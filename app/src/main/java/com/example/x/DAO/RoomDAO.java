@@ -35,6 +35,12 @@ public class RoomDAO {
         long row = database.update("room",values,"id=?",new String[]{String.valueOf(room.getId())});
         return row>0;
     }
+    public boolean changeStatus(int id){
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        String sql = "update room set status=0 where id=?";
+        database.execSQL(sql,new String[]{String.valueOf(id)});
+        return true;
+    }
     public boolean delete(int id){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         long row = database.delete("room","id=?",new String[]{String.valueOf(id)});
