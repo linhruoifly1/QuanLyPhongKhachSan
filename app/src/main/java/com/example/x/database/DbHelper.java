@@ -10,7 +10,7 @@ public class DbHelper extends SQLiteOpenHelper {
 public static final String dbName ="dataX";
 
     public DbHelper(@Nullable Context context) {
-        super(context, dbName, null, 6);
+        super(context, dbName, null, 7);
     }
 
     @Override
@@ -20,7 +20,8 @@ public static final String dbName ="dataX";
                 "    name TEXT    NOT NULL\n" +
                 ");";
         db.execSQL(tbType);
-        String dataType = "insert into type values (1,'Phòng đơn')," +
+        String dataType = "insert into type values " +
+                "(1,'Phòng đơn')," +
                 "(2,'Phòng đôi')," +
                 "(3,'Phòng hạng sang')";
         db.execSQL(dataType);
@@ -33,7 +34,8 @@ public static final String dbName ="dataX";
                 "    price  INTEGER NOT NULL\n" +
                 ");";
         db.execSQL(tbRoom);
-        String dataRoom = "insert into room values (1,1,101,1,100),(2,2,102,1,150),(3,2,103,1,150),(4,3,104,1,300)," +
+        String dataRoom = "insert into room values " +
+                "(1,1,101,1,100),(2,2,102,1,150),(3,2,103,1,150),(4,3,104,1,300)," +
                 "(5,1,201,1,100),(6,2,202,1,150),(7,2,203,1,150),(8,3,204,1,300)," +
                 "(9,1,301,1,100),(10,2,302,1,150),(11,2,303,1,150),(12,3,304,1,300)," +
                 "(13,1,401,1,100),(14,2,402,1,150),(15,2,403,1,150),(16,3,404,1,300)," +
@@ -65,6 +67,12 @@ public static final String dbName ="dataX";
                 "    price    INTEGER NOT NULL\n" +
                 ");";
         db.execSQL(tbService);
+        String dataService = "insert into service values " +
+                "(1,'Nhìn ra hồ',20)," +
+                "(2,'Sắp xếp cuộc họp',100)," +
+                "(3,'Trang trí cho cặp đôi',50)," +
+                "(4,'Có thể nấu ăn',30)";
+        db.execSQL(dataService);
         String tbBill = "CREATE TABLE bill (\n" +
                 "    id             INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    idCustomer       INTEGER REFERENCES customer (id) \n" +

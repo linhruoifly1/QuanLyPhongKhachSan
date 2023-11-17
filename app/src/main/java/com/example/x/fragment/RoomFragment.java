@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +38,7 @@ public class RoomFragment extends Fragment {
     private RoomAdapter adapter;
     private RoomDAO roomDAO;
     private ArrayList<Room> arrayList;
+    private ArrayList<Room> arrayList1;
     private Room room;
     private int idType;
     @Override
@@ -50,12 +53,51 @@ public class RoomFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rcvRoom = view.findViewById(R.id.rcvRoom);
         fltRoom = view.findViewById(R.id.fltRoom);
+        edSearchRoom = view.findViewById(R.id.edSearchRoom);
         roomDAO = new RoomDAO(getContext());
         arrayList = roomDAO.getAll();
+        arrayList1 = roomDAO.getAll();
         rcvRoom.setLayoutManager(new GridLayoutManager(getContext(),1));
         adapter = new RoomAdapter(getContext(),arrayList);
         rcvRoom.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        edSearchRoom.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                arrayList.clear();
+                TypeDAO typeDAO = new TypeDAO(getContext());
+                ArrayList<Type> types = typeDAO.getAll();
+                for (Room room1 : arrayList1) {
+                    for (Type type: types) {
+                        if(type.getName().contains(s.toString()) && room1.getIdType()==type.getId()){
+                            arrayList.add(room1);
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                for (Room room1: arrayList1) {
+                    if(String.valueOf(room1.getNumber()).contains(s.toString())){
+                        arrayList.add(room1);
+                    }else if(room1.getStatus()==0 && "sẵn sàng".contains(s.toString())){
+                        arrayList.add(room1);
+                    }else if(room1.getStatus()==1 && "có khách".contains(s.toString())){
+                        arrayList.add(room1);
+                    }else if(room1.getStatus()==2 && "đang chờ".contains(s.toString())){
+                        arrayList.add(room1);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         fltRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
