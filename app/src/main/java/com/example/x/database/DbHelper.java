@@ -10,7 +10,7 @@ public class DbHelper extends SQLiteOpenHelper {
 public static final String dbName ="dataX";
 
     public DbHelper(@Nullable Context context) {
-        super(context, dbName, null, 4);
+        super(context, dbName, null, 6);
     }
 
     @Override
@@ -20,6 +20,10 @@ public static final String dbName ="dataX";
                 "    name TEXT    NOT NULL\n" +
                 ");";
         db.execSQL(tbType);
+        String dataType = "insert into type values (1,'Phòng đơn')," +
+                "(2,'Phòng đôi')," +
+                "(3,'Phòng hạng sang')";
+        db.execSQL(dataType);
         String tbRoom = "CREATE TABLE room (\n" +
                 "    id     INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    idType INTEGER REFERENCES type (id) \n" +
@@ -29,6 +33,13 @@ public static final String dbName ="dataX";
                 "    price  INTEGER NOT NULL\n" +
                 ");";
         db.execSQL(tbRoom);
+        String dataRoom = "insert into room values (1,1,101,1,100),(2,2,102,1,150),(3,2,103,1,150),(4,3,104,1,300)," +
+                "(5,1,201,1,100),(6,2,202,1,150),(7,2,203,1,150),(8,3,204,1,300)," +
+                "(9,1,301,1,100),(10,2,302,1,150),(11,2,303,1,150),(12,3,304,1,300)," +
+                "(13,1,401,1,100),(14,2,402,1,150),(15,2,403,1,150),(16,3,404,1,300)," +
+                "(17,1,501,1,100),(18,2,502,1,150),(19,2,503,1,150),(20,3,504,1,300)," +
+                "(21,1,601,1,100),(22,2,602,1,150),(23,2,603,1,150),(24,3,604,1,300)";
+        db.execSQL(dataRoom);
         String tbCustomer = "CREATE TABLE customer (\n" +
                 "    id    INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name  TEXT    NOT NULL,\n" +
@@ -46,7 +57,7 @@ public static final String dbName ="dataX";
                 "    password TEXT    NOT NULL\n" +
                 ");";
         db.execSQL(tbReceptionist);
-        String dataReceptionist ="insert into receptionist values (1,'Nguyễn Ngọc Linh','0968243403','linhruoifly1@gmail.com',1997,'admin','admin')";
+        String dataReceptionist ="insert into receptionist values (1,'Nguyễn Ngọc Linh','linhruoifly1@gmail.com','admin','admin')";
         db.execSQL(dataReceptionist);
         String tbService = "CREATE TABLE service (\n" +
                 "    id       INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
@@ -71,6 +82,7 @@ public static final String dbName ="dataX";
                 "    sumCost        INTEGER NOT NULL\n" +
                 ");";
         String tbHardBill = "CREATE TABLE hardBill (\n" +
+                "    id             INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    idBill         INTEGER REFERENCES bill (id),\n" +
                 "    idRoom         INTEGER REFERENCES room (id),\n" +
                 "    quantityPeople INTEGER NOT NULL\n" +

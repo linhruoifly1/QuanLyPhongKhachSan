@@ -1,66 +1,96 @@
 package com.example.x.fragment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.x.DAO.TypeDAO;
 import com.example.x.R;
+import com.example.x.adapter.TypeAdapter;
+import com.example.x.model.Type;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TypeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class TypeFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public TypeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TypeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TypeFragment newInstance(String param1, String param2) {
-        TypeFragment fragment = new TypeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    private RecyclerView rcvType;
+    private FloatingActionButton fltType;
+    private TypeAdapter adapter;
+    private TypeDAO typeDAO;
+    private Type type;
+    private ArrayList<Type> arrayList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_type, container, false);
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rcvType = view.findViewById(R.id.rcvType);
+        fltType = view.findViewById(R.id.fltType);
+        typeDAO = new TypeDAO(getContext());
+        arrayList = typeDAO.getAll();
+        rcvType.setLayoutManager(new GridLayoutManager(getContext(),1));
+        adapter = new TypeAdapter(getContext(),arrayList);
+        rcvType.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        fltType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenDiaLogInsert(type);
+            }
+        });
+    }
+
+    private void OpenDiaLogInsert(Type type) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.insert_type,null);
+        builder.setView(view);
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        EditText edNameTypeAdd = view.findViewById(R.id.edNameTypeAdd);
+        Button btnAddTypeNew = view.findViewById(R.id.btnAddTypeNew);
+        Button btnCancelTypeNew = view.findViewById(R.id.btnCancelTypeNew);
+        btnCancelTypeNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnAddTypeNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(edNameTypeAdd.getText().length()==0){
+                    Toast.makeText(getActivity(), "Không được để trống", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Type type1 = new Type(edNameTypeAdd.getText().toString());
+                if(typeDAO.insert(type1)){
+                    arrayList.clear();
+                    arrayList.addAll(typeDAO.getAll());
+                    adapter.notifyDataSetChanged();
+                    dialog.dismiss();
+                    Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 }

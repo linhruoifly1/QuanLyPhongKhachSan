@@ -18,14 +18,14 @@ public class TypeDAO {
     public boolean insert(Type type){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("nameType",type.getName());
+        values.put("name",type.getName());
         long row = database.insert("type",null,values);
         return row>0;
     }
     public boolean update(Type type){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("nameType",type.getName());
+        values.put("name",type.getName());
         long row = database.update("type",values,"id=?",new String[]{String.valueOf(type.getId())});
         return row>0;
     }
