@@ -149,13 +149,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.viewHolder>{
                     Toast.makeText(context, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                for(int i =0;i<arrayList.size();i++){
-                    Room room1 = arrayList.get(i);
-                    if(edNumberRoom.getText().toString().equals(String.valueOf(room1.getNumber()))){
-                        Toast.makeText(context, "Đã có dữ liệu", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
+//                for(int i =0;i<arrayList.size();i++){
+//                    Room room1 = arrayList.get(i);
+//                    if(edNumberRoom.getText().toString().equals(String.valueOf(room1.getNumber()))){
+//                        Toast.makeText(context, "Đã có dữ liệu", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    }
+//                }
                 room.setIdType(idType);
                 room.setNumber(Integer.parseInt(edNumberRoom.getText().toString()));
                 room.setStatus(0);
