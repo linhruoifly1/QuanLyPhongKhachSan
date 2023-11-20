@@ -19,7 +19,6 @@ public class CustomerDAO {
     public boolean insert(Customer customer){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id",customer.getId());
         values.put("name",customer.getName());
         values.put("phone",customer.getPhone());
         values.put("email",customer.getEmail());
@@ -30,7 +29,6 @@ public class CustomerDAO {
     public boolean update(Customer customer){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id",customer.getId());
         values.put("name",customer.getName());
         values.put("phone",customer.getPhone());
         values.put("email",customer.getEmail());

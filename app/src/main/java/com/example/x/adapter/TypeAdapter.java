@@ -74,13 +74,13 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.viewHolder>{
                     Toast.makeText(context, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                for(int i =0;i<arrayList.size();i++){
-                    Type type1 = arrayList.get(i);
-                    if(edNameTypeUpdate.getText().toString().equals(type1.getName())){
-                        Toast.makeText(context, "Đã có dữ liệu", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
+//                for(int i =0;i<arrayList.size();i++){
+//                    Type type1 = arrayList.get(i);
+//                    if(edNameTypeUpdate.getText().toString().equals(type1.getName())){
+//                        Toast.makeText(context, "Đã có dữ liệu", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    }
+//                }
                 type.setName(edNameTypeUpdate.getText().toString());
                 if(typeDAO.update(type)){
                     arrayList.clear();
