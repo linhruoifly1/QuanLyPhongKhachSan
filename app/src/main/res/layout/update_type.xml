@@ -31,6 +31,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="SỬA"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             android:backgroundTint="#000000"
@@ -40,6 +41,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="HỦY"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:backgroundTint="#000000"
             android:textStyle="bold"/>
