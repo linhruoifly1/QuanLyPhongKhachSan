@@ -1,66 +1,108 @@
 package com.example.x.fragment;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.x.DAO.ReceptionistDAO;
 import com.example.x.R;
+import com.example.x.model.Receptionist;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddUserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.regex.Pattern;
+
+
 public class AddUserFragment extends Fragment {
+    EditText edthoTen, edtEmail, edtUsername, edtpass;
+    Button btnthem;
+    ReceptionistDAO receptionistDAO;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AddUserFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddUserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AddUserFragment newInstance(String param1, String param2) {
-        AddUserFragment fragment = new AddUserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    public static final Pattern EMAIL_ADDRESS
+            = Pattern.compile(
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                    "\\@" +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                    "(" +
+                    "\\." +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                    ")+"
+    );
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_user, container, false);
+
+        // ánh xạ
+        edthoTen = view.findViewById(R.id.edthoTenadd);
+        edtEmail = view.findViewById(R.id.edtEmailadd);
+        edtUsername = view.findViewById(R.id.edtUsernameadd);
+        edtpass = view.findViewById(R.id.edtpassadd);
+
+        btnthem = view.findViewById(R.id.btnthemUser);
+
+        btnthem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String hoten = edthoTen.getText().toString();
+                String email = edtEmail.getText().toString();
+                String user = edtUsername.getText().toString();
+                String pass = edtpass.getText().toString();
+
+                if (hoten.equals("")){
+                    edthoTen.setError("Không Bỏ Trống Tên");
+                    return;
+                }
+                if ( email.equals("") ){
+                    edtEmail.setError("Không Bỏ Trống Email");
+
+                }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    edtEmail.setError("Email không đúng định dạng");
+                    return;
+                }
+
+                if ( user.equals("")){
+                    edtUsername.setError("Không Bỏ Trống Username");
+                    return;
+                }
+                if (pass.equals("")){
+                    edtpass.setError("Không Bỏ Trống Password");
+                    return;
+                }
+
+                Receptionist receptionist = new Receptionist(hoten,email,user,pass);
+                receptionistDAO = new ReceptionistDAO(getContext());
+
+                if (receptionistDAO.checkUser(String.valueOf(edtUsername.getText()))){
+                    Toast.makeText(getContext(), "Đã tồn tại tài khoản", Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+
+                }
+
+
+
+                long kq= receptionistDAO.insert(receptionist);
+                if (kq > 0){
+                    Toast.makeText(getContext(), "Thêm Thành Công", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getContext(), "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+//        Receptionist receptionist = new Receptionist(getContext());
+//        boolean check = receptionistDAO.checkUser(String.valueOf(edtUsername.getText()));
+
+        return view;
     }
 }

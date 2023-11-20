@@ -6,23 +6,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#A2D8DF"
+    android:background="#353131"
     android:padding="5dp"
     tools:context=".WelcomeActivity">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="QUẢN LÝ PHÒNG KHÁCH SẠN"
-        android:textSize="26dp"
+        android:text="The Hotel X"
+        android:textSize="40dp"
         android:gravity="center"
         android:textStyle="bold"
-        android:textColor="#E91E63"/>
-    <TextView
-        android:layout_width="match_parent"
+        android:textColor="#FEFCFC"/>
+
+    <ImageView
+        android:layout_width="178dp"
+        android:layout_height="82dp"
+        android:src="@drawable/star"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="X"
-        android:textSize="200dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textColor="#FF5722"/>
+        android:src="@drawable/img_1"/>
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.x.fragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,60 +8,136 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.x.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RevenueFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.logging.SimpleFormatter;
+
+
 public class RevenueFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    int mYear, mDay, mMonth;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public RevenueFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RevenueFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RevenueFragment newInstance(String param1, String param2) {
-        RevenueFragment fragment = new RevenueFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy-MM-dd");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_revenue, container, false);
+        View view = inflater.inflate(R.layout.fragment_revenue, container, false);
+
+        EditText edtStar = view.findViewById(R.id.edtStart);
+        EditText edtEnd = view.findViewById(R.id.edtEnd);
+        ImageView imgStar = view.findViewById(R.id.imgStart);
+        ImageView imgEnd = view.findViewById(R.id.imgEnd);
+        Button btnthongKe = view.findViewById(R.id.btnthongKeDoanhThu);
+
+        //start
+        DatePickerDialog.OnDateSetListener startDay = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mYear = year;
+                mMonth = mMonth;
+                mDay = dayOfMonth;
+                GregorianCalendar gregorianCalendar =new GregorianCalendar(mYear,mMonth,mDay);
+                edtStar.setText(simpleDateFormat.format(gregorianCalendar.getTime()));
+            }
+        };
+        DatePickerDialog.OnDateSetListener IMGstartDay = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mYear = year;
+                mMonth = mMonth;
+                mDay = dayOfMonth;
+                GregorianCalendar gregorianCalendar =new GregorianCalendar(mYear,mMonth,mDay);
+                edtStar.setText(simpleDateFormat.format(gregorianCalendar.getTime()));
+            }
+        };
+        //
+        //end
+        DatePickerDialog.OnDateSetListener endDay = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mYear = year;
+                mMonth = month;
+                mDay = dayOfMonth;
+                GregorianCalendar gregorianCalendar = new GregorianCalendar(mYear,mMonth,mDay);
+                edtEnd.setText(simpleDateFormat.format(gregorianCalendar.getTime()));
+            }
+        };
+        DatePickerDialog.OnDateSetListener IMGendDay = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mYear = year;
+                mMonth = month;
+                mDay = dayOfMonth;
+                GregorianCalendar gregorianCalendar = new GregorianCalendar(mYear,mMonth,mDay);
+                edtEnd.setText(simpleDateFormat.format(gregorianCalendar.getTime()));
+            }
+        };
+        ///
+
+        edtStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                mYear = calendar.get(Calendar.YEAR);
+                mMonth = calendar.get(Calendar.MONTH);
+                mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(getContext(),0,startDay,mYear,mMonth,mDay);
+                dialog.show();
+            }
+        });
+
+        edtEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                mYear = calendar.get(Calendar.YEAR);
+                mMonth = calendar.get(Calendar.MONTH);
+                mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), 0,endDay,mYear,mMonth,mDay);
+                dialog.show();
+            }
+        });
+
+        imgStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                mYear = calendar.get(Calendar.YEAR);
+                mMonth = calendar.get(Calendar.MONTH);
+                mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(getContext(),0,startDay,mYear,mMonth,mDay);
+                dialog.show();
+            }
+        });
+
+        imgEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                mYear = calendar.get(Calendar.YEAR);
+                mMonth = calendar.get(Calendar.MONTH);
+                mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), 0,endDay,mYear,mMonth,mDay);
+                dialog.show();
+            }
+        });
+
+        btnthongKe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        return  view;
     }
 }

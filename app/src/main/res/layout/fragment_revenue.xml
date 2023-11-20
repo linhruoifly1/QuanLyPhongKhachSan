@@ -1,14 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.RevenueFragment">
+    tools:context=".fragment.RevenueFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="50sp"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/imgStart"
+            android:layout_width="64dp"
+            android:layout_height="53dp"
+            android:src="@drawable/calendar" />
+
+        <EditText
+            android:id="@+id/edtStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/boder"
+            android:focusable="false"
+            android:layout_marginLeft="10sp"
+            android:paddingLeft="20sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="50sp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgEnd"
+            android:layout_width="64dp"
+            android:layout_height="53dp"
+            android:src="@drawable/calendar" />
+
+        <EditText
+            android:id="@+id/edtEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/boder"
+            android:focusable="false"
+            android:layout_marginLeft="10sp"
+            android:paddingLeft="20sp"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnthongKeDoanhThu"
+        android:layout_width="234dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30sp"
+        android:background="@drawable/boderbutton"
+        android:text="Thống Kê"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        />
+
+
+
+    <TextView
+        android:id="@+id/txtdoanhThu"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="30sp"
+        android:paddingLeft="40sp"
+        android:textColor="#E11212"
+        />
+
+
+</LinearLayout>

@@ -1,14 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
+
+    android:orientation="vertical"
+
     tools:context=".fragment.ChangePassFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <ImageView
+
+        android:layout_width="158dp"
+
+        android:layout_height="160dp"
+
+        android:layout_gravity="center"
+
+        android:layout_marginTop="30sp"
+
+        android:scaleType="fitXY"
+
+        android:src="@drawable/img" />
+
+
+    <TextView
+
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="30sp"
+
+        android:layout_marginTop="40sp"
+
+        android:text="Mật khẩu cũ"
+
+        android:textColor="#000000"
+
+        android:textSize="14sp"
+
+        android:textStyle="bold"
+
+        />
+
+
+    <EditText
+
+        android:id="@+id/edtmkCu"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="36dp"
+
+        android:layout_gravity="center"
+
+        android:background="@drawable/boder" />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="30sp"
+
+        android:layout_marginTop="20sp"
+
+        android:text="Mật khẩu mới"
+
+        android:textColor="#000000"
+
+        android:textSize="14sp"
+
+        android:textStyle="bold"
+
+        />
+
+    <EditText
+
+        android:id="@+id/edtmkMoi"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="36dp"
+
+        android:layout_gravity="center"
+
+        android:background="@drawable/boder"
+
+        />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="30sp"
+
+        android:layout_marginTop="20sp"
+
+        android:text="Xác nhận mật khẩu mới"
+
+        android:textColor="#000000"
+
+        android:textSize="14sp"
+
+        android:textStyle="bold"
+
+        />
+
+
+    <EditText
+
+        android:id="@+id/edtxacNhan"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="36dp"
+
+        android:layout_gravity="center"
+
+        android:background="@drawable/boder" />
+
+
+    <Button
+
+        android:id="@+id/btnxacNhan"
+
+        android:layout_width="259dp"
+
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+
+        android:layout_marginTop="30sp"
+
+        android:background="@drawable/boderbutton"
+
+        android:text="Xác nhận"
+
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

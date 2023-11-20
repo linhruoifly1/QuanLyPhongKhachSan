@@ -9,14 +9,15 @@
         android:id="@+id/rcvService"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fltService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="28dp"
+        android:layout_height="31dp"
         android:layout_gravity="end|bottom"
-        android:src="@drawable/addnew"
-        android:backgroundTint="#d9d9d9"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginRight="10dp"/>
+        android:backgroundTint="#171F1D"
+        android:src="@drawable/addnew" />
 
 </FrameLayout>

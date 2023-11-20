@@ -12,9 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.x.DAO.ReceptionistDAO;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText edUsername,edPassword;
+    private TextInputEditText edUsername,edPassword;
     private CheckBox chkRemember;
     private Button btnLogin,btnCancel;
     ReceptionistDAO receptionistDAO;
@@ -22,23 +23,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        edUsername = findViewById(R.id.edUsername);
-        edPassword = findViewById(R.id.edPassword);
+        edUsername = findViewById(R.id.edtUser);
+        edPassword = findViewById(R.id.edtPass);
         chkRemember = findViewById(R.id.chkRemember);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnCancel = findViewById(R.id.btnCancel);
+        btnLogin = findViewById(R.id.btndangNhap);
         receptionistDAO = new ReceptionistDAO(LoginActivity.this);
         SharedPreferences preferences = getSharedPreferences("userfile",MODE_PRIVATE);
         edUsername.setText(preferences.getString("username",""));
         edPassword.setText(preferences.getString("password",""));
         chkRemember.setChecked(preferences.getBoolean("remember",false));
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edUsername.setText("");
-                edPassword.setText("");
-            }
-        });
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
