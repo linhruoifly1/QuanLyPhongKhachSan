@@ -2,38 +2,36 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
-        <item android:title="Quản lý">
-            <menu>
-                <item android:id="@+id/bill"
-                    android:title="Quản lý hóa đơn"
-                    android:icon="@drawable/bill"/>
-                <item android:id="@+id/room"
-                    android:title="Quản lý phòng"
-                    android:icon="@drawable/room"/>
-                <item android:id="@+id/type"
-                    android:title="Quản lý loại phòng"
-                    android:icon="@drawable/type"/>
-                <item android:id="@+id/service"
-                    android:title="Quản lý dịch vụ"
-                    android:icon="@drawable/service"/>
-                <item android:id="@+id/client"
-                    android:title="Quản lý khách hàng"
-                    android:icon="@drawable/client"/>
-            </menu>
-        </item>
+
+        <item android:id="@+id/bill"
+            android:title="Quản lý hóa đơn"
+            android:icon="@drawable/image8"/>
+        <item android:id="@+id/room"
+            android:title="Quản lý phòng"
+            android:icon="@drawable/logo"/>
+        <item android:id="@+id/type"
+            android:title="Quản lý loại phòng"
+            android:icon="@drawable/image10"/>
+        <item android:id="@+id/service"
+            android:title="Quản lý dịch vụ"
+            android:icon="@drawable/image11"/>
+        <item android:id="@+id/client"
+            android:title="Quản lý khách hàng"
+            android:icon="@drawable/image12"/>
+
     </group>
     <group android:checkableBehavior="single">
         <item android:title="Thống kê">
             <menu>
                 <item android:id="@+id/revenue"
                     android:title="Doanh thu"
-                    android:icon="@drawable/revenue"/>
+                    android:icon="@drawable/image13"/>
                 <item android:id="@+id/topRoom"
                     android:title="Phòng được sử dụng nhiều nhất"
-                    android:icon="@drawable/top"/>
+                    android:icon="@drawable/image14"/>
                 <item android:id="@+id/topService"
                     android:title="Dịch vụ được sử dụng nhiều nhất"
-                    android:icon="@drawable/service"/>
+                    android:icon="@drawable/image15"/>
             </menu>
         </item>
     </group>
@@ -42,11 +40,14 @@
             <menu>
                 <item android:id="@+id/addUser"
                     android:title="Thêm người dùng"
-                    android:icon="@drawable/add"
+                    android:icon="@drawable/image16"
                     android:visible="false"/>
+                <item android:id="@+id/profile"
+                    android:title="Hồ sơ"
+                    android:icon="@drawable/image24"/>
                 <item android:id="@+id/change"
                     android:title="Đổi mật khẩu"
-                    android:icon="@drawable/change"/>
+                    android:icon="@drawable/image17"/>
                 <item android:id="@+id/signout"
                     android:title="Đăng xuất"
                     android:icon="@drawable/signout"/>
