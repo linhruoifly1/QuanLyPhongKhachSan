@@ -9,7 +9,6 @@
         android:layout_margin="35px"
         android:layout_width="250px"
         android:layout_height="250px"
-        android:src="@drawable/avatar"
         android:layout_gravity="center"/>
 
 

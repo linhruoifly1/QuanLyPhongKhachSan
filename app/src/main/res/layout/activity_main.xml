@@ -17,7 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/toolbar"
-                android:background="#00BCD4"
+                android:background="#353131"
                 android:minHeight="?attr/actionBarSize"/>
         </com.google.android.material.appbar.AppBarLayout>
         <FrameLayout
