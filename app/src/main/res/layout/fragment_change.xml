@@ -10,7 +10,8 @@
 
     android:orientation="vertical"
 
-    tools:context=".fragment.ChangePassFragment">
+    tools:context=".fragment.ChangePassFragment"
+    android:padding="20sp">
 
 
     <ImageView

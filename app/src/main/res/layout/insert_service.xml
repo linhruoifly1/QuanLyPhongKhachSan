@@ -43,6 +43,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:backgroundTint="#000000"
+            android:textColor="@color/white"
             android:layout_marginRight="20dp"/>
         <Button
             android:id="@+id/btnCancelServiceNew"
@@ -50,6 +51,7 @@
             android:layout_height="wrap_content"
             android:text="HỦY"
             android:textSize="18sp"
+            android:textColor="@color/white"
             android:backgroundTint="#000000"
             android:textStyle="bold"/>
     </LinearLayout>
