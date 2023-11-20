@@ -60,6 +60,7 @@
             android:text="THÊM"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:backgroundTint="#000000"
             android:layout_marginRight="20dp"/>

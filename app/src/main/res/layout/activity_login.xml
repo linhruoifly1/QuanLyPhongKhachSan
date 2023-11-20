@@ -10,7 +10,7 @@
     android:padding="10dp">
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textIplayout"
-        android:layout_marginTop="400px"
+        android:layout_marginTop="500px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
@@ -70,8 +70,7 @@
         android:layout_marginTop="20sp"
         android:background="@drawable/boderbutton"
         android:text="Đăng Nhập"
-        android:textColor="@color/white"
-        />
+        android:textColor="@color/white"/>
 
 
 

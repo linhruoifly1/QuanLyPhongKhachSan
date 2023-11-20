@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private View mHeaderView;
     TextView tvFullNameUser;
     ReceptionistDAO receptionistDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         receptionistDAO = new ReceptionistDAO(this);
         navView = findViewById(R.id.navView);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         toggle.setDrawerSlideAnimationEnabled(true);
         toggle.syncState();
         drawerLayout.addDrawerListener(toggle);
@@ -60,43 +61,46 @@ public class MainActivity extends AppCompatActivity {
         mHeaderView = navView.getHeaderView(0);
         tvFullNameUser = mHeaderView.findViewById(R.id.tvFullNameUser);
         tvFullNameUser.setText(librarian.getName());
-        if(user.equalsIgnoreCase("admin")){
+        if (user.equalsIgnoreCase("admin")) {
             navView.getMenu().findItem(R.id.addUser).setVisible(true);
         }
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId()==R.id.room){
+                if (item.getItemId() == R.id.room) {
                     RoomFragment roomFragment = new RoomFragment();
                     replaceFragment(roomFragment);
-                }else if(item.getItemId()==R.id.type){
+                } else if (item.getItemId() == R.id.type) {
                     TypeFragment typeFragment = new TypeFragment();
                     replaceFragment(typeFragment);
-                }else if(item.getItemId()==R.id.service){
+                } else if (item.getItemId() == R.id.service) {
                     ServiceFragment serviceFragment = new ServiceFragment();
                     replaceFragment(serviceFragment);
-                }else if(item.getItemId()==R.id.bill){
+                } else if (item.getItemId() == R.id.bill) {
                     BillFragment billFragment = new BillFragment();
                     replaceFragment(billFragment);
-                }else if(item.getItemId()==R.id.client){
+                } else if (item.getItemId() == R.id.client) {
                     CustomerFragment clientFragment = new CustomerFragment();
                     replaceFragment(clientFragment);
-                }else if(item.getItemId()==R.id.revenue){
+                } else if (item.getItemId() == R.id.revenue) {
                     RevenueFragment revenueFragment = new RevenueFragment();
                     replaceFragment(revenueFragment);
-                }else if(item.getItemId()==R.id.topRoom){
+                } else if (item.getItemId() == R.id.topRoom) {
                     TopRoomFragment topRoomFragment = new TopRoomFragment();
                     replaceFragment(topRoomFragment);
-                }else if(item.getItemId()==R.id.topService){
+                } else if (item.getItemId() == R.id.topService) {
                     TopServiceFragment topServiceFragment = new TopServiceFragment();
                     replaceFragment(topServiceFragment);
-                }else if(item.getItemId()==R.id.change){
+                } else if (item.getItemId() == R.id.change) {
                     ChangePassFragment changePassFragment = new ChangePassFragment();
                     replaceFragment(changePassFragment);
-                }else if(item.getItemId()==R.id.addUser){
+                } else if (item.getItemId() == R.id.addUser) {
                     AddUserFragment addUserFragment = new AddUserFragment();
                     replaceFragment(addUserFragment);
-                }else if(item.getItemId()==R.id.signout){
+
+                } else if (item.getItemId() == R.id.profile) {
+
+                } else if (item.getItemId() == R.id.signout) {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
@@ -108,8 +112,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void replaceFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.frameNav,fragment).commit();
+        fm.beginTransaction().replace(R.id.frameNav, fragment).commit();
     }
 }
