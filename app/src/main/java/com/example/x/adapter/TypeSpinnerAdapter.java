@@ -35,11 +35,9 @@ public class TypeSpinnerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_spiner_type,parent,false);
-        TextView tvIdType = view.findViewById(R.id.tvIdTypeSpinner);
         TextView tvNameType = view.findViewById(R.id.tvNameTypeSpinner);
         Type type = arrayList.get(position);
         if(type != null){
-            tvIdType.setText(""+type.getId());
             tvNameType.setText(type.getName());
         }
         return view;

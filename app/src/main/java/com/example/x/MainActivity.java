@@ -21,6 +21,7 @@ import com.example.x.fragment.AddUserFragment;
 import com.example.x.fragment.BillFragment;
 import com.example.x.fragment.ChangePassFragment;
 import com.example.x.fragment.CustomerFragment;
+import com.example.x.fragment.ProfileFragment;
 import com.example.x.fragment.RevenueFragment;
 import com.example.x.fragment.RoomFragment;
 import com.example.x.fragment.ServiceFragment;
@@ -100,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if (item.getItemId() == R.id.profile) {
 
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    replaceFragment(profileFragment);
                 } else if (item.getItemId() == R.id.signout) {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);

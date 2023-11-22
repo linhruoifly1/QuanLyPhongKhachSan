@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:src="@drawable/addnew"
-        android:backgroundTint="#d9d9d9"
+        android:backgroundTint="#353131"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="10dp"/>
 

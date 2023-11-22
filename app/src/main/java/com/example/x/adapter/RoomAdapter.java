@@ -117,12 +117,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.viewHolder>{
         AlertDialog dialog = builder.create();
         dialog.show();
         Spinner spinnerType = view.findViewById(R.id.spinnerTypeUpdate);
+        TextView tv_id = view.findViewById(R.id.tv_roomID);
         EditText edNumberRoom = view.findViewById(R.id.edNumberRoomUpdate);
         EditText edPriceRoom = view.findViewById(R.id.edPriceRoomUpdate);
         Button btnUpdateRoom = view.findViewById(R.id.btnUpdateRoomNew);
         Button btnCancel = view.findViewById(R.id.btnCancelRoomUpdate);
         edNumberRoom.setText(""+room.getNumber());
         edPriceRoom.setText(""+room.getPrice());
+        tv_id.setText("Mã phòng: "+room.getId());
         TypeDAO typeDAO = new TypeDAO(context);
         ArrayList<Type> types = typeDAO.getAll();
         TypeSpinnerAdapter typeSpinnerAdapter = new TypeSpinnerAdapter(context,types);
