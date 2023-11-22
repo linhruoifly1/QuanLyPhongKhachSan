@@ -142,8 +142,12 @@ public class RoomFragment extends Fragment {
         btnAddRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edNumberRoom.getText().length()==0||edPriceRoom.getText().length()==0){
-                    Toast.makeText(getActivity(), "Không để trống", Toast.LENGTH_SHORT).show();
+                if(edNumberRoom.getText().length()==0){
+                    edNumberRoom.setError("Không bỏ trống số phòng");
+
+                }
+                if(edPriceRoom.getText().length()==0){
+                    edPriceRoom.setError("Không bỏ trống giá phòng");
                     return;
                 }
                 for(int i =0;i<arrayList.size();i++){

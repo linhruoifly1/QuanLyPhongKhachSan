@@ -60,19 +60,19 @@ public class AddUserFragment extends Fragment {
 
                 if (hoten.equals("")){
                     edthoTen.setError("Không Bỏ Trống Tên");
-                    return;
+
                 }
                 if ( email.equals("") ){
                     edtEmail.setError("Không Bỏ Trống Email");
 
                 }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                     edtEmail.setError("Email không đúng định dạng");
-                    return;
+
                 }
 
                 if ( user.equals("")){
                     edtUsername.setError("Không Bỏ Trống Username");
-                    return;
+
                 }
                 if (pass.equals("")){
                     edtpass.setError("Không Bỏ Trống Password");

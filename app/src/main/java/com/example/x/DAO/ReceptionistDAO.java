@@ -55,9 +55,21 @@ public class ReceptionistDAO {
     }
     public boolean checkLogin(String username,String password){
         SQLiteDatabase database = dbHelper.getReadableDatabase();
-        Cursor cursor = database.rawQuery("select * from receptionist where username=? and password=?",new String[]{username,password});
-        int row = cursor.getCount();
-        return row>0;
+        Cursor cursor = database.rawQuery("SELECT * FROM receptionist WHERE username = ? AND password = ?",new String[]{username,password});
+        if (cursor.getCount()>0){
+            cursor.moveToFirst();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("id", cursor.getString(0));
+            editor.putString("name", cursor.getString(1));
+            editor.putString("email",cursor.getString(2));
+            editor.putString("username", cursor.getString(3));
+            editor.putString("password", cursor.getString(4));
+            editor.commit();
+            return true;
+        }
+//        Cursor cursor = database.rawQuery("select * from receptionist where username=? and password=?",new String[]{username,password});
+//        int row = cursor.getCount();
+        return false;
     }
     public int changePassword(String username,String pass, String newPass){
         ContentValues values = new ContentValues();

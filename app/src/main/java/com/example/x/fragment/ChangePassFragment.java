@@ -60,8 +60,17 @@ public class ChangePassFragment extends Fragment {
 
                 //validate
 
-                if (mkCu.equals("") || mkMoi.equals("") || xacNhan.equals("")){
-                    Toast.makeText(getContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                if (mkCu.equals("")){
+                    edtmkCu.setError("Vui lòng điền mật khẩu cũ");
+                }
+                if (mkMoi.equals("")){
+                    edtmkMoi.setError("Vui lòng điền mật khẩu mới");
+                }
+                if (edtmkMoi.getText().length()<6){
+                    edtmkMoi.setError("Mật khẩu phải có 6 kí tự");
+                }
+                if (xacNhan.equals("")){
+                    edtxacNhan.setError("Vui lòng xác nhận mật khẩu");
                     return;
                 }
                 if (xacNhan.equals(mkMoi)){
@@ -73,10 +82,10 @@ public class ChangePassFragment extends Fragment {
                     } else if (receptionistDAO.changePassword(user,mkCu,mkMoi)==-1) {
                         Toast.makeText(getContext(), "Đổi Mật Khẩu Thất bại", Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(getContext(), "Mật khẩu cũ không đúng", Toast.LENGTH_SHORT).show();
+                        edtmkCu.setError("Mật khẩu cũ không đúng");
                     }
                 }else {
-                    Toast.makeText(getContext(), "2 mật khẩu không khớp", Toast.LENGTH_SHORT).show();
+                        edtxacNhan.setError("2 mật khẩu không khớp");
                 }
             }
         });

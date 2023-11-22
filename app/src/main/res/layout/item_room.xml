@@ -17,20 +17,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="120dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Mã Phòng: "
-                android:textStyle="bold"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tvIdRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
-                android:textSize="20sp"
                 android:textColor="#000000"
-                android:textStyle="bold"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,14 +45,15 @@
                 android:text="Loại Phòng: "
                 android:textStyle="bold"
                 android:textSize="15sp"/>
+
             <TextView
                 android:id="@+id/tvNameTypeRoom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đơn"
-                android:textSize="20sp"
                 android:textColor="#000000"
-                android:textStyle="bold"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đơn"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textColor="#000000"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -88,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đơn"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textColor="#000000"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -108,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đơn"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textColor="#000000"
                 android:textStyle="bold"/>
         </LinearLayout>

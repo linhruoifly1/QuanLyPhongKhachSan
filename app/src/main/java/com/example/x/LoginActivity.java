@@ -43,8 +43,10 @@ public class LoginActivity extends AppCompatActivity {
     private void checkLogin() {
         String inputUser = edUsername.getText().toString();
         String inputPass = edPassword.getText().toString();
-        if(inputUser.isEmpty()||inputPass.isEmpty()){
-            Toast.makeText(this, "Vui lòng nhập tên đăng nhập và mật khẩu", Toast.LENGTH_SHORT).show();
+        if(inputUser.isEmpty()){
+            edUsername.setError("Vui lòng nhập username");
+        }if(inputPass.isEmpty()){
+            edPassword.setError("vui lòng nhập password");
         }else{
             if(receptionistDAO.checkLogin(inputUser,inputPass)){
                 Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();

@@ -9,6 +9,7 @@
     android:layout_height="match_parent"
 
     android:orientation="vertical"
+    android:padding="20sp"
 
     tools:context=".fragment.AddUserFragment">
 
@@ -29,7 +30,7 @@
 
         android:layout_height="wrap_content"
 
-        android:layout_marginLeft="30sp"
+        android:layout_marginLeft="10sp"
 
         android:text="Họ Tên"
 
@@ -44,7 +45,7 @@
 
         android:id="@+id/edthoTenadd"
 
-        android:layout_width="318dp"
+        android:layout_width="match_parent"
 
         android:layout_height="40dp"
 
@@ -52,7 +53,8 @@
 
         android:background="@drawable/boder"
 
-        android:paddingLeft="5sp" />
+        android:paddingLeft="5sp"
+        android:paddingRight="10sp"/>
 
 
     <TextView
@@ -61,7 +63,7 @@
 
         android:layout_height="wrap_content"
 
-        android:layout_marginLeft="30sp"
+        android:layout_marginLeft="10sp"
 
         android:layout_marginTop="10sp"
 
@@ -78,7 +80,7 @@
 
         android:id="@+id/edtEmailadd"
 
-        android:layout_width="318dp"
+        android:layout_width="match_parent"
 
         android:layout_height="40dp"
 
@@ -86,7 +88,8 @@
 
         android:background="@drawable/boder"
 
-        android:paddingLeft="5sp" />
+        android:paddingLeft="5sp"
+        android:paddingRight="10sp"/>
 
     <TextView
 
@@ -94,7 +97,7 @@
 
         android:layout_height="wrap_content"
 
-        android:layout_marginLeft="30sp"
+        android:layout_marginLeft="10sp"
 
         android:layout_marginTop="10sp"
 
@@ -111,7 +114,7 @@
 
         android:id="@+id/edtUsernameadd"
 
-        android:layout_width="318dp"
+        android:layout_width="match_parent"
 
         android:layout_height="40dp"
 
@@ -119,7 +122,8 @@
 
         android:background="@drawable/boder"
 
-        android:paddingLeft="5sp" />
+        android:paddingLeft="5sp"
+        android:paddingRight="10sp"/>
 
     <TextView
 
@@ -127,7 +131,7 @@
 
         android:layout_height="wrap_content"
 
-        android:layout_marginLeft="30sp"
+        android:layout_marginLeft="10sp"
 
 
         android:layout_marginTop="10sp"
@@ -145,7 +149,7 @@
 
         android:id="@+id/edtpassadd"
 
-        android:layout_width="318dp"
+        android:layout_width="match_parent"
 
         android:layout_height="40dp"
 
@@ -153,8 +157,8 @@
 
         android:background="@drawable/boder"
 
-        android:paddingLeft="5sp" />
-
+        android:paddingLeft="5sp"
+        android:paddingRight="10sp"/>
 
     <Button
 
