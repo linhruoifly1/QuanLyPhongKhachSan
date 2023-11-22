@@ -21,12 +21,14 @@
 
         <EditText
             android:id="@+id/edtStart"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/boder"
-            android:focusable="false"
+            android:inputType="date"
+            android:hint="Chọn ngày bắt đầu"
             android:layout_marginLeft="10sp"
-            android:paddingLeft="20sp"
+            android:padding="10dp"
+            android:paddingEnd="100dp"
             />
     </LinearLayout>
 
@@ -45,12 +47,13 @@
 
         <EditText
             android:id="@+id/edtEnd"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/boder"
-            android:focusable="false"
             android:layout_marginLeft="10sp"
-            android:paddingLeft="20sp"
+            android:hint="Chọn ngày kết thúc"
+            android:padding="10sp"
+            android:paddingEnd="100dp"
             />
     </LinearLayout>
 

@@ -4,21 +4,31 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="10dp"
     android:background="#ffffff">
+
     <TextView
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sửa phòng"
         android:textSize="30dp"
         android:textStyle="bold"
         android:layout_marginBottom="20dp"/>
+    <TextView
+        android:id="@+id/tv_roomID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="fedfsdf"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginStart="10dp"/>
     <Spinner
         android:id="@+id/spinnerTypeUpdate"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/radius"/>
+
     <EditText
         android:id="@+id/edNumberRoomUpdate"
         android:layout_marginTop="10dp"
@@ -44,6 +54,7 @@
         android:gravity="center"
         android:layout_marginTop="10dp">
         <Button
+            android:textColor="@color/white"
             android:id="@+id/btnUpdateRoomNew"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
@@ -54,6 +65,7 @@
             android:backgroundTint="#000000"
             android:layout_marginRight="20dp"/>
         <Button
+            android:textColor="@color/white"
             android:id="@+id/btnCancelRoomUpdate"
             android:layout_width="100dp"
             android:layout_height="wrap_content"

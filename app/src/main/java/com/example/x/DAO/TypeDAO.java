@@ -29,10 +29,12 @@ public class TypeDAO {
         long row = database.update("type",values,"id=?",new String[]{String.valueOf(type.getId())});
         return row>0;
     }
-    public boolean delete(int id){
+    public int updateStatus(Type type){
+        ContentValues values = new ContentValues();
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        long row = database.delete("type","id=?",new String[]{String.valueOf(id)});
-        return row>0;
+        values.put("status",type.getId());
+
+        return database.update("type",values,"id=?",new String[]{String.valueOf(type.getId())});
     }
     public Type getId(String id){
         String sql = "select * from type where id=?";
@@ -40,7 +42,7 @@ public class TypeDAO {
         return list.get(0);
     }
     public ArrayList<Type> getAll(){
-        String sql = "select * from type";
+        String sql = "select * from type where status = 0";
         return getData(sql);
     }
     private ArrayList<Type> getData(String sql,String...selectionArgs){

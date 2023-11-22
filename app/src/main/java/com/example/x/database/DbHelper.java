@@ -10,20 +10,21 @@ public class DbHelper extends SQLiteOpenHelper {
 public static final String dbName ="dataX";
 
     public DbHelper(@Nullable Context context) {
-        super(context, dbName, null, 9);
+        super(context, dbName, null, 10);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String tbType = "CREATE TABLE type (\n" +
                 "    id   INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "    name TEXT    NOT NULL\n" +
+                "    name TEXT    NOT NULL,\n" +
+                "    status INTEGER    NOT NULL\n" +
                 ");";
         db.execSQL(tbType);
         String dataType = "insert into type values " +
-                "(1,'Phòng đơn')," +
-                "(2,'Phòng đôi')," +
-                "(3,'Phòng hạng sang')";
+                "(1,'Phòng đơn',0)," +
+                "(2,'Phòng đôi',0)," +
+                "(3,'Phòng hạng sang',0)";
         db.execSQL(dataType);
         String tbRoom = "CREATE TABLE room (\n" +
                 "    id     INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
@@ -64,7 +65,9 @@ public static final String dbName ="dataX";
         String tbService = "CREATE TABLE service (\n" +
                 "    id       INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name     TEXT    NOT NULL,\n" +
-                "    price    INTEGER NOT NULL\n" +
+                "    price    INTEGER NOT NULL,\n" +
+                "    status INTEGER    NOT NULL\n" +
+
                 ");";
         db.execSQL(tbService);
         String dataService = "insert into service values " +
