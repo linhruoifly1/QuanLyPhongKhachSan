@@ -85,7 +85,6 @@ public static final String dbName ="dataX";
                 "    idService      INTEGER REFERENCES service (id),\n" +
                 "    checkIn        TEXT,\n" +
                 "    checkOut       TEXT,\n" +
-                "    date       TEXT,\n" +
                 "    realCheckOut   TEXT,\n" +
                 "    costRoom       INTEGER NOT NULL,\n" +
                 "    costService       INTEGER,\n" +
