@@ -25,6 +25,11 @@ public class ReceptionistDAO {
         ArrayList<Receptionist> list = getData(sql,username);
         return list.get(0);
     }
+    public Receptionist getId(String id){
+        String sql = "select * from receptionist where id=?";
+        ArrayList<Receptionist> list = getData(sql,id);
+        return list.get(0);
+    }
     public ArrayList<Receptionist> getAll(){
         String sql = "select * from receptionist";
         return getData(sql);
