@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.x.DAO.ReceptionistDAO;
@@ -16,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
     private TextInputEditText edUsername,edPassword;
+    private TextView errUs, errPass;
     private CheckBox chkRemember;
     private Button btnLogin,btnCancel;
     ReceptionistDAO receptionistDAO;
@@ -26,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
         edUsername = findViewById(R.id.edtUser);
         edPassword = findViewById(R.id.edtPass);
         chkRemember = findViewById(R.id.chkRemember);
+        errUs = findViewById(R.id.txterrUsername);
+        errPass = findViewById(R.id.txterrPassword);
         btnLogin = findViewById(R.id.btndangNhap);
         receptionistDAO = new ReceptionistDAO(LoginActivity.this);
         SharedPreferences preferences = getSharedPreferences("userfile",MODE_PRIVATE);
@@ -44,10 +48,17 @@ public class LoginActivity extends AppCompatActivity {
         String inputUser = edUsername.getText().toString();
         String inputPass = edPassword.getText().toString();
         if(inputUser.isEmpty()){
-            edUsername.setError("Vui lòng nhập username");
-        }if(inputPass.isEmpty()){
-            edPassword.setError("vui lòng nhập password");
+            errUs.setText("Vui lòng nhập tên đăng nhập");
+        }else {
+            errUs.setText("");
+        }
+        //
+        if(inputPass.isEmpty()){
+            errPass.setText("Vui lòng nhập mật khẩu");
         }else{
+            errPass.setText("");
+        }
+
             if(receptionistDAO.checkLogin(inputUser,inputPass)){
                 Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                 rememberUser(inputUser,inputPass,chkRemember.isChecked());
@@ -59,7 +70,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
             }
         }
-    }
 
     private void rememberUser(String inputUser, String inputPass, boolean checked) {
         SharedPreferences preferences = getSharedPreferences("userfile",MODE_PRIVATE);

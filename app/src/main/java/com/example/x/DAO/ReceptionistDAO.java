@@ -82,7 +82,7 @@ public class ReceptionistDAO {
         Cursor cursor = database.rawQuery("SELECT * FROM receptionist WHERE username = ? AND password = ?",new String[]{username, pass});
         if (cursor.getCount() > 0){
             values.put("password",newPass);
-            long check = database.update("receptionist",values,"id = ?",new String[]{username});
+            long check = database.update("receptionist",values,"username = ?",new String[]{username});
             if (check == -1){
                 return -1; //thất bại
             }
