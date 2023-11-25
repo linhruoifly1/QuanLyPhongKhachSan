@@ -10,7 +10,7 @@ public class DbHelper extends SQLiteOpenHelper {
 public static final String dbName ="dataX";
 
     public DbHelper(@Nullable Context context) {
-        super(context, dbName, null, 12);
+        super(context, dbName, null, 13);
     }
 
     @Override
@@ -71,7 +71,7 @@ public static final String dbName ="dataX";
                 ");";
         db.execSQL(tbService);
         String dataService = "insert into service values " +
-                "(1,'Nhìn ra hồ',20,0)," +
+                "(1,'Không sử dụng',0,0)," +
                 "(2,'Sắp xếp cuộc họp',100,0)," +
                 "(3,'Trang trí cho cặp đôi',50,0)," +
                 "(4,'Có thể nấu ăn',30,0)";
@@ -86,8 +86,7 @@ public static final String dbName ="dataX";
                 "    checkIn        TEXT,\n" +
                 "    checkOut       TEXT,\n" +
                 "    costRoom       INTEGER,\n" +
-                "    costService    INTEGER,\n" +
-                "    VAT            INTEGER NOT NULL,\n" +
+                "    VAT            INTEGER,\n" +
                 "    status         INTEGER NOT NULL,\n" +
                 "    sumCost        INTEGER \n" +
                 ");";

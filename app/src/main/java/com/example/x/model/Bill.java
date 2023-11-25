@@ -1,36 +1,54 @@
 package com.example.x.model;
 
 public class Bill {
-    private int id,idCustomer,idReceptionist;
+    private int id,idCustomer,idReceptionist,idService;
     private String checkIn,checkOut;
-    private int costRoom,costService,VAT,status,sumCost;
+    private int costRoom,VAT,status,sumCost;
 
-    public Bill(int idCustomer, int idReceptionist, String checkIn, String checkOut, int costRoom, int costService, int VAT, int status, int sumCost) {
+    public Bill(int idCustomer, int idReceptionist,int idService, String checkIn, String checkOut, int costRoom, int VAT, int status, int sumCost) {
         this.idCustomer = idCustomer;
         this.idReceptionist = idReceptionist;
+        this.idService = idService;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.costRoom = costRoom;
-        this.costService = costService;
         this.VAT = VAT;
         this.status = status;
         this.sumCost = sumCost;
     }
 
-    public Bill(int id, int idCustomer, int idReceptionist, String checkIn, String checkOut, int costRoom, int costService, int VAT, int status, int sumCost) {
+    public Bill(int idCustomer, int idReceptionist, int idService, String checkIn, String checkOut, int VAT, int status) {
+        this.idCustomer = idCustomer;
+        this.idReceptionist = idReceptionist;
+        this.idService = idService;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.VAT = VAT;
+        this.status = status;
+    }
+
+    public Bill(int id, int idCustomer, int idReceptionist, int idService, String checkIn, String checkOut, int costRoom, int VAT, int status, int sumCost) {
         this.id = id;
         this.idCustomer = idCustomer;
         this.idReceptionist = idReceptionist;
+        this.idService = idService;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.costRoom = costRoom;
-        this.costService = costService;
         this.VAT = VAT;
         this.status = status;
         this.sumCost = sumCost;
     }
 
     public Bill() {
+    }
+
+    public int getIdService() {
+        return idService;
+    }
+
+    public void setIdService(int idService) {
+        this.idService = idService;
     }
 
     public int getId() {
@@ -78,14 +96,6 @@ public class Bill {
 
     public void setCostRoom(int costRoom) {
         this.costRoom = costRoom;
-    }
-
-    public int getCostService() {
-        return costService;
-    }
-
-    public void setCostService(int costService) {
-        this.costService = costService;
     }
 
     public int getVAT() {

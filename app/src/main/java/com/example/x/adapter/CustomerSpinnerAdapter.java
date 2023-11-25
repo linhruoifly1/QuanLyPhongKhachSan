@@ -1,4 +1,5 @@
 package com.example.x.adapter;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,15 +7,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.example.x.R;
-import com.example.x.model.Service;
+import com.example.x.model.Customer;
 
 import java.util.ArrayList;
 
-public class ServiceSpinnerAdapter extends BaseAdapter {
+public class CustomerSpinnerAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<Service> arrayList;
+    private ArrayList<Customer> arrayList;
 
-    public ServiceSpinnerAdapter(Context context, ArrayList<Service> arrayList) {
+    public CustomerSpinnerAdapter(Context context, ArrayList<Customer> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -34,9 +35,9 @@ public class ServiceSpinnerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_spiner,parent,false);
         TextView tvItem = view.findViewById(R.id.tvNameSpinner);
-        Service service = arrayList.get(position);
-        if(service != null){
-            tvItem.setText(""+service.getName());
+        Customer customer = arrayList.get(position);
+        if(customer != null){
+            tvItem.setText(customer.getName());
         }
         return view;
     }

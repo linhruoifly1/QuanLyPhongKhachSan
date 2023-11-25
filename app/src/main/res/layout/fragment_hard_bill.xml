@@ -9,7 +9,7 @@
         android:id="@+id/edSearchHardBill"
         android:layout_width="match_parent"
         android:background="@drawable/radius"
-        android:hint="Tìm phòng"
+        android:hint="Tìm kiếm"
         android:padding="10dp"
         android:layout_height="50dp"/>
     <androidx.recyclerview.widget.RecyclerView
@@ -17,13 +17,4 @@
         android:id="@+id/rcvHardBill"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fltHardBill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:src="@drawable/addnew"
-        android:backgroundTint="#171F1D"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="10dp"/>
 </FrameLayout>

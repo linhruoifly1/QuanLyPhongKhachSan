@@ -76,6 +76,26 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:text="Tên Dịch Vụ: "
+                android:textStyle="bold"
+                android:textSize="12dp"/>
+            <TextView
+                android:id="@+id/tvServiceBill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thái Hậu Nguyên Sinh"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
                 android:text="Check In: "
                 android:textStyle="bold"
                 android:textSize="12dp"/>
