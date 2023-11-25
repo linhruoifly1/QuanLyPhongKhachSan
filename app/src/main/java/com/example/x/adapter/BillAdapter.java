@@ -62,6 +62,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
         holder.tvCustomerBill.setText(customer.getName());
         Service service = serviceDAO.getId(String.valueOf(bill.getIdService()));
         holder.tvServiceBill.setText(service.getName());
+        // lấy giờ lúc tọa hóa đơn
         String timeCheckIn = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         holder.tvCheckIn.setText(bill.getCheckIn()+" "+timeCheckIn+" UTC");
         holder.tvCheckOut.setText(bill.getCheckOut()+" 12:00:00 UTC");
