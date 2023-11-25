@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(roomFragment);
         Intent intent = getIntent();
         String user = intent.getStringExtra("user");
-        Receptionist librarian = receptionistDAO.getUsername(user);
+        Receptionist receptionist = receptionistDAO.getUsername(user);
         mHeaderView = navView.getHeaderView(0);
         tvFullNameUser = mHeaderView.findViewById(R.id.tvFullNameUser);
-        tvFullNameUser.setText(librarian.getName());
+        tvFullNameUser.setText(receptionist.getName());
         if (user.equalsIgnoreCase("admin")) {
             navView.getMenu().findItem(R.id.addUser).setVisible(true);
         }
