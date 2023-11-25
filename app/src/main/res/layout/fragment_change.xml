@@ -130,13 +130,12 @@
         android:layout_width="match_parent"
 
         android:layout_height="36dp"
-        android:paddingLeft="10sp"
-        android:paddingRight="10sp"
-
         android:layout_gravity="center"
+        android:background="@drawable/boder"
 
-        android:background="@drawable/boder" />
+        android:paddingLeft="10sp"
 
+        android:paddingRight="10sp" />
 
     <Button
 

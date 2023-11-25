@@ -66,11 +66,11 @@ public class ChangePassFragment extends Fragment {
                 if (mkMoi.equals("")){
                     edtmkMoi.setError("Vui lòng điền mật khẩu mới");
                 }
-                if (edtmkMoi.getText().length()<6){
-                    edtmkMoi.setError("Mật khẩu phải có 6 kí tự");
-                }
                 if (xacNhan.equals("")){
                     edtxacNhan.setError("Vui lòng xác nhận mật khẩu");
+                }
+                if (edtmkMoi.getText().length()<6){
+                    edtmkMoi.setError("Mật khẩu phải có 6 kí tự");
                     return;
                 }
                 if (xacNhan.equals(mkMoi)){
