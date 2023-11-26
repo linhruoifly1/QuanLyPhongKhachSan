@@ -1,30 +1,30 @@
 package com.example.x.model;
 
 public class TopService {
-    private String tenDichVu;
-    private int soLuong;
+    private String nameService;
+    private int QuantityService;
 
-    public TopService(String tenDichVu, int soLuong) {
-        this.tenDichVu = tenDichVu;
-        this.soLuong = soLuong;
+    public TopService(String nameService, int QuantityService) {
+        this.nameService = nameService;
+        this.QuantityService = QuantityService;
     }
 
     public TopService() {
     }
 
-    public String getTenDichVu() {
-        return tenDichVu;
+    public String getNameService() {
+        return nameService;
     }
 
-    public void setTenDichVu(String tenDichVu) {
-        this.tenDichVu = tenDichVu;
+    public void setNameService(String nameService) {
+        this.nameService = nameService;
     }
 
-    public int getSoLuong() {
-        return soLuong;
+    public int getQuantityService() {
+        return QuantityService;
     }
 
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+    public void setQuantityService(int quantityService) {
+        QuantityService = quantityService;
     }
 }
