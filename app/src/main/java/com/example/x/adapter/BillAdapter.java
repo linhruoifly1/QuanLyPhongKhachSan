@@ -1,6 +1,7 @@
 package com.example.x.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,20 +9,29 @@ import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.x.DAO.BillDAO;
 import com.example.x.DAO.CustomerDAO;
+import com.example.x.DAO.HardBillDAO;
 import com.example.x.DAO.ReceptionistDAO;
+import com.example.x.DAO.RoomDAO;
 import com.example.x.DAO.ServiceDAO;
 import com.example.x.R;
 import com.example.x.model.Bill;
 import com.example.x.model.Customer;
+import com.example.x.model.HardBill;
 import com.example.x.model.Receptionist;
+import com.example.x.model.Room;
 import com.example.x.model.Service;
 
 import java.text.SimpleDateFormat;
@@ -33,9 +43,12 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
     private Context context;
     private ArrayList<Bill> arrayList;
     BillDAO billDAO;
-    ServiceDAO serviceDAO;
-    CustomerDAO customerDAO;
-    ReceptionistDAO receptionistDAO;
+    private ServiceDAO serviceDAO;
+    private CustomerDAO customerDAO;
+    private ReceptionistDAO receptionistDAO;
+    private RoomDAO roomDAO;
+    private HardBillDAO hardBillDAO;
+    private int idRoom;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public BillAdapter(Context context, ArrayList<Bill> arrayList) {
         this.context = context;
@@ -43,6 +56,8 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
         serviceDAO = new ServiceDAO(context);
         customerDAO = new CustomerDAO(context);
         receptionistDAO = new ReceptionistDAO(context);
+        roomDAO = new RoomDAO(context);
+        hardBillDAO = new HardBillDAO(context);
     }
 
     @NonNull
@@ -89,7 +104,64 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
             holder.imgDeleteBill.setVisibility(View.INVISIBLE);
             holder.imgStatusBill.setVisibility(View.INVISIBLE);
         }
-        holder.tvSumCost.setText(""+bill.getSumCost());
+        holder.imgRoomBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder =new AlertDialog.Builder(context);
+                View view = LayoutInflater.from(context).inflate(R.layout.insert_hardbill,null);
+                builder.setView(view);
+                builder.setCancelable(false);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                Spinner spinnerRoomAdd = view.findViewById(R.id.spinnerRoomAdd);
+                EditText edQuantityPeople = view.findViewById(R.id.edQuantityPeople);
+                Button btnAdd = view.findViewById(R.id.btnAddHardNew);
+                Button btnCancel = view.findViewById(R.id.btnCancelHardNew);
+                ArrayList<Room> roomArrayList = roomDAO.getAll();
+                RoomSpinnerAdapter roomSpinnerAdapter = new RoomSpinnerAdapter(context,roomArrayList);
+                spinnerRoomAdd.setAdapter(roomSpinnerAdapter);
+                spinnerRoomAdd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        idRoom = roomArrayList.get(position).getId();
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btnAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ArrayList<HardBill> hardBillArrayList = hardBillDAO.getAll();
+                        HardBillAdapter hardBillAdapter = new HardBillAdapter(context,hardBillArrayList);
+                        if(edQuantityPeople.getText().length()==0){
+                            edQuantityPeople.setError("Nhập số khách hàng");
+                            return;
+                        }
+                        HardBill hardBill = new HardBill(bill.getId(),idRoom,Integer.parseInt(edQuantityPeople.getText().toString()));
+                        if(hardBillDAO.insert(hardBill)){
+                            hardBillArrayList.clear();
+                            hardBillArrayList.addAll(hardBillDAO.getAll());
+                            hardBillAdapter.notifyDataSetChanged();
+                            notifyDataSetChanged();
+                            dialog.dismiss();
+                            Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        }else{
+                            dialog.dismiss();
+                            Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+//        int costRoom = hardBillDAO.getCostRoom(bill.getId())*billDAO.getNumberDate(bill.getId());
+        holder.tvCostRoom.setText("$" +hardBillDAO.getCostRoom(bill.getId()));
     }
 
     private void openDiaLogUpdate(Bill bill) {

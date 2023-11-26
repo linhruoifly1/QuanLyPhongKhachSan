@@ -6,6 +6,9 @@
         <item android:id="@+id/bill"
             android:title="Quản lý hóa đơn"
             android:icon="@drawable/bill"/>
+        <item android:id="@+id/hardbill"
+            android:title="Hóa đơn chi tiết"
+            android:icon="@drawable/bill"/>
         <item android:id="@+id/room"
             android:title="Quản lý phòng"
             android:icon="@drawable/room"/>

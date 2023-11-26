@@ -46,6 +46,20 @@ public class BillDAO {
         long row = database.update("bill",values,"id=?",new String[]{String.valueOf(bill.getId())});
         return row>0;
     }
+    public int getNumberDate(int id){
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        String sql = "select (checkOut-checkIn) as numberDate from bill where id= ?";
+        ArrayList<Integer> list = new ArrayList<>();
+        Cursor cursor = database.rawQuery(sql, new String[]{String.valueOf(id)});
+        while (cursor.moveToNext()){
+            try{
+                list.add(cursor.getInt(0));
+            }catch (Exception e){
+                list.add(0);
+            }
+        }
+        return list.get(0);
+    }
     public boolean changeStatus(int id){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         String sql = "update bill set status=1 where id=?";
