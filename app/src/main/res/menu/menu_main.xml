@@ -6,18 +6,21 @@
         <item android:id="@+id/bill"
             android:title="Quản lý hóa đơn"
             android:icon="@drawable/bill"/>
+        <item android:id="@+id/hardbill"
+            android:title="Hóa đơn chi tiết"
+            android:icon="@drawable/hardbill"/>
         <item android:id="@+id/room"
             android:title="Quản lý phòng"
-            android:icon="@drawable/room"/>
+            android:icon="@drawable/bed"/>
         <item android:id="@+id/type"
             android:title="Quản lý loại phòng"
-            android:icon="@drawable/type"/>
+            android:icon="@drawable/opendoor"/>
         <item android:id="@+id/service"
             android:title="Quản lý dịch vụ"
-            android:icon="@drawable/service"/>
+            android:icon="@drawable/reception"/>
         <item android:id="@+id/client"
             android:title="Quản lý khách hàng"
-            android:icon="@drawable/client"/>
+            android:icon="@drawable/groupnv"/>
 
     </group>
     <group android:checkableBehavior="single">
@@ -28,10 +31,10 @@
                     android:icon="@drawable/revenue"/>
                 <item android:id="@+id/topRoom"
                     android:title="Phòng được sử dụng nhiều nhất"
-                    android:icon="@drawable/top"/>
+                    android:icon="@drawable/placeholder"/>
                 <item android:id="@+id/topService"
                     android:title="Dịch vụ được sử dụng nhiều nhất"
-                    android:icon="@drawable/top"/>
+                    android:icon="@drawable/customerservice"/>
             </menu>
         </item>
     </group>
@@ -40,17 +43,17 @@
             <menu>
                 <item android:id="@+id/addUser"
                     android:title="Thêm người dùng"
-                    android:icon="@drawable/baseline_person_add_24"
+                    android:icon="@drawable/follow"
                     android:visible="false"/>
                 <item android:id="@+id/profile"
                     android:title="Hồ sơ"
-                    android:icon="@drawable/baseline_person_24"/>
+                    android:icon="@drawable/profile"/>
                 <item android:id="@+id/change"
                     android:title="Đổi mật khẩu"
-                    android:icon="@drawable/baseline_key_24"/>
+                    android:icon="@drawable/changepassword"/>
                 <item android:id="@+id/signout"
                     android:title="Đăng xuất"
-                    android:icon="@drawable/signout"/>
+                    android:icon="@drawable/logout"/>
             </menu>
         </item>
     </group>

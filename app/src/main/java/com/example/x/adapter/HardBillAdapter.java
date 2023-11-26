@@ -1,5 +1,7 @@
 package com.example.x.adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,8 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
     private Context context;
     private ArrayList<HardBill> arrayList;
 
+    private HardBill hardBill;
+
     public HardBillAdapter(Context context, ArrayList<HardBill> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
@@ -31,12 +35,26 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
+        holder.tvIdHard.setText("Mã: "+arrayList.get(position).getId());
+        holder.tvIdBillHard.setText("Mã hóa đơn:" + arrayList.get(position).getIdBill());
+        holder.tvNumberRoomHard.setText("Số phòng: "+ arrayList.get(position).getIdRoom());
+        holder.tvQuantityPeople.setText("Số lượng khách:"+ arrayList.get(position).getQuantityPeople());
+
+        hardBill = arrayList.get(position);
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return arrayList.size();
     }
 
     public class viewHolder extends RecyclerView.ViewHolder{
@@ -48,5 +66,11 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
             tvNumberRoomHard = itemView.findViewById(R.id.tvNumberRoomHard);
             tvQuantityPeople = itemView.findViewById(R.id.tvQuantityPeople);
         }
+    }
+
+    public void openDialogUpdateHardbill(HardBill hardBill){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+
     }
 }
