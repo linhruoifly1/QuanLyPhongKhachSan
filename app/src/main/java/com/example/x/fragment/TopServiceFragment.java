@@ -10,9 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.x.DAO.StatisticDAO;
+import com.example.x.DAO.StatisticsDAO;
 import com.example.x.R;
-import com.example.x.adapter.ServiceAdapter;
 import com.example.x.adapter.TopServiceAdapter;
 import com.example.x.model.TopService;
 
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 
 public class TopServiceFragment extends Fragment {
 
-    StatisticDAO dao;
+    StatisticsDAO dao;
 
 
 
@@ -31,7 +30,7 @@ public class TopServiceFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_top_service, container, false);
 
         RecyclerView rcvTopSV  = view.findViewById(R.id.rcvtopService);
-        dao = new StatisticDAO(getContext());
+        dao = new StatisticsDAO(getContext());
         ArrayList<TopService> list =dao.getService();
 
         LinearLayoutManager manager =new LinearLayoutManager(getContext());

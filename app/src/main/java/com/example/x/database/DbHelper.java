@@ -10,7 +10,7 @@ public class DbHelper extends SQLiteOpenHelper {
 public static final String dbName ="dataX";
 
     public DbHelper(@Nullable Context context) {
-        super(context, dbName, null, 14);
+        super(context, dbName, null, 15);
     }
 
     @Override
@@ -85,7 +85,6 @@ public static final String dbName ="dataX";
                 "    idService      INTEGER REFERENCES service (id),\n" +
                 "    checkIn        DATE,\n" +
                 "    checkOut       DATE,\n" +
-                "    costRoom       INTEGER,\n" +
                 "    VAT            INTEGER,\n" +
                 "    status         INTEGER NOT NULL,\n" +
                 "    sumCost        INTEGER \n" +

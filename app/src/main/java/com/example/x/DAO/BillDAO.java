@@ -24,7 +24,6 @@ public class BillDAO {
         values.put("idService",bill.getIdService());
         values.put("checkIn",bill.getCheckIn());
         values.put("checkOut",bill.getCheckOut());
-        values.put("costRoom",bill.getCostRoom());
         values.put("VAT",bill.getVAT());
         values.put("status",bill.getStatus());
         values.put("sumCost",bill.getSumCost());
@@ -39,7 +38,6 @@ public class BillDAO {
         values.put("idService",bill.getIdService());
         values.put("checkIn",bill.getCheckIn());
         values.put("checkOut",bill.getCheckOut());
-        values.put("costRoom",bill.getCostRoom());
         values.put("VAT",bill.getVAT());
         values.put("status",bill.getStatus());
         values.put("sumCost",bill.getSumCost());
@@ -48,7 +46,7 @@ public class BillDAO {
     }
     public int getNumberDate(int id){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        String sql = "select (checkOut-checkIn) as numberDate from bill where id= ?";
+        String sql = "select julianday(checkOut) - julianday(CheckIn) as numberDays from bill where id =?";
         ArrayList<Integer> list = new ArrayList<>();
         Cursor cursor = database.rawQuery(sql, new String[]{String.valueOf(id)});
         while (cursor.moveToNext()){
@@ -64,6 +62,12 @@ public class BillDAO {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         String sql = "update bill set status=1 where id=?";
         database.execSQL(sql,new String[]{String.valueOf(id)});
+        return true;
+    }
+    public boolean updateSumCost(int cost, int id){
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        String sql = "update bill set sumCost=? where id=?";
+        database.execSQL(sql,new String[]{String.valueOf(cost),String.valueOf(id)});
         return true;
     }
     public boolean delete(int id){
@@ -92,10 +96,9 @@ public class BillDAO {
             bill.setIdService(cursor.getInt(3));
             bill.setCheckIn(cursor.getString(4));
             bill.setCheckOut(cursor.getString(5));
-            bill.setCostRoom(cursor.getInt(6));
-            bill.setVAT(cursor.getInt(7));
-            bill.setStatus(cursor.getInt(8));
-            bill.setSumCost(cursor.getInt(9));
+            bill.setVAT(cursor.getInt(6));
+            bill.setStatus(cursor.getInt(7));
+            bill.setSumCost(cursor.getInt(8));
             list.add(bill);
         }
         return list;
