@@ -21,6 +21,7 @@ import com.example.x.fragment.AddUserFragment;
 import com.example.x.fragment.BillFragment;
 import com.example.x.fragment.ChangePassFragment;
 import com.example.x.fragment.CustomerFragment;
+import com.example.x.fragment.HardBillFragment;
 import com.example.x.fragment.ProfileFragment;
 import com.example.x.fragment.RevenueFragment;
 import com.example.x.fragment.RoomFragment;
@@ -80,7 +81,11 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.bill) {
                     BillFragment billFragment = new BillFragment();
                     replaceFragment(billFragment);
-                } else if (item.getItemId() == R.id.client) {
+                } else if (item.getItemId() == R.id.hardbill) {
+                    HardBillFragment hardBillFragment = new HardBillFragment();
+                    replaceFragment(hardBillFragment);
+                }
+                else if (item.getItemId() == R.id.client) {
                     CustomerFragment clientFragment = new CustomerFragment();
                     replaceFragment(clientFragment);
                 } else if (item.getItemId() == R.id.revenue) {

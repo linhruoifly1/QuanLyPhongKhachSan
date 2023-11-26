@@ -1,7 +1,5 @@
 package com.example.x.adapter;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,20 +9,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.x.DAO.HardBillDAO;
+import com.example.x.DAO.RoomDAO;
 import com.example.x.R;
 import com.example.x.model.HardBill;
+import com.example.x.model.Room;
 
 import java.util.ArrayList;
 
 public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHolder>{
     private Context context;
     private ArrayList<HardBill> arrayList;
-
-    private HardBill hardBill;
+    HardBillDAO hardBillDAO;
+    RoomDAO roomDAO;
 
     public HardBillAdapter(Context context, ArrayList<HardBill> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
+        hardBillDAO = new HardBillDAO(context);
+        roomDAO = new RoomDAO(context);
     }
     @NonNull
     @Override
@@ -35,21 +38,12 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.tvIdHard.setText("Mã: "+arrayList.get(position).getId());
-        holder.tvIdBillHard.setText("Mã hóa đơn:" + arrayList.get(position).getIdBill());
-        holder.tvNumberRoomHard.setText("Số phòng: "+ arrayList.get(position).getIdRoom());
-        holder.tvQuantityPeople.setText("Số lượng khách:"+ arrayList.get(position).getQuantityPeople());
-
-        hardBill = arrayList.get(position);
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;
-            }
-        });
-
-
+        HardBill hardBill = arrayList.get(position);
+        holder.tvIdHard.setText(""+hardBill.getId());
+        holder.tvIdBillHard.setText(""+hardBill.getIdBill());
+        Room room = roomDAO.getId(String.valueOf(hardBill.getIdRoom()));
+        holder.tvNumberRoomHard.setText(""+room.getNumber());
+        holder.tvQuantityPeople.setText(""+hardBill.getQuantityPeople());
     }
 
     @Override
@@ -66,11 +60,5 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
             tvNumberRoomHard = itemView.findViewById(R.id.tvNumberRoomHard);
             tvQuantityPeople = itemView.findViewById(R.id.tvQuantityPeople);
         }
-    }
-
-    public void openDialogUpdateHardbill(HardBill hardBill){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-
     }
 }

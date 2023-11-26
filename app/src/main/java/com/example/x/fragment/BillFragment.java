@@ -22,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.x.DAO.BillDAO;
@@ -179,7 +180,7 @@ public class BillFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bill bill1 = new Bill(idCustomer,idReceptionist,idService,edCheckIn.getText().toString(),edCheckOut.getText().toString(),8,0);
+                Bill bill1 = new Bill(idCustomer,idReceptionist,idService,edCheckIn.getText().toString(),edCheckOut.getText().toString(),10,0);
                 if(billDAO.insert(bill1)){
                     arrayList.clear();
                     arrayList.addAll(billDAO.getAll());
