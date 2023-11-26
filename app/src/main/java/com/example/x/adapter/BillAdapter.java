@@ -79,11 +79,11 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
         holder.tvCustomerBill.setText(customer.getName());
         Service service = serviceDAO.getId(String.valueOf(bill.getIdService()));
         holder.tvServiceBill.setText(service.getName());
-        // lấy giờ lúc tọa hóa đơn
-        String timeNow = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        // lấy ngày giờ lúc tọa hóa đơn
+        String timeNow = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
         String dateNow = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         holder.tvCheckIn.setText(bill.getCheckIn()+" "+timeNow+" UTC");
-        holder.tvCheckOut.setText(bill.getCheckOut()+" 12:00:00 UTC");
+        holder.tvCheckOut.setText(bill.getCheckOut()+" 12:00 UTC");
         int costService = service.getPrice();
         holder.tvCostService.setText("$ "+costService);
         int statusBill = bill.getStatus();
@@ -109,6 +109,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
             holder.imgStatusBill.setVisibility(View.INVISIBLE);
             holder.tvRealCheckOut.setVisibility(View.VISIBLE);
         }
+        // Chọn thêm phòng trong hóa đơn, có thể chọn nhiều phòng
         holder.imgRoomBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,13 +166,18 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                 });
             }
         });
+        // tổng tiền phòng theo số ngày thuê
         int costRoom = hardBillDAO.getCostRoom(bill.getId())*billDAO.getNumberDate(bill.getId());
         holder.tvCostRoom.setText("$ " +costRoom);
+        // tổng tiền thuế 10%
         int VAT = (costService+costRoom)*bill.getVAT()/100;
         holder.tvVAT.setText("$ "+VAT);
+        // thành tiền
         int sumCost = costService+costRoom+VAT;
+        // push dữ liệu thành tiền vo database
         billDAO.updateSumCost(sumCost,bill.getId());
         holder.tvSumCost.setText("$ "+sumCost);
+        //Xóa hóa đơn khi chưa thanh toán
         holder.imgDeleteBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,6 +209,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                 dialog.show();
             }
         });
+        // Thay đổi trạng thái hóa đơn
         holder.imgStatusBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,6 +222,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(billDAO.changeStatus(bill.getId())){
+                            //lấy ngày giờ lúc thay đổi trạng thái là giờ thanh toán và trả phòng
                             holder.tvRealCheckOut.setText(dateNow+" "+timeNow+" UTC");
                             arrayList.clear();
                             arrayList.addAll(billDAO.getAll());
