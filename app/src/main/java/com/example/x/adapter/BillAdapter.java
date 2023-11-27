@@ -3,6 +3,7 @@ package com.example.x.adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.format.Time;
@@ -42,7 +43,7 @@ import java.util.Locale;
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
     private Context context;
     private ArrayList<Bill> arrayList;
-    BillDAO billDAO;
+    private BillDAO billDAO;
     private ServiceDAO serviceDAO;
     private CustomerDAO customerDAO;
     private ReceptionistDAO receptionistDAO;
@@ -53,6 +54,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
     public BillAdapter(Context context, ArrayList<Bill> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
+        billDAO = new BillDAO(context);
         serviceDAO = new ServiceDAO(context);
         customerDAO = new CustomerDAO(context);
         receptionistDAO = new ReceptionistDAO(context);
@@ -77,18 +79,20 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
         holder.tvCustomerBill.setText(customer.getName());
         Service service = serviceDAO.getId(String.valueOf(bill.getIdService()));
         holder.tvServiceBill.setText(service.getName());
-        // lấy giờ lúc tọa hóa đơn
-        String timeCheckIn = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-        holder.tvCheckIn.setText(bill.getCheckIn()+" "+timeCheckIn+" UTC");
-        holder.tvCheckOut.setText(bill.getCheckOut()+" 12:00:00 UTC");
-        holder.tvCostRoom.setText(""+bill.getCostRoom());
-        holder.tvCostService.setText("$ "+service.getPrice());
-        holder.tvVAT.setText(bill.getVAT()+"%");
+        // lấy ngày giờ lúc tọa hóa đơn
+        String timeNow = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+        String dateNow = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        holder.tvCheckIn.setText(bill.getCheckIn()+" "+timeNow+" UTC");
+        holder.tvCheckOut.setText(bill.getCheckOut()+" 12:00 UTC");
+        int costService = service.getPrice();
+        holder.tvCostService.setText("$ "+costService);
         int statusBill = bill.getStatus();
         if(statusBill==0){
             holder.tvStatusBill.setText("Chưa thanh toán");
             holder.tvStatusBill.setTextColor(Color.RED);
+            holder.tvRealCheckOut.setVisibility(View.INVISIBLE);
             holder.imgRoomBill.setVisibility(View.VISIBLE);
+            holder.imgDeleteBill.setVisibility(View.VISIBLE);
             holder.imgStatusBill.setVisibility(View.VISIBLE);
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -103,7 +107,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
             holder.imgRoomBill.setVisibility(View.INVISIBLE);
             holder.imgDeleteBill.setVisibility(View.INVISIBLE);
             holder.imgStatusBill.setVisibility(View.INVISIBLE);
+            holder.tvRealCheckOut.setVisibility(View.VISIBLE);
         }
+        // Chọn thêm phòng trong hóa đơn, có thể chọn nhiều phòng
         holder.imgRoomBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,8 +166,83 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                 });
             }
         });
-//        int costRoom = hardBillDAO.getCostRoom(bill.getId())*billDAO.getNumberDate(bill.getId());
-        holder.tvCostRoom.setText("$" +hardBillDAO.getCostRoom(bill.getId()));
+        // tổng tiền phòng theo số ngày thuê
+        int costRoom = hardBillDAO.getCostRoom(bill.getId())*billDAO.getNumberDate(bill.getId());
+        holder.tvCostRoom.setText("$ " +costRoom);
+        // tổng tiền thuế 10%
+        int VAT = (costService+costRoom)*bill.getVAT()/100;
+        holder.tvVAT.setText("$ "+VAT);
+        // thành tiền
+        int sumCost = costService+costRoom+VAT;
+        // push dữ liệu thành tiền vo database
+        billDAO.updateSumCost(sumCost,bill.getId());
+        holder.tvSumCost.setText("$ "+sumCost);
+        //Xóa hóa đơn khi chưa thanh toán
+        holder.imgDeleteBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Cảnh báo !!!");
+                builder.setIcon(R.drawable.warning);
+                builder.setMessage("Bạn muốn xóa không?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(billDAO.delete(bill.getId())){
+                            arrayList.clear();
+                            arrayList.addAll(billDAO.getAll());
+                            notifyDataSetChanged();
+                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context, "Hủy bỏ", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+        // Thay đổi trạng thái hóa đơn
+        holder.imgStatusBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Cảnh báo !!!");
+                builder.setIcon(R.drawable.warning);
+                builder.setMessage("Khách hàng đã thanh toán?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Đã thanh toán", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(billDAO.changeStatus(bill.getId())){
+                            //lấy ngày giờ lúc thay đổi trạng thái là giờ thanh toán và trả phòng
+                            holder.tvRealCheckOut.setText(dateNow+" "+timeNow+" UTC");
+                            arrayList.clear();
+                            arrayList.addAll(billDAO.getAll());
+                            notifyDataSetChanged();
+                            Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(context, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("Chưa thanh toán", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context, "Hủy bỏ", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
 
     private void openDiaLogUpdate(Bill bill) {

@@ -3,15 +3,14 @@ package com.example.x.model;
 public class Bill {
     private int id,idCustomer,idReceptionist,idService;
     private String checkIn,checkOut;
-    private int costRoom,VAT,status,sumCost;
+    private int VAT,status,sumCost;
 
-    public Bill(int idCustomer, int idReceptionist,int idService, String checkIn, String checkOut, int costRoom, int VAT, int status, int sumCost) {
+    public Bill(int idCustomer, int idReceptionist,int idService, String checkIn, String checkOut, int VAT, int status, int sumCost) {
         this.idCustomer = idCustomer;
         this.idReceptionist = idReceptionist;
         this.idService = idService;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
-        this.costRoom = costRoom;
         this.VAT = VAT;
         this.status = status;
         this.sumCost = sumCost;
@@ -27,14 +26,13 @@ public class Bill {
         this.status = status;
     }
 
-    public Bill(int id, int idCustomer, int idReceptionist, int idService, String checkIn, String checkOut, int costRoom, int VAT, int status, int sumCost) {
+    public Bill(int id, int idCustomer, int idReceptionist, int idService, String checkIn, String checkOut, int VAT, int status, int sumCost) {
         this.id = id;
         this.idCustomer = idCustomer;
         this.idReceptionist = idReceptionist;
         this.idService = idService;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
-        this.costRoom = costRoom;
         this.VAT = VAT;
         this.status = status;
         this.sumCost = sumCost;
@@ -89,13 +87,6 @@ public class Bill {
 
     public void setCheckOut(String checkOut) {
         this.checkOut = checkOut;
-    }
-    public int getCostRoom() {
-        return costRoom;
-    }
-
-    public void setCostRoom(int costRoom) {
-        this.costRoom = costRoom;
     }
 
     public int getVAT() {

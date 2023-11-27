@@ -8,7 +8,8 @@
         android:orientation="vertical"
         android:background="@drawable/radius"
         android:padding="5dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:layout_margin="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -253,15 +254,16 @@
         android:id="@+id/imgRoomBill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="10dp"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="50dp"
         android:layout_marginRight="10dp"
         android:src="@drawable/addroom"/>
     <ImageView
         android:id="@+id/imgDeleteBill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|center_vertical"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="10dp"
         android:src="@drawable/delete"/>
     <ImageView
