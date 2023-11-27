@@ -123,7 +123,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                 EditText edQuantityPeople = view.findViewById(R.id.edQuantityPeople);
                 Button btnAdd = view.findViewById(R.id.btnAddHardNew);
                 Button btnCancel = view.findViewById(R.id.btnCancelHardNew);
-                ArrayList<Room> roomArrayList = roomDAO.getAll();
+                ArrayList<Room> roomArrayList = roomDAO.getReadyRoom();
                 RoomSpinnerAdapter roomSpinnerAdapter = new RoomSpinnerAdapter(context,roomArrayList);
                 spinnerRoomAdd.setAdapter(roomSpinnerAdapter);
                 spinnerRoomAdd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -152,6 +152,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                         }
                         HardBill hardBill = new HardBill(bill.getId(),idRoom,Integer.parseInt(edQuantityPeople.getText().toString()));
                         if(hardBillDAO.insert(hardBill)){
+                            roomDAO.changeOffStatus(idRoom);
                             hardBillArrayList.clear();
                             hardBillArrayList.addAll(hardBillDAO.getAll());
                             hardBillAdapter.notifyDataSetChanged();
@@ -224,6 +225,11 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                         if(billDAO.changeStatus(bill.getId())){
                             //lấy ngày giờ lúc thay đổi trạng thái là giờ thanh toán và trả phòng
                             holder.tvRealCheckOut.setText(dateNow+" "+timeNow+" UTC");
+                            ArrayList<Room> roomArrayList = roomDAO.getRoomInBill(bill.getId());
+                            for(int i = 0; i<roomArrayList.size();i++){
+                                Room room = roomArrayList.get(i);
+                                roomDAO.changeWaitStatus(room.getId());
+                            }
                             arrayList.clear();
                             arrayList.addAll(billDAO.getAll());
                             notifyDataSetChanged();
