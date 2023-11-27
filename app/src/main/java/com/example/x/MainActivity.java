@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         mHeaderView = navView.getHeaderView(0);
         tvFullNameUser = mHeaderView.findViewById(R.id.tvFullNameUser);
         tvFullNameUser.setText(librarian.getName());
+        ImageView imageView = mHeaderView.findViewById(R.id.avatar_header);
+
         if (user.equalsIgnoreCase("admin")) {
             navView.getMenu().findItem(R.id.addUser).setVisible(true);
         }

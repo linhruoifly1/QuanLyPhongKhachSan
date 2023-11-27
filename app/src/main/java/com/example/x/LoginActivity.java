@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.x.DAO.ReceptionistDAO;
@@ -17,7 +18,8 @@ import com.google.android.material.textfield.TextInputEditText;
 public class LoginActivity extends AppCompatActivity {
     private TextInputEditText edUsername,edPassword;
     private CheckBox chkRemember;
-    private Button btnLogin,btnCancel;
+    private Button btnLogin;
+    TextView tv_forgotPassword;
     ReceptionistDAO receptionistDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         edPassword = findViewById(R.id.edtPass);
         chkRemember = findViewById(R.id.chkRemember);
         btnLogin = findViewById(R.id.btndangNhap);
+        tv_forgotPassword = findViewById(R.id.tv_quenMk);
+
         receptionistDAO = new ReceptionistDAO(LoginActivity.this);
         SharedPreferences preferences = getSharedPreferences("userfile",MODE_PRIVATE);
         edUsername.setText(preferences.getString("username",""));
@@ -37,6 +41,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkLogin();
+            }
+        });
+
+        tv_forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+                startActivity(intent);
+
             }
         });
     }

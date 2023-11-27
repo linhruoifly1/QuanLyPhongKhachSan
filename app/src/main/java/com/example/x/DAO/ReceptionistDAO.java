@@ -11,6 +11,7 @@ import com.example.x.database.DbHelper;
 import com.example.x.model.Receptionist;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 public class ReceptionistDAO {
 
@@ -40,6 +41,7 @@ public class ReceptionistDAO {
             receptionist.setEmail(cursor.getString(2));
             receptionist.setUsername(cursor.getString(3));
             receptionist.setPassword(cursor.getString(4));
+            receptionist.setAvatar(cursor.getString(5));
             list.add(receptionist);
         }
         return list;
@@ -52,6 +54,14 @@ public class ReceptionistDAO {
         values.put("username",receptionist.getUsername());
         values.put("password",receptionist.getPassword());
         return database.insert("receptionist",null,values);
+    }
+
+    public long insertImage(Receptionist receptionist){
+       ContentValues contentValues = new ContentValues();
+       SQLiteDatabase database = dbHelper.getWritableDatabase();
+       contentValues.put("avatar",receptionist.getAvatar().toString());
+       return  database.insert("receptionist",null,contentValues);
+
     }
     public boolean checkLogin(String username,String password){
         SQLiteDatabase database = dbHelper.getReadableDatabase();
@@ -71,6 +81,7 @@ public class ReceptionistDAO {
 //        int row = cursor.getCount();
         return false;
     }
+
     public int changePassword(String username,String pass, String newPass){
         ContentValues values = new ContentValues();
         SQLiteDatabase database = dbHelper.getWritableDatabase();
@@ -97,5 +108,15 @@ public class ReceptionistDAO {
 
         }
         return cout>0;
+    }
+    public int updateProfile(Receptionist receptionist){
+        ContentValues contentValues = new ContentValues();
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        contentValues.put("name",receptionist.getName());
+        contentValues.put("email",receptionist.getEmail());
+        contentValues.put("avatar",receptionist.getAvatar());
+
+        return database.update("receptionist",contentValues,"id=?",new String[]{String.valueOf(receptionist.getId())});
+
     }
 }

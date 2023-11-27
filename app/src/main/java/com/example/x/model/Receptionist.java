@@ -1,10 +1,12 @@
 package com.example.x.model;
 
+import android.net.Uri;
+
 public class Receptionist {
     private int id;
     private String name, email;
     private String username,password;
-
+    private String  avatar;
     public Receptionist() {
     }
 
@@ -21,6 +23,14 @@ public class Receptionist {
         this.email = email;
         this.username = username;
         this.password = password;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getId() {

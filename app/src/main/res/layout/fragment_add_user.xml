@@ -22,7 +22,7 @@
 
         android:layout_gravity="center"
 
-        android:src="@drawable/adduser" />
+        android:src="@drawable/man" />
 
     <TextView
 
