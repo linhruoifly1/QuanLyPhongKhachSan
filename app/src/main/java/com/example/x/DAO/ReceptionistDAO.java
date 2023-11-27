@@ -26,6 +26,11 @@ public class ReceptionistDAO {
         ArrayList<Receptionist> list = getData(sql,username);
         return list.get(0);
     }
+    public Receptionist getId(String id){
+        String sql = "select * from receptionist where id=?";
+        ArrayList<Receptionist> list = getData(sql,id);
+        return list.get(0);
+    }
     public ArrayList<Receptionist> getAll(){
         String sql = "select * from receptionist";
         return getData(sql);
@@ -88,7 +93,7 @@ public class ReceptionistDAO {
         Cursor cursor = database.rawQuery("SELECT * FROM receptionist WHERE username = ? AND password = ?",new String[]{username, pass});
         if (cursor.getCount() > 0){
             values.put("password",newPass);
-            long check = database.update("receptionist",values,"id = ?",new String[]{username});
+            long check = database.update("receptionist",values,"username = ?",new String[]{username});
             if (check == -1){
                 return -1; //thất bại
             }

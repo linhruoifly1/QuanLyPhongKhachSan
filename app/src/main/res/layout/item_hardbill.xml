@@ -11,23 +11,66 @@
         android:orientation="vertical"
         android:background="@drawable/radius"
         android:padding="20dp"
-        android:gravity="center_vertical"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:gravity="center_vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="Mã Khách Hàng: "
-                android:textStyle="bold"
-                android:textSize="15sp"/>
+                android:layout_height="match_parent"
+                android:text="Mã: "
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <TextView
-                android:id="@+id/tvIdCustomer"
+                android:id="@+id/tvIdHard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Mã hóa đơn: "
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvIdBillHard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đơn"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Số phòng: "
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/tvNumberRoomHard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đơn"
                 android:textSize="15sp"
                 android:textColor="#000000"
                 android:textStyle="bold"/>
@@ -40,74 +83,11 @@
             <TextView
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:text="Tên Khách Hàng: "
-                android:textStyle="bold"
-                android:textSize="15sp"/>
-
-            <TextView
-                android:id="@+id/tvNameCustomer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Thái Hậu Nguyên Sinh"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="Số Điện Thoại: "
-                android:textStyle="bold"
-                android:textSize="15sp"/>
-
-            <TextView
-                android:id="@+id/tvPhoneCustomer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Đơn"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="Email:"
-                android:textStyle="bold"
-                android:textSize="15sp"/>
-
-            <TextView
-                android:id="@+id/tvEmailCustomer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Đơn"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                android:textStyle="normal" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="Năm Sinh: "
+                android:text="Số lượng khách:"
                 android:textStyle="bold"
                 android:textSize="15sp"/>
             <TextView
-                android:id="@+id/tvBirthCustomer"
+                android:id="@+id/tvQuantityPeople"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đơn"

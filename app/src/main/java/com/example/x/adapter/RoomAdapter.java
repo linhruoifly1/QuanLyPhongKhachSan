@@ -87,7 +87,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.viewHolder>{
                 builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(roomDAO.changeStatus(room.getId())){
+                        if(roomDAO.changeOnStatus(room.getId())){
                             arrayList.clear();
                             arrayList.addAll(roomDAO.getAll());
                             notifyDataSetChanged();

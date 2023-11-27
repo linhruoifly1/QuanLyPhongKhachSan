@@ -1,28 +1,52 @@
 package com.example.x.model;
 
 public class Bill {
-    private int id,idClient,idRoom,idReceptionist,costRoom,costService,sumCost;
+    private int id,idCustomer,idReceptionist,idService;
+    private String checkIn,checkOut;
+    private int VAT,status,sumCost;
 
-    public Bill(int id, int idClient, int idRoom, int idReceptionist, int costRoom, int costService, int sumCost) {
-        this.id = id;
-        this.idClient = idClient;
-        this.idRoom = idRoom;
+    public Bill(int idCustomer, int idReceptionist,int idService, String checkIn, String checkOut, int VAT, int status, int sumCost) {
+        this.idCustomer = idCustomer;
         this.idReceptionist = idReceptionist;
-        this.costRoom = costRoom;
-        this.costService = costService;
+        this.idService = idService;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.VAT = VAT;
+        this.status = status;
         this.sumCost = sumCost;
     }
 
-    public Bill(int idClient, int idRoom, int idReceptionist, int costRoom, int costService, int sumCost) {
-        this.idClient = idClient;
-        this.idRoom = idRoom;
+    public Bill(int idCustomer, int idReceptionist, int idService, String checkIn, String checkOut, int VAT, int status) {
+        this.idCustomer = idCustomer;
         this.idReceptionist = idReceptionist;
-        this.costRoom = costRoom;
-        this.costService = costService;
+        this.idService = idService;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.VAT = VAT;
+        this.status = status;
+    }
+
+    public Bill(int id, int idCustomer, int idReceptionist, int idService, String checkIn, String checkOut, int VAT, int status, int sumCost) {
+        this.id = id;
+        this.idCustomer = idCustomer;
+        this.idReceptionist = idReceptionist;
+        this.idService = idService;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.VAT = VAT;
+        this.status = status;
         this.sumCost = sumCost;
     }
 
     public Bill() {
+    }
+
+    public int getIdService() {
+        return idService;
+    }
+
+    public void setIdService(int idService) {
+        this.idService = idService;
     }
 
     public int getId() {
@@ -33,20 +57,12 @@ public class Bill {
         this.id = id;
     }
 
-    public int getIdClient() {
-        return idClient;
+    public int getIdCustomer() {
+        return idCustomer;
     }
 
-    public void setIdClient(int idClient) {
-        this.idClient = idClient;
-    }
-
-    public int getIdRoom() {
-        return idRoom;
-    }
-
-    public void setIdRoom(int idRoom) {
-        this.idRoom = idRoom;
+    public void setIdCustomer(int idCustomer) {
+        this.idCustomer = idCustomer;
     }
 
     public int getIdReceptionist() {
@@ -57,20 +73,36 @@ public class Bill {
         this.idReceptionist = idReceptionist;
     }
 
-    public int getCostRoom() {
-        return costRoom;
+    public String getCheckIn() {
+        return checkIn;
     }
 
-    public void setCostRoom(int costRoom) {
-        this.costRoom = costRoom;
+    public void setCheckIn(String checkIn) {
+        this.checkIn = checkIn;
     }
 
-    public int getCostService() {
-        return costService;
+    public String getCheckOut() {
+        return checkOut;
     }
 
-    public void setCostService(int costService) {
-        this.costService = costService;
+    public void setCheckOut(String checkOut) {
+        this.checkOut = checkOut;
+    }
+
+    public int getVAT() {
+        return VAT;
+    }
+
+    public void setVAT(int VAT) {
+        this.VAT = VAT;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getSumCost() {

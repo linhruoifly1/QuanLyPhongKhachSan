@@ -56,6 +56,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.viewHold
     }
 
     private void openDiaLogUpdate(Service service) {
+        //tạo layout dialog
         AlertDialog.Builder builder =new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.update_service,null);
         builder.setView(view);

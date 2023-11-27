@@ -18,11 +18,11 @@ import java.util.ArrayList;
 public class TopServiceAdapter extends RecyclerView.Adapter<TopServiceAdapter.ViewHolder> {
 
     private final Context context;
-    private ArrayList<TopService> list;
+    private ArrayList<TopService> arrayList;
 
-    public TopServiceAdapter(Context context, ArrayList<TopService> list) {
+    public TopServiceAdapter(Context context, ArrayList<TopService> arrayList) {
         this.context = context;
-        this.list = list;
+        this.arrayList = arrayList;
     }
 
     @NonNull
@@ -35,24 +35,24 @@ public class TopServiceAdapter extends RecyclerView.Adapter<TopServiceAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txttenDv.setText("Tên Dịch Vụ: "+ list.get(position).getTenDichVu());
-        holder.txtsoLuot.setText("Số Lượt Sử Dụng:"+ list.get(position).getSoLuong());
-
+        TopService top = arrayList.get(position);
+        holder.tvNameServiceTop.setText(top.getNameService());
+        holder.tvQuantityService.setText(""+top.getQuantityService());
     }
 
     @Override
     public int getItemCount() {
-        return list.size() ;
+        return arrayList.size() ;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView txttenDv, txtsoLuot;
+        TextView tvNameServiceTop, tvQuantityService;
 
         public ViewHolder(@NonNull View itemView) {
 
             super(itemView);
-            txttenDv = itemView.findViewById(R.id.txttenDv);
-            txtsoLuot = itemView.findViewById(R.id.txtsoLuong);
+            tvNameServiceTop = itemView.findViewById(R.id.tvNameServiceTop);
+            tvQuantityService = itemView.findViewById(R.id.tvQuantityService);
 
         }
     }

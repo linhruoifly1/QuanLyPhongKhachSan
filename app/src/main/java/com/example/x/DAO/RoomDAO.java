@@ -35,11 +35,44 @@ public class RoomDAO {
         long row = database.update("room",values,"id=?",new String[]{String.valueOf(room.getId())});
         return row>0;
     }
-    public boolean changeStatus(int id){
+    public boolean changeOnStatus(int id){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         String sql = "update room set status=0 where id=?";
         database.execSQL(sql,new String[]{String.valueOf(id)});
         return true;
+    }
+    public boolean changeOffStatus(int id){
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        String sql = "update room set status=1 where id=?";
+        database.execSQL(sql,new String[]{String.valueOf(id)});
+        return true;
+    }
+    public boolean changeWaitStatus(int id){
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        String sql = "update room set status=2 where id=?";
+        database.execSQL(sql,new String[]{String.valueOf(id)});
+        return true;
+    }
+    public ArrayList<Room> getReadyRoom(){
+        String sql = "select * from room where status=0";
+        ArrayList<Room> list = getData(sql);
+        return list;
+    }
+    public ArrayList<Room> getRoomInBill(int id){
+        ArrayList<Room> list = new ArrayList<>();
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        String sql = "select * from room inner join hardBill on room.id = hardBill.idRoom where status = 1 and idBill=?";
+        Cursor cursor = database.rawQuery(sql, new String[]{String.valueOf(id)});
+        while (cursor.moveToNext()){
+            Room room=new Room();
+            room.setId(cursor.getInt(0));
+            room.setIdType(cursor.getInt(1));
+            room.setNumber(cursor.getInt(2));
+            room.setStatus(cursor.getInt(3));
+            room.setPrice(cursor.getInt(4));
+            list.add(room);
+        }
+        return list;
     }
     public boolean delete(int id){
         SQLiteDatabase database = dbHelper.getWritableDatabase();

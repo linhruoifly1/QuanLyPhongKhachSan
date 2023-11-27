@@ -9,12 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +21,7 @@ import com.example.x.fragment.AddUserFragment;
 import com.example.x.fragment.BillFragment;
 import com.example.x.fragment.ChangePassFragment;
 import com.example.x.fragment.CustomerFragment;
+import com.example.x.fragment.HardBillFragment;
 import com.example.x.fragment.ProfileFragment;
 import com.example.x.fragment.RevenueFragment;
 import com.example.x.fragment.RoomFragment;
@@ -60,12 +59,10 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(roomFragment);
         Intent intent = getIntent();
         String user = intent.getStringExtra("user");
-        Receptionist librarian = receptionistDAO.getUsername(user);
+        Receptionist receptionist = receptionistDAO.getUsername(user);
         mHeaderView = navView.getHeaderView(0);
         tvFullNameUser = mHeaderView.findViewById(R.id.tvFullNameUser);
-        tvFullNameUser.setText(librarian.getName());
-        ImageView imageView = mHeaderView.findViewById(R.id.avatar_header);
-
+        tvFullNameUser.setText(receptionist.getName());
         if (user.equalsIgnoreCase("admin")) {
             navView.getMenu().findItem(R.id.addUser).setVisible(true);
         }
@@ -84,7 +81,11 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.bill) {
                     BillFragment billFragment = new BillFragment();
                     replaceFragment(billFragment);
-                } else if (item.getItemId() == R.id.client) {
+                } else if (item.getItemId() == R.id.hardbill) {
+                    HardBillFragment hardBillFragment = new HardBillFragment();
+                    replaceFragment(hardBillFragment);
+                }
+                else if (item.getItemId() == R.id.client) {
                     CustomerFragment clientFragment = new CustomerFragment();
                     replaceFragment(clientFragment);
                 } else if (item.getItemId() == R.id.revenue) {
