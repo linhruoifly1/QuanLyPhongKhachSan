@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/radius"
-        android:padding="5dp"
+        android:padding="10dp"
         android:gravity="center_vertical"
         android:layout_margin="10dp">
         <LinearLayout
