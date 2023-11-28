@@ -64,7 +64,7 @@ public class RevenueFragment extends Fragment {
                 edtEnd.setText(sdf.format(gregorianCalendar.getTime()));
             }
         };
-        edtStar.setOnClickListener(new View.OnClickListener() {
+        imgStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
@@ -76,7 +76,7 @@ public class RevenueFragment extends Fragment {
             }
         });
 
-        edtEnd.setOnClickListener(new View.OnClickListener() {
+        imgEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();

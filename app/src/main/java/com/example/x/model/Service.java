@@ -4,7 +4,7 @@ public class Service {
     private int id;
     private String name;
     private int price;
-
+    private int status;
     public Service(String name, int price) {
         this.name = name;
         this.price = price;
@@ -17,6 +17,14 @@ public class Service {
     }
 
     public Service() {
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getId() {

@@ -15,13 +15,14 @@ public class ServiceDAO {
     public ServiceDAO(Context context){
         dbHelper = new DbHelper(context);
     }
-    public boolean insert(Service service){
+    public long insert(Service service){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("name",service.getName());
         values.put("price",service.getPrice());
-        long row = database.insert("service",null,values);
-        return row>0;
+        values.put("status",service.getStatus());
+        return  database.insert("service",null,values);
+
     }
     public boolean update(Service service){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
@@ -42,7 +43,7 @@ public class ServiceDAO {
         return list.get(0);
     }
     public ArrayList<Service> getAll(){
-        String sql = "select * from service";
+        String sql = "select * from service where status = 0";
         return getData(sql);
     }
     private ArrayList<Service> getData(String sql,String...selectionArgs){
@@ -54,6 +55,7 @@ public class ServiceDAO {
             service.setId(cursor.getInt(0));
             service.setName(cursor.getString(1));
             service.setPrice(cursor.getInt(2));
+            service.setStatus(cursor.getInt(3));
             list.add(service);
         }
         return list;

@@ -3,18 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.HardBillFragment"
-    android:padding="10dp">
+    android:padding="10dp"
+    tools:context=".fragment.HardBillFragment">
+
     <EditText
         android:id="@+id/edSearchHardBill"
         android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:background="@drawable/radius"
         android:hint="Tìm kiếm"
-        android:padding="10dp"
-        android:layout_height="50dp"/>
+        android:padding="10dp" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="60dp"
         android:id="@+id/rcvHardBill"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fltBill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#171F1D"
+        android:src="@drawable/addnew" />
+
 </FrameLayout>

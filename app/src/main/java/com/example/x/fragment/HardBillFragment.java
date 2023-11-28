@@ -19,6 +19,7 @@ import com.example.x.R;
 import com.example.x.adapter.HardBillAdapter;
 import com.example.x.adapter.RoomAdapter;
 import com.example.x.model.HardBill;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,8 @@ public class HardBillFragment extends Fragment {
     private ArrayList<HardBill> arrayList;
     private HardBillDAO hardBillDAO;
     private HardBillAdapter adapter;
+
+    private FloatingActionButton fab_add_bill;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

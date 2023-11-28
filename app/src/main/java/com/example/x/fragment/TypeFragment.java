@@ -24,12 +24,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class TypeFragment extends Fragment {
+public class    TypeFragment extends Fragment {
     private RecyclerView rcvType;
     private FloatingActionButton fltType;
     private TypeAdapter adapter;
     private TypeDAO typeDAO;
-    private Type type;
     private ArrayList<Type> arrayList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,12 +50,12 @@ public class TypeFragment extends Fragment {
         fltType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OpenDiaLogInsert(type);
+                OpenDiaLogInsert();
             }
         });
     }
 
-    private void OpenDiaLogInsert(Type type) {
+    private void OpenDiaLogInsert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = LayoutInflater.from(getContext()).inflate(R.layout.insert_type,null);
         builder.setView(view);
@@ -75,19 +74,15 @@ public class TypeFragment extends Fragment {
         btnAddTypeNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edNameTypeAdd.getText().length()==0){
+                String name = edNameTypeAdd.getText().toString();
+                if(name.isEmpty()){
                     Toast.makeText(getActivity(), "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                for(int i =0;i<arrayList.size();i++){
-                    Type type1 = arrayList.get(i);
-                    if(edNameTypeAdd.getText().toString().equals(type1.getName())){
-                        Toast.makeText(getActivity(), "Đã có dữ liệu", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-                Type type1 = new Type(edNameTypeAdd.getText().toString());
-                if(typeDAO.insert(type1)){
+                Type type = new Type();
+                type.setName(name);
+                type.setStatus(0);
+                if(typeDAO.insert(type)>0){
                     arrayList.clear();
                     arrayList.addAll(typeDAO.getAll());
                     adapter.notifyDataSetChanged();

@@ -10,40 +10,42 @@ public class DbHelper extends SQLiteOpenHelper {
 public static final String dbName ="dataX";
 
     public DbHelper(@Nullable Context context) {
-        super(context, dbName, null, 14);
+        super(context, dbName, null, 16);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String tbType = "CREATE TABLE type (\n" +
                 "    id   INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "    name TEXT    NOT NULL,\n" +
+                "    name TEXT    NOT NULL UNIQUE,\n" +
                 "    status INTEGER    NOT NULL\n" +
                 ");";
         db.execSQL(tbType);
-        String dataType = "insert into type values " +
-                "(1,'Phòng đơn',0)," +
-                "(2,'Phòng đôi',0)," +
-                "(3,'Phòng hạng sang',0),"+
-                "(4,'Phòng view hồ',0)";
-        db.execSQL(dataType);
+//        String dataType = "insert into type values " +
+//                "(1,'Phòng đơn',0)," +
+//                "(2,'Phòng đôi',0)," +
+//                "(3,'Phòng hạng sang',0),"+
+//                "(4,'Phòng view hồ',0)";
+        db.execSQL("insert into type(name,status) values" +
+                "('VIP',0)," +
+                "('Đơn',0)");
         String tbRoom = "CREATE TABLE room (\n" +
                 "    id     INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    idType INTEGER REFERENCES type (id) \n" +
                 "                   NOT NULL,\n" +
-                "    number INTEGER NOT NULL,\n" +
+                "    number INTEGER NOT NULL UNIQUE,\n" +
                 "    status INTEGER NOT NULL,\n" +
                 "    price  INTEGER NOT NULL\n" +
                 ");";
         db.execSQL(tbRoom);
-        String dataRoom = "insert into room values " +
-                "(1,1,101,0,100),(2,2,102,0,150),(3,2,103,0,150),(4,3,104,0,300)," +
-                "(5,1,201,0,100),(6,2,202,0,150),(7,2,203,0,150),(8,3,204,0,300)," +
-                "(9,1,301,0,100),(10,2,302,0,150),(11,2,303,0,150),(12,3,304,0,300)," +
-                "(13,1,401,0,100),(14,2,402,0,150),(15,2,403,0,150),(16,3,404,0,300)," +
-                "(17,1,501,0,100),(18,2,502,0,150),(19,2,503,0,150),(20,3,504,0,300)," +
-                "(21,1,601,0,100),(22,2,602,0,150),(23,2,603,0,150),(24,3,604,0,300)";
-        db.execSQL(dataRoom);
+//        String dataRoom = "insert into room values " +
+//                "(1,1,101,0,100),(2,2,102,0,150),(3,2,103,0,150),(4,3,104,0,300)," +
+//                "(5,1,201,0,100),(6,2,202,0,150),(7,2,203,0,150),(8,3,204,0,300)," +
+//                "(9,1,301,0,100),(10,2,302,0,150),(11,2,303,0,150),(12,3,304,0,300)," +
+//                "(13,1,401,0,100),(14,2,402,0,150),(15,2,403,0,150),(16,3,404,0,300)," +
+//                "(17,1,501,0,100),(18,2,502,0,150),(19,2,503,0,150),(20,3,504,0,300)," +
+//                "(21,1,601,0,100),(22,2,602,0,150),(23,2,603,0,150),(24,3,604,0,300)";
+//        db.execSQL(dataRoom);
         String tbCustomer = "CREATE TABLE customer (\n" +
                 "    id    INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name  TEXT    NOT NULL,\n" +
@@ -65,18 +67,18 @@ public static final String dbName ="dataX";
         db.execSQL(dataReceptionist);
         String tbService = "CREATE TABLE service (\n" +
                 "    id       INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "    name     TEXT    NOT NULL,\n" +
+                "    name     TEXT    NOT NULL ,\n" +
                 "    price    INTEGER NOT NULL,\n" +
                 "    status INTEGER    NOT NULL\n" +
 
                 ");";
         db.execSQL(tbService);
-        String dataService = "insert into service values " +
-                "(1,'Không sử dng',0,0)," +
-                "(2,'Sắp xếp cuộc họp',100,0)," +
-                "(3,'Trang trí cho cặp đôi',50,0)," +
-                "(4,'Có thể nấu ăn',30,0)";
-        db.execSQL(dataService);
+//        String dataService = "insert into service values " +
+//                "(1,'Không sử dng',0,0)," +
+//                "(2,'Sắp xếp cuộc họp',100,0)," +
+//                "(3,'Trang trí cho cặp đôi',50,0)," +
+//                "(4,'Có thể nấu ăn',30,0)";
+//        db.execSQL(dataService);
         String tbBill = "CREATE TABLE bill (\n" +
                 "    id             INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    idCustomer       INTEGER REFERENCES customer (id) \n" +

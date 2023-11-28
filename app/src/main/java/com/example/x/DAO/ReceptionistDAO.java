@@ -46,7 +46,6 @@ public class ReceptionistDAO {
             receptionist.setEmail(cursor.getString(2));
             receptionist.setUsername(cursor.getString(3));
             receptionist.setPassword(cursor.getString(4));
-            receptionist.setAvatar(cursor.getString(5));
             list.add(receptionist);
         }
         return list;
