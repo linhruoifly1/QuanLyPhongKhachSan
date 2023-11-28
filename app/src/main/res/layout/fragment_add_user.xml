@@ -154,9 +154,8 @@
         android:layout_height="40dp"
 
         android:layout_gravity="center"
-
+        android:inputType="textPassword"
         android:background="@drawable/boder"
-
         android:paddingLeft="5sp"
         android:paddingRight="10sp"/>
 

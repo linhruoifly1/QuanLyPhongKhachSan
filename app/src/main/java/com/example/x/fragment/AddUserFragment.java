@@ -60,18 +60,22 @@ public class AddUserFragment extends Fragment {
 
                 if (hoten.equals("")){
                     edthoTen.setError("Không Bỏ Trống Tên");
+                    return;
 
                 }
                 if ( email.equals("") ){
                     edtEmail.setError("Không Bỏ Trống Email");
+                    return;
 
                 }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                     edtEmail.setError("Email không đúng định dạng");
+                    return;
 
                 }
 
                 if ( user.equals("")){
                     edtUsername.setError("Không Bỏ Trống Username");
+                    return;
 
                 }
                 if (pass.equals("")){
@@ -85,12 +89,7 @@ public class AddUserFragment extends Fragment {
                 if (receptionistDAO.checkUser(String.valueOf(edtUsername.getText()))){
                     Toast.makeText(getContext(), "Đã tồn tại tài khoản", Toast.LENGTH_SHORT).show();
                     return;
-                }else {
-
                 }
-
-
-
                 long kq= receptionistDAO.insert(receptionist);
                 if (kq > 0){
                     Toast.makeText(getContext(), "Thêm Thành Công", Toast.LENGTH_SHORT).show();

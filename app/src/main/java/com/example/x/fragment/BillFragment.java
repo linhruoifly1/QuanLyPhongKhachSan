@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.x.AddBillActivity;
 import com.example.x.DAO.BillDAO;
 import com.example.x.DAO.CustomerDAO;
 import com.example.x.DAO.ReceptionistDAO;
@@ -52,11 +53,10 @@ public class BillFragment extends Fragment {
     private EditText edSearchBill;
     private ArrayList<Bill> arrayList;
     private ArrayList<Bill> arrayList1;
-    private Bill bill;
     private BillDAO billDAO;
     private BillAdapter adapter;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    private int idCustomer,idService,idReceptionist,costService;
+    String user;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,12 +74,16 @@ public class BillFragment extends Fragment {
         arrayList1 = billDAO.getAll();
         rcvBill.setLayoutManager(new GridLayoutManager(getContext(),1));
         adapter = new BillAdapter(getContext(),arrayList);
-        rcvBill.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        rcvBill.scrollToPosition(0);
+        rcvBill.setAdapter(adapter);
+        user = getActivity().getIntent().getStringExtra("user");
         fltBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDiaLogInsert(bill);
+                Intent intent = new Intent(getContext(), AddBillActivity.class);
+                intent.putExtra("user_bill", user);
+                startActivity(intent);
             }
         });
         edSearchBill.addTextChangedListener(new TextWatcher() {
@@ -100,98 +104,4 @@ public class BillFragment extends Fragment {
         });
     }
 
-    private void openDiaLogInsert(Bill bill) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.insert_bill,null);
-        builder.setView(view);
-        builder.setCancelable(false);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        // Ánh xạ
-        Spinner spinnerCustomer = view.findViewById(R.id.spinnerCustomerAdd);
-        Spinner spinnerService = view.findViewById(R.id.spinnerServiceAdd);
-        EditText edCheckIn = view.findViewById(R.id.edCheckIn);
-        EditText edCheckOut = view.findViewById(R.id.edCheckOut);
-        Button btnAdd = view.findViewById(R.id.btnAddBillNew);
-        Button btnCancel = view.findViewById(R.id.btnCancelBillNew);
-        // set adapter cho spinner customer
-        CustomerDAO customerDAO = new CustomerDAO(getContext());
-        ArrayList<Customer> customerArrayList = customerDAO.getAll();
-        CustomerSpinnerAdapter customerSpinnerAdapter = new CustomerSpinnerAdapter(getContext(),customerArrayList);
-        spinnerCustomer.setAdapter(customerSpinnerAdapter);
-        // set adapter cho spinner service
-        ServiceDAO serviceDAO = new ServiceDAO(getContext());
-        ArrayList<Service> serviceArrayList = serviceDAO.getAll();
-        ServiceSpinnerAdapter serviceSpinnerAdapter = new ServiceSpinnerAdapter(getContext(),serviceArrayList);
-        spinnerService.setAdapter(serviceSpinnerAdapter);
-        // customer
-        spinnerCustomer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                idCustomer = customerArrayList.get(position).getId();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        // service
-        spinnerService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                idService = serviceArrayList.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        // receptionist
-        Intent intent = getActivity().getIntent();
-        String username = intent.getStringExtra("user");
-        ReceptionistDAO receptionistDAO = new ReceptionistDAO(getContext());
-        Receptionist receptionist = receptionistDAO.getUsername(username);
-        idReceptionist = receptionist.getId();
-        // thêm giờ check in
-        String checkIn = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new java.util.Date());
-        edCheckIn.setText(checkIn);
-        edCheckOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        GregorianCalendar calendar = new GregorianCalendar(year,month,dayOfMonth);
-                        edCheckOut.setText(sdf.format(calendar.getTime()));
-                    }
-                },year,month,day);
-                datePickerDialog.show();
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bill bill1 = new Bill(idCustomer,idReceptionist,idService,edCheckIn.getText().toString(),edCheckOut.getText().toString(),10,0);
-                if(billDAO.insert(bill1)){
-                    arrayList.clear();
-                    arrayList.addAll(billDAO.getAll());
-                    adapter.notifyDataSetChanged();
-                    dialog.dismiss();
-                    Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-                }else{
-                    dialog.dismiss();
-                    Toast.makeText(getActivity(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
 }
