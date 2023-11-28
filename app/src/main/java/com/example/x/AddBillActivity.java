@@ -1,6 +1,8 @@
 package com.example.x;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -35,37 +37,38 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class AddBillActivity extends AppCompatActivity {
-    Spinner spinnerCustomer,spinnerService;
-    EditText edCheckIn,edCheckOut;
-    Button btnCancel,btnAdd;
+    Spinner spinnerCustomer, spinnerService, spinnerRoom;
+    EditText edCheckIn, edCheckOut;
+    Button btnCancel, btnAdd;
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    private int idCustomer,idService,idReceptionist;
-    private BillDAO billDAO;
-    private ArrayList<Bill> arrayList;
-    private BillAdapter adapter;
+    private int idCustomer, idService, idReceptionist, costService;
+    BillDAO billDAO;
+    private static final int ADD_BILL_REQUEST_CODE = 1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bill);
-         spinnerCustomer = findViewById(R.id.spinnerCustomerAdd);
-         spinnerService = findViewById(R.id.spinnerServiceAdd);
-         edCheckIn = findViewById(R.id.edCheckIn);
-         edCheckOut = findViewById(R.id.edCheckOut);
-         btnAdd = findViewById(R.id.btnAddBillNew);
-         btnCancel = findViewById(R.id.btnCancelBillNew);
-         billDAO = new BillDAO(this);
-         arrayList = billDAO.getAll();
-         adapter = new BillAdapter(this,arrayList);
+        spinnerCustomer = findViewById(R.id.spinnerCustomerAdd);
+        spinnerService = findViewById(R.id.spinnerServiceAdd);
+        edCheckIn = findViewById(R.id.edCheckIn);
+        edCheckOut = findViewById(R.id.edCheckOut);
+        btnAdd = findViewById(R.id.btnAddBillNew);
+        btnCancel = findViewById(R.id.btnCancelBillNew);
+        billDAO = new BillDAO(getApplicationContext());
+
+
         //customer
         CustomerDAO customerDAO = new CustomerDAO(this);
         ArrayList<Customer> customerArrayList = customerDAO.getAll();
-        CustomerSpinnerAdapter customerSpinnerAdapter = new CustomerSpinnerAdapter(this,customerArrayList);
+        CustomerSpinnerAdapter customerSpinnerAdapter = new CustomerSpinnerAdapter(this, customerArrayList);
         spinnerCustomer.setAdapter(customerSpinnerAdapter);
         // set adapter cho spinner service
         ServiceDAO serviceDAO = new ServiceDAO(this);
         ArrayList<Service> serviceArrayList = serviceDAO.getAll();
-        ServiceSpinnerAdapter serviceSpinnerAdapter = new ServiceSpinnerAdapter(this,serviceArrayList);
+        ServiceSpinnerAdapter serviceSpinnerAdapter = new ServiceSpinnerAdapter(this, serviceArrayList);
         spinnerService.setAdapter(serviceSpinnerAdapter);
         // customer
         spinnerCustomer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -73,6 +76,7 @@ public class AddBillActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 idCustomer = customerArrayList.get(position).getId();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -91,7 +95,7 @@ public class AddBillActivity extends AppCompatActivity {
         // receptionist
         String username = getIntent().getStringExtra("user_bill");
         ReceptionistDAO receptionistDAO = new ReceptionistDAO(this);
-        if (username==null){
+        if (username == null) {
             return;
         }
         Receptionist receptionist = receptionistDAO.getUsername(username);
@@ -109,10 +113,10 @@ public class AddBillActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddBillActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        GregorianCalendar calendar = new GregorianCalendar(year,month,dayOfMonth);
+                        GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth);
                         edCheckOut.setText(sdf.format(calendar.getTime()));
                     }
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -127,8 +131,8 @@ public class AddBillActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String checkout = edCheckOut.getText().toString();
 
-                if (checkout.isEmpty()){
-                    Toast.makeText(AddBillActivity.this, "không để trống"+checkout, Toast.LENGTH_SHORT).show();
+                if (checkout.isEmpty()) {
+                    Toast.makeText(AddBillActivity.this, "không để trống" + checkout, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Bill bill1 = new Bill();
@@ -138,18 +142,18 @@ public class AddBillActivity extends AppCompatActivity {
                 bill1.setIdService(idService);
                 bill1.setIdCustomer(idCustomer);
                 bill1.setStatus(0);
-                bill1.setVAT(10);
+                bill1.setVAT(8);
                 bill1.setCheckOut(edCheckOut.getText().toString());
-
-                if(billDAO.insert(bill1)>0){
-                    arrayList.clear();
-                    arrayList.addAll(billDAO.getAll());
-                    adapter.notifyDataSetChanged();
+                // Trước khi kết thúc AddBillActivity, gửi kết quả trở lại
+                if (billDAO.insert(bill1) > 0) {
                     Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    onBackPressed();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
+                } else {
+                    Toast.makeText(getApplicationContext(), "thêm thất bại", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_CANCELED);
                 }
+                finish();
+
             }
         });
 

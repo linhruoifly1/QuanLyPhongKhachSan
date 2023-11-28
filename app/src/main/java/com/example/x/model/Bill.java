@@ -1,6 +1,8 @@
 package com.example.x.model;
 
-public class Bill {
+import java.io.Serializable;
+
+public class Bill implements Serializable {
     private int id,idCustomer,idReceptionist,idService;
     private String checkIn,checkOut;
     private int VAT,status,sumCost;

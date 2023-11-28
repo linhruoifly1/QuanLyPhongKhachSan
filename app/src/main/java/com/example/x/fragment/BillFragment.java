@@ -1,10 +1,16 @@
 package com.example.x.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -56,6 +62,21 @@ public class BillFragment extends Fragment {
     private BillDAO billDAO;
     private BillAdapter adapter;
     String user;
+    private static final int ADD_BILL_REQUEST_CODE = 1;
+   ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+
+                        arrayList.clear();
+                        arrayList.addAll(billDAO.getAll());
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+    );
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,18 +93,17 @@ public class BillFragment extends Fragment {
         billDAO = new BillDAO(getContext());
         arrayList = billDAO.getAll();
         arrayList1 = billDAO.getAll();
-        rcvBill.setLayoutManager(new GridLayoutManager(getContext(),1));
-        adapter = new BillAdapter(getContext(),arrayList);
-        adapter.notifyDataSetChanged();
-        rcvBill.scrollToPosition(0);
+        rcvBill.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        adapter = new BillAdapter(getContext(), arrayList);
         rcvBill.setAdapter(adapter);
-        user = getActivity().getIntent().getStringExtra("user");
+
         fltBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AddBillActivity.class);
+                user = getActivity().getIntent().getStringExtra("user");
                 intent.putExtra("user_bill", user);
-                startActivity(intent);
+                resultLauncher.launch(intent);
             }
         });
         edSearchBill.addTextChangedListener(new TextWatcher() {
@@ -102,6 +122,7 @@ public class BillFragment extends Fragment {
 
             }
         });
+
     }
 
 }

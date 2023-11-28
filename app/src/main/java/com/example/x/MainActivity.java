@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvFullNameUser;
     ReceptionistDAO receptionistDAO;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(roomFragment);
         Intent intent = getIntent();
         String user = intent.getStringExtra("user");
+        if (user==null){
+            return;
+        }
         Receptionist receptionist = receptionistDAO.getUsername(user);
         mHeaderView = navView.getHeaderView(0);
         tvFullNameUser = mHeaderView.findViewById(R.id.tvFullNameUser);
@@ -68,13 +72,15 @@ public class MainActivity extends AppCompatActivity {
         if (user.equalsIgnoreCase("admin")) {
             navView.getMenu().findItem(R.id.addUser).setVisible(true);
         }
+        replaceFragment(new BillFragment());
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.room) {
-                    RoomFragment roomFragment = new RoomFragment();
-                    replaceFragment(roomFragment);
+                if (item.getItemId() == R.id.bill) {
+                    BillFragment billFragment = new BillFragment();
+                    replaceFragment(billFragment);
                     toolbar.setTitle(item.getTitle());
+
 
                 } else if (item.getItemId() == R.id.type) {
                     TypeFragment typeFragment = new TypeFragment();
@@ -86,18 +92,17 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(serviceFragment);
                     toolbar.setTitle(item.getTitle());
 
-                } else if (item.getItemId() == R.id.bill) {
-                    BillFragment billFragment = new BillFragment();
-                    replaceFragment(billFragment);
-                    toolbar.setTitle(item.getTitle());
+                } else if (item.getItemId() == R.id.room) {
 
+                    RoomFragment roomFragment = new RoomFragment();
+                    replaceFragment(roomFragment);
+                    toolbar.setTitle(item.getTitle());
                 } else if (item.getItemId() == R.id.hardbill) {
                     HardBillFragment hardBillFragment = new HardBillFragment();
                     replaceFragment(hardBillFragment);
                     toolbar.setTitle(item.getTitle());
 
-                }
-                else if (item.getItemId() == R.id.client) {
+                } else if (item.getItemId() == R.id.client) {
                     CustomerFragment clientFragment = new CustomerFragment();
                     replaceFragment(clientFragment);
                     toolbar.setTitle(item.getTitle());
@@ -149,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         fm.beginTransaction().replace(R.id.frameNav, fragment).commit();
     }
 
-    public void signOut(){
+    public void signOut() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
         builder.setTitle("Thông báo");
         builder.setIcon(R.drawable.logout);
