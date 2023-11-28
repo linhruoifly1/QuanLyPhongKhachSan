@@ -35,32 +35,28 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class AddBillActivity extends AppCompatActivity {
-    Spinner spinnerCustomer,spinnerService,spinnerRoom;
+    Spinner spinnerCustomer,spinnerService;
     EditText edCheckIn,edCheckOut;
     Button btnCancel,btnAdd;
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    private int idCustomer,idService,idReceptionist,costService;
+    private int idCustomer,idService,idReceptionist;
     private BillDAO billDAO;
+    private ArrayList<Bill> arrayList;
+    private BillAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bill);
          spinnerCustomer = findViewById(R.id.spinnerCustomerAdd);
          spinnerService = findViewById(R.id.spinnerServiceAdd);
-         spinnerRoom = findViewById(R.id.spinnerRoomAdd);
          edCheckIn = findViewById(R.id.edCheckIn);
          edCheckOut = findViewById(R.id.edCheckOut);
          btnAdd = findViewById(R.id.btnAddBillNew);
          btnCancel = findViewById(R.id.btnCancelBillNew);
          billDAO = new BillDAO(this);
-
-
-         //room
-        RoomDAO roomDAO = new RoomDAO(this);
-        ArrayList<Room> rooms = roomDAO.getAll();
-        RoomSpinnerAdapter roomSpinnerAdapter = new RoomSpinnerAdapter(this,rooms);
-        spinnerRoom.setAdapter(roomSpinnerAdapter);
+         arrayList = billDAO.getAll();
+         adapter = new BillAdapter(this,arrayList);
         //customer
         CustomerDAO customerDAO = new CustomerDAO(this);
         ArrayList<Customer> customerArrayList = customerDAO.getAll();
@@ -142,10 +138,13 @@ public class AddBillActivity extends AppCompatActivity {
                 bill1.setIdService(idService);
                 bill1.setIdCustomer(idCustomer);
                 bill1.setStatus(0);
-                bill1.setVAT(8);
+                bill1.setVAT(10);
                 bill1.setCheckOut(edCheckOut.getText().toString());
 
                 if(billDAO.insert(bill1)>0){
+                    arrayList.clear();
+                    arrayList.addAll(billDAO.getAll());
+                    adapter.notifyDataSetChanged();
                     Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }else{
