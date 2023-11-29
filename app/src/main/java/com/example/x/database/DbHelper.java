@@ -10,27 +10,26 @@ public class DbHelper extends SQLiteOpenHelper {
 public static final String dbName ="dataX";
 
     public DbHelper(@Nullable Context context) {
-        super(context, dbName, null, 15);
+        super(context, dbName, null, 20);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String tbType = "CREATE TABLE type (\n" +
                 "    id   INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "    name TEXT    NOT NULL,\n" +
+                "    name TEXT    NOT NULL UNIQUE,\n" +
                 "    status INTEGER    NOT NULL\n" +
                 ");";
         db.execSQL(tbType);
-        String dataType = "insert into type values " +
-                "(1,'Phòng đơn',0)," +
-                "(2,'Phòng đôi',0)," +
-                "(3,'Phòng hạng sang',0)";
-        db.execSQL(dataType);
+        db.execSQL("insert into type(name,status) values" +
+                "('VIP',0)," +
+                "('Đôi',0)," +
+                "('Đơn',0)");
         String tbRoom = "CREATE TABLE room (\n" +
                 "    id     INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    idType INTEGER REFERENCES type (id) \n" +
                 "                   NOT NULL,\n" +
-                "    number INTEGER NOT NULL,\n" +
+                "    number INTEGER NOT NULL UNIQUE,\n" +
                 "    status INTEGER NOT NULL,\n" +
                 "    price  INTEGER NOT NULL\n" +
                 ");";
@@ -64,14 +63,14 @@ public static final String dbName ="dataX";
         db.execSQL(dataReceptionist);
         String tbService = "CREATE TABLE service (\n" +
                 "    id       INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "    name     TEXT    NOT NULL,\n" +
+                "    name     TEXT    NOT NULL ,\n" +
                 "    price    INTEGER NOT NULL,\n" +
                 "    status INTEGER    NOT NULL\n" +
 
                 ");";
         db.execSQL(tbService);
         String dataService = "insert into service values " +
-                "(1,'Không sử dụng',0,0)," +
+                "(1,'Không sử dng',0,0)," +
                 "(2,'Sắp xếp cuộc họp',100,0)," +
                 "(3,'Trang trí cho cặp đôi',50,0)," +
                 "(4,'Có thể nấu ăn',30,0)";
@@ -83,9 +82,9 @@ public static final String dbName ="dataX";
                 "    idReceptionist INTEGER REFERENCES receptionist (id) \n" +
                 "                           NOT NULL,\n" +
                 "    idService      INTEGER REFERENCES service (id),\n" +
-                "    checkIn        DATE,\n" +
-                "    checkOut       DATE,\n" +
-                "    VAT            INTEGER,\n" +
+                "    checkIn        TEXT,\n" +
+                "    checkOut       TEXT,\n" +
+                "    VAT            INTEGER NOT NULL,\n" +
                 "    status         INTEGER NOT NULL,\n" +
                 "    sumCost        INTEGER \n" +
                 ");";

@@ -19,7 +19,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText edUsername,edPassword;
     private TextView errUs, errPass;
     private CheckBox chkRemember;
-    private Button btnLogin,btnCancel;
+    private Button btnLogin;
+    TextView tv_forgotPassword;
     ReceptionistDAO receptionistDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         errUs = findViewById(R.id.txterrUsername);
         errPass = findViewById(R.id.txterrPassword);
         btnLogin = findViewById(R.id.btndangNhap);
+        tv_forgotPassword = findViewById(R.id.tv_quenMk);
+
         receptionistDAO = new ReceptionistDAO(LoginActivity.this);
         SharedPreferences preferences = getSharedPreferences("userfile",MODE_PRIVATE);
         edUsername.setText(preferences.getString("username",""));
@@ -41,6 +44,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkLogin();
+            }
+        });
+
+        tv_forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+                startActivity(intent);
+
             }
         });
     }

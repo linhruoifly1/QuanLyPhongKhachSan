@@ -3,45 +3,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_vertical"
     android:padding="10dp"
     android:background="#ffffff">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Thêm hóa đơn"
-        android:textSize="30dp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginBottom="20dp"/>
+        android:layout_gravity="center"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Khách hàng"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_margin="10dp"/>
     <Spinner
+
         android:id="@+id/spinnerCustomerAdd"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/radius"
-        android:layout_marginBottom="10dp"/>
+        android:background="@drawable/radius" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dịch vụ"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_margin="10dp"/>
     <Spinner
+
         android:id="@+id/spinnerServiceAdd"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/radius"
-        android:layout_marginBottom="10dp"/>
+        android:background="@drawable/radius" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ngày check in"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_margin="10dp"/>
     <EditText
+        android:padding="10dp"
+        android:hint="Ngày check in"
         android:id="@+id/edCheckIn"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@drawable/radius"
-        android:layout_marginBottom="10dp"
         android:inputType="none"
         android:focusable="false"
         android:cursorVisible="false"
         android:clickable="false"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ngày check out"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_margin="10dp"/>
     <EditText
+        android:padding="10dp"
         android:id="@+id/edCheckOut"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@drawable/radius"
         android:hint="Ngày Check Out"
-        android:layout_marginBottom="10dp"
         android:inputType="none"
         android:focusable="false"
         android:cursorVisible="false"

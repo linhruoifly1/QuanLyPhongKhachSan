@@ -53,12 +53,12 @@ public class ServiceFragment extends Fragment {
         fltService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDiaLogInsert(service);
+                openDiaLogInsert();
             }
         });
     }
 
-    private void openDiaLogInsert(Service service) {
+    private void openDiaLogInsert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = LayoutInflater.from(getContext()).inflate(R.layout.insert_service,null);
         builder.setView(view);
@@ -90,7 +90,8 @@ public class ServiceFragment extends Fragment {
                     }
                 }
                 Service service1 = new Service(edNameServiceAdd.getText().toString(),Integer.parseInt(edPriceServiceAdd.getText().toString()));
-                if(serviceDAO.insert(service1)){
+                service1.setStatus(0);
+                if(serviceDAO.insert(service1)>0){
                     arrayList.clear();
                     arrayList.addAll(serviceDAO.getAll());
                     adapter.notifyDataSetChanged();

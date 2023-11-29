@@ -16,7 +16,7 @@ public class BillDAO {
     public BillDAO(Context context){
         dbHelper = new DbHelper(context);
     }
-    public boolean insert(Bill bill){
+    public long insert(Bill bill){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("idCustomer",bill.getIdCustomer());
@@ -27,8 +27,7 @@ public class BillDAO {
         values.put("VAT",bill.getVAT());
         values.put("status",bill.getStatus());
         values.put("sumCost",bill.getSumCost());
-        long row = database.insert("bill",null,values);
-        return row>0;
+        return database.insert("bill",null,values);
     }
     public boolean update(Bill bill){
         SQLiteDatabase database = dbHelper.getWritableDatabase();

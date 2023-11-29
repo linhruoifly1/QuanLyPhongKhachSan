@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.x.DAO.ReceptionistDAO;
@@ -22,10 +23,10 @@ import com.example.x.R;
 public class ChangePassFragment extends Fragment {
 
 
-
     public ChangePassFragment() {
         // Required empty public constructor
     }
+
     EditText edtmkCu, edtmkMoi, edtxacNhan;
     Button btnxacNhan;
 
@@ -41,6 +42,9 @@ public class ChangePassFragment extends Fragment {
         edtmkCu = view.findViewById(R.id.edtmkCu);
         edtmkMoi = view.findViewById(R.id.edtmkMoi);
         edtxacNhan = view.findViewById(R.id.edtxacNhan);
+        TextView tv_mkc = view.findViewById(R.id.errorMKC);
+        TextView tv_mkm = view.findViewById(R.id.errorMKM);
+        TextView tv_xn = view.findViewById(R.id.errorXN);
 
         btnxacNhan = view.findViewById(R.id.btnxacNhan);
 
@@ -50,7 +54,7 @@ public class ChangePassFragment extends Fragment {
 
                 // tạo 1 file lưu trữ
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("receptionist", Context.MODE_PRIVATE);
-                String user = sharedPreferences.getString("username","");
+                String user = sharedPreferences.getString("username", "");
 
                 receptionistDAO = new ReceptionistDAO(getContext());
 
@@ -58,34 +62,39 @@ public class ChangePassFragment extends Fragment {
                 String mkMoi = edtmkMoi.getText().toString();
                 String xacNhan = edtxacNhan.getText().toString();
 
-                //validate
-
-                if (mkCu.equals("")){
-                    edtmkCu.setError("Vui lòng điền mật khẩu cũ");
+                //validate mkc
+                if (mkCu.equals("")) {
+                    tv_mkc.setText("Vui lòng điền mật khẩu cũ");
+                } else {
+                    tv_mkc.setText("");
                 }
-                if (mkMoi.equals("")){
-                    edtmkMoi.setError("Vui lòng điền mật khẩu mới");
+                // validate mkm
+                if (mkMoi.equals("")) {
+                    tv_mkm.setText("Vui lòng điền mật khẩu mới");
+                } else if
+                (edtmkMoi.getText().length() < 6) {
+                    tv_mkm.setText("Mật khẩu phải có 6 kí tự");
+                } else {
+                    tv_mkm.setText("");
                 }
-                if (xacNhan.equals("")){
-                    edtxacNhan.setError("Vui lòng xác nhận mật khẩu");
-                }
-                if (edtmkMoi.getText().length()<6){
-                    edtmkMoi.setError("Mật khẩu phải có 6 kí tự");
+                //validate xn
+                if (xacNhan.equals("")) {
+                    tv_xn.setText("Vui lòng xác nhận mật khẩu");
                     return;
                 }
-                if (xacNhan.equals(mkMoi)){
-                    if (receptionistDAO.changePassword(user,mkCu,mkMoi)==1){
+                if (xacNhan.equals(mkMoi)) {
+                    if (receptionistDAO.changePassword(user, mkCu, mkMoi) == 1) {
                         Toast.makeText(getContext(), "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getContext(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
-                    } else if (receptionistDAO.changePassword(user,mkCu,mkMoi)==-1) {
+                    } else if (receptionistDAO.changePassword(user, mkCu, mkMoi) == -1) {
                         Toast.makeText(getContext(), "Đổi Mật Khẩu Thất bại", Toast.LENGTH_SHORT).show();
-                    }else{
-                        edtmkCu.setError("Mật khẩu cũ không đúng");
+                    } else {
+                        tv_mkc.setText("Mật khẩu cũ không đúng");
                     }
-                }else {
-                        edtxacNhan.setError("2 mật khẩu không khớp");
+                } else {
+                    tv_xn.setText("2 mật khẩu không khớp");
                 }
             }
         });
