@@ -1,10 +1,19 @@
 package com.example.x.adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +31,9 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
     private ArrayList<HardBill> arrayList;
     HardBillDAO hardBillDAO;
     RoomDAO roomDAO;
+
+    private int idRoom;
+    private int quantyPeople;
 
     public HardBillAdapter(Context context, ArrayList<HardBill> arrayList) {
         this.context = context;
@@ -44,6 +56,14 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
         Room room = roomDAO.getId(String.valueOf(hardBill.getIdRoom()));
         holder.tvNumberRoomHard.setText(""+room.getNumber());
         holder.tvQuantityPeople.setText(""+hardBill.getQuantityPeople());
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                updateHardBill(hardBill);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -60,5 +80,76 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
             tvNumberRoomHard = itemView.findViewById(R.id.tvNumberRoomHard);
             tvQuantityPeople = itemView.findViewById(R.id.tvQuantityPeople);
         }
+    }
+
+    public void updateHardBill(HardBill hardBill){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        View view = inflater.inflate(R.layout.update_hardbill,null);
+        builder.setView(view);
+        Dialog dialog = builder.create();
+        dialog.show();
+
+        // ánh xạ
+
+        TextView txtidHard = view.findViewById(R.id.txtupdateIdHard);
+        TextView txtidBillHard = view.findViewById(R.id.txtupdatebillHard);
+        Spinner SpnNumberRoom = view.findViewById(R.id.spnNumberRoomUp);
+        EditText edtQuantyPeople = view.findViewById(R.id.edtquantyPeopleUp);
+        Button btnUphardBill = view.findViewById(R.id.btnUpHardBill);
+        Button btnCancleHard = view.findViewById(R.id.btnCancleHardBillUp);
+
+        txtidHard.setText("Mã: "+hardBill.getId());
+        txtidBillHard.setText("Mã hóa đơn: "+hardBill.getIdBill());
+        edtQuantyPeople.setText(String.valueOf(hardBill.getQuantityPeople()));
+        roomDAO = new RoomDAO(context);
+        ArrayList<Room> rooms = roomDAO.getAll();
+        RoomSpinnerAdapter roomSpinnerAdapter = new RoomSpinnerAdapter(context,rooms);
+        SpnNumberRoom.setAdapter(roomSpinnerAdapter);
+
+        SpnNumberRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                idRoom = rooms.get(position).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        btnCancleHard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnUphardBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (edtQuantyPeople.getText().equals("")){
+                    edtQuantyPeople.setError("Vui lòng điền số lượng người");
+                }
+                hardBill.setIdRoom(idRoom);
+                hardBill.setQuantityPeople(Integer.parseInt(edtQuantyPeople.getText().toString()));
+
+                if (hardBillDAO.update(hardBill)){
+                    arrayList.clear();
+                    arrayList.addAll(hardBillDAO.getAll());
+                    notifyDataSetChanged();
+                    dialog.dismiss();
+                    Toast.makeText(context, "Sửa thành công", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(context, "Sửa thất bại", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            }
+
+        });
+
+
+
     }
 }
