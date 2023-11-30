@@ -89,6 +89,12 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.viewHolder> {
                 }
 
         );
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
         builder.show();
     }
 

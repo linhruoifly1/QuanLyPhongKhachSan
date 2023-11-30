@@ -117,10 +117,11 @@
         </LinearLayout>
     </LinearLayout>
     <ImageView
-        android:id="@+id/imgClean"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/clean"
+        android:layout_margin="20dp"
+        android:id="@+id/archive_room"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/achive"
         android:layout_gravity="end|center_vertical"
         android:layout_marginRight="10dp"/>
 </androidx.cardview.widget.CardView>
