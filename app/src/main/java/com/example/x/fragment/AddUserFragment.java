@@ -58,53 +58,56 @@ public class AddUserFragment extends Fragment {
                 String user = edtUsername.getText().toString();
                 String pass = edtpass.getText().toString();
 
-                if (hoten.equals("")){
+                if (hoten.equals("")) {
                     edthoTen.setError("Không Bỏ Trống Tên");
                     return;
 
                 }
-                if ( email.equals("") ){
+                if (email.equals("")) {
                     edtEmail.setError("Không Bỏ Trống Email");
                     return;
 
-                }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     edtEmail.setError("Email không đúng định dạng");
                     return;
 
                 }
 
-                if ( user.equals("")){
+                if (user.equals("")) {
                     edtUsername.setError("Không Bỏ Trống Username");
                     return;
 
                 }
-                if (pass.equals("")){
+                if (pass.equals("")) {
                     edtpass.setError("Không Bỏ Trống Password");
                     return;
                 }
+                if (pass.length() < 6) {
+                    edtpass.setError("Mật khẩu phải từ 6 kí tự trở lên");
+                    return;
+                }
 
-                Receptionist receptionist = new Receptionist(hoten,email,user,pass);
+                Receptionist receptionist = new Receptionist(hoten, email, user, pass);
                 receptionistDAO = new ReceptionistDAO(getContext());
 
-                if (receptionistDAO.checkUser(String.valueOf(edtUsername.getText()))){
+                if (receptionistDAO.checkUser(String.valueOf(edtUsername.getText()))) {
                     Toast.makeText(getContext(), "Đã tồn tại tài khoản", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                long kq= receptionistDAO.insert(receptionist);
-                if (kq > 0){
+                long kq = receptionistDAO.insert(receptionist);
+                if (kq > 0) {
                     Toast.makeText(getContext(), "Thêm Thành Công", Toast.LENGTH_SHORT).show();
                     edtEmail.setText("");
                     edtpass.setText("");
                     edthoTen.setText("");
                     edtUsername.setText("");
-                }else{
+                } else {
                     Toast.makeText(getContext(), "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
-//        Receptionist receptionist = new Receptionist(getContext());
-//        boolean check = receptionistDAO.checkUser(String.valueOf(edtUsername.getText()));
+
 
         return view;
     }
