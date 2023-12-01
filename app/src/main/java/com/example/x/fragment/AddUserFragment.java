@@ -93,6 +93,10 @@ public class AddUserFragment extends Fragment {
                 long kq= receptionistDAO.insert(receptionist);
                 if (kq > 0){
                     Toast.makeText(getContext(), "Thêm Thành Công", Toast.LENGTH_SHORT).show();
+                    edtEmail.setText("");
+                    edtpass.setText("");
+                    edthoTen.setText("");
+                    edtUsername.setText("");
                 }else{
                     Toast.makeText(getContext(), "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
                 }

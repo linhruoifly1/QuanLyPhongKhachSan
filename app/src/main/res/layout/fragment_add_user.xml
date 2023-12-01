@@ -44,7 +44,6 @@
     <EditText
 
         android:id="@+id/edthoTenadd"
-
         android:layout_width="match_parent"
 
         android:layout_height="40dp"
@@ -161,7 +160,7 @@
 
     <Button
 
-        android:id="@+id/btnthemUser"
+            android:id="@+id/btnthemUser"
 
         android:layout_width="274dp"
 
