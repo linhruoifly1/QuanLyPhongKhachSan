@@ -3,22 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="10dp"
     android:background="#ffffff">
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chọn phòng thuê"
         android:textSize="30dp"
         android:textStyle="bold"
+        android:gravity="center"
         android:layout_marginBottom="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Phòng"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"/>
+
     <Spinner
         android:id="@+id/spinnerRoomAdd"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/radius"
         android:layout_marginBottom="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Số lượng khách"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"/>
     <EditText
         android:id="@+id/edQuantityPeople"
         android:layout_width="match_parent"

@@ -2,7 +2,9 @@ package com.example.x.model;
 
 import android.net.Uri;
 
-public class Receptionist {
+import java.io.Serializable;
+
+public class Receptionist implements Serializable {
     private int id;
     private String name, email;
     private String username,password;

@@ -5,18 +5,22 @@
     android:layout_height="match_parent"
     tools:context=".fragment.BillFragment"
     android:padding="10dp">
+
     <EditText
         android:id="@+id/edSearchBill"
         android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:background="@drawable/radius"
-        android:hint="Tìm phòng"
-        android:padding="10dp"
-        android:layout_height="50dp"/>
+        android:hint="Tìm kiếm hóa đơn"
+        android:drawableStart="@drawable/icon_search"
+        android:padding="10dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="60dp"
         android:id="@+id/rcvBill"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fltBill"
         android:layout_width="wrap_content"
@@ -25,5 +29,5 @@
         android:src="@drawable/addnew"
         android:backgroundTint="#171F1D"
         android:layout_marginBottom="20dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp" />
 </FrameLayout>

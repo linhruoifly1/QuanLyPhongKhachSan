@@ -191,7 +191,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.viewHolder>{
             tvNumberRoom = itemView.findViewById(R.id.tvNumberRoom);
             tvStatusRoom = itemView.findViewById(R.id.tvStatusRoom);
             tvPriceRoom = itemView.findViewById(R.id.tvPriceRoom);
-            imgClean = itemView.findViewById(R.id.imgClean);
+            imgClean = itemView.findViewById(R.id.archive_room);
         }
     }
 }

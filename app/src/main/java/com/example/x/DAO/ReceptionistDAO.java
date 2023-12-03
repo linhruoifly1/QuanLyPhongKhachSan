@@ -24,6 +24,9 @@ public class ReceptionistDAO {
     public Receptionist getUsername(String username){
         String sql = "select * from receptionist where username=?";
         ArrayList<Receptionist> list = getData(sql,username);
+        if (list.isEmpty()){
+            return null;
+        }
         return list.get(0);
     }
     public Receptionist getId(String id){
@@ -118,7 +121,6 @@ public class ReceptionistDAO {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         contentValues.put("name",receptionist.getName());
         contentValues.put("email",receptionist.getEmail());
-        contentValues.put("avatar",receptionist.getAvatar());
 
         return database.update("receptionist",contentValues,"id=?",new String[]{String.valueOf(receptionist.getId())});
 

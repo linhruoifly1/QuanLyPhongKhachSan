@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        tv_forgotPassword.setOnClickListener(new View.OnClickListener() {
+            tv_forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
