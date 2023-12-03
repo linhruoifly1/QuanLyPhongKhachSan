@@ -60,26 +60,29 @@ public class AddUserFragment extends Fragment {
 
                 if (hoten.equals("")){
                     edthoTen.setError("Không Bỏ Trống Tên");
-                    return;
+
 
                 }
                 if ( email.equals("") ){
                     edtEmail.setError("Không Bỏ Trống Email");
-                    return;
 
                 }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                     edtEmail.setError("Email không đúng định dạng");
-                    return;
+
 
                 }
 
                 if ( user.equals("")){
-                    edtUsername.setError("Không Bỏ Trống Username");
-                    return;
+                    edtUsername.setError("Không Bỏ Trống Tên Đăng Nhập");
+
 
                 }
                 if (pass.equals("")){
-                    edtpass.setError("Không Bỏ Trống Password");
+                    edtpass.setError("Không Bỏ Trống Mật Khẩu");
+                    return;
+                }
+                if(edtpass.getText().length()<6){
+                    edtpass.setError("Mật khẩu phải tối thiểu 6 ký tự");
                     return;
                 }
 
