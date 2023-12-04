@@ -257,15 +257,16 @@
         android:layout_gravity="end|top"
         android:layout_marginTop="50dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/addroom"/>
+        android:src="@drawable/addhome"/>
     <ImageView
         android:id="@+id/imgDeleteBill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|top"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="90dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/delete"/>
+        android:src="@drawable/deletebill"/>
+
     <ImageView
         android:id="@+id/imgStatusBill"
         android:layout_width="wrap_content"
@@ -273,5 +274,5 @@
         android:layout_gravity="end|top"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/money"/>
+        android:src="@drawable/pay" />
 </androidx.cardview.widget.CardView>

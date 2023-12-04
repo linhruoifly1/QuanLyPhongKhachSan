@@ -76,7 +76,7 @@ public class    TypeFragment extends Fragment {
             public void onClick(View v) {
                 String name = edNameTypeAdd.getText().toString();
                 if(name.isEmpty()){
-                    Toast.makeText(getActivity(), "Không được để trống", Toast.LENGTH_SHORT).show();
+                    edNameTypeAdd.setError("Không bỏ trống tên loại phòng");
                     return;
                 }
                 Type type = new Type();

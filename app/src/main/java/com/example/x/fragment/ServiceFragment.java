@@ -78,8 +78,18 @@ public class ServiceFragment extends Fragment {
         btnAddServiceNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edNameServiceAdd.getText().length()==0 || edPriceServiceAdd.getText().length()==0){
-                    Toast.makeText(getActivity(), "Không được để trống", Toast.LENGTH_SHORT).show();
+                if(edNameServiceAdd.getText().toString().equals("")){
+                    edNameServiceAdd.setError("Vui lòng điền tên dịch vụ");
+                    return;
+                }
+                if (edPriceServiceAdd.getText().toString().equals("")){
+                    edPriceServiceAdd.setError("Vui lòng điền giá dịch vụ");
+                    return;
+                }
+                try {
+                    int price = Integer.parseInt(edPriceServiceAdd.getText().toString());
+                }catch (Exception e){
+                    edPriceServiceAdd.setError("Giá phải là số");
                     return;
                 }
                 for(int i =0;i<arrayList.size();i++){

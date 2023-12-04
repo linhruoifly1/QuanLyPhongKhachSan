@@ -78,8 +78,12 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.viewHold
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edNameService.getText().length()==0||edPriceService.getText().length()==0){
-                    Toast.makeText(context, "Không được để trống", Toast.LENGTH_SHORT).show();
+                if(edNameService.getText().toString().equals("")){
+                    edNameService.setError("Vui lòng nhập tên dịch vụ");
+                    return;
+                }
+                if (edPriceService.getText().toString().equals("")){
+                    edPriceService.setError("Vui lòng nhập giá dịch vụ");
                     return;
                 }
 //                for(int i =0;i<arrayList.size();i++){

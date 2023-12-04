@@ -129,8 +129,16 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
         btnUphardBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edtQuantyPeople.getText().equals("")){
+
+                if (edtQuantyPeople.getText().toString().equals("")){
                     edtQuantyPeople.setError("Vui lòng điền số lượng người");
+                    return;
+                }
+                try {
+                  int  edtQuantyPeople1 = Integer.parseInt(edtQuantyPeople.getText().toString());
+                }catch (Exception e){
+                    edtQuantyPeople.setError("Số lượng phải nhập số");
+                    return;
                 }
                 hardBill.setIdRoom(idRoom);
                 hardBill.setQuantityPeople(Integer.parseInt(edtQuantyPeople.getText().toString()));

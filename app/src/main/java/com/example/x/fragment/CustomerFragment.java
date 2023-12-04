@@ -23,6 +23,7 @@ import com.example.x.adapter.CustomerAdapter;
 import com.example.x.model.Customer;
 import com.example.x.model.Room;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -76,6 +77,7 @@ public class CustomerFragment extends Fragment {
         EditText edBirthCustomer = view.findViewById(R.id.edBirthCustomerAdd);
         Button btnAdd = view.findViewById(R.id.btnAddCustomer);
         Button btnCancel = view.findViewById(R.id.btnCancelCustomerAdd);
+
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,11 +87,35 @@ public class CustomerFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edNameCustomer.getText().length()==0||
-                        edPhoneCustomer.getText().length()==0||
-                        edEmailCustomer.getText().length()==0||
-                        edBirthCustomer.getText().length()==0){
-                    Toast.makeText(getActivity(), "Không để trống", Toast.LENGTH_SHORT).show();
+//                if(edNameCustomer.getText().length()==0||
+//                        edPhoneCustomer.getText().length()==0||
+//                        edEmailCustomer.getText().length()==0||
+//                        edBirthCustomer.getText().length()==0){
+//                    Snackbar.make(view, "Không bỏ trống", Snackbar.LENGTH_SHORT).show();
+//
+//                    return;
+//                }
+                if (edNameCustomer.getText().toString().equals("")){
+//                    Snackbar.make(view,"Vui lòng nhập tên khách hàng", Snackbar.LENGTH_SHORT).show();
+                    edNameCustomer.setError("Vui lòng nhập tên khách hàng");
+
+                }
+                if (edPhoneCustomer.getText().toString().equals("")){
+//                    Snackbar.make(view,"Vui lòng nhập số điện thoại", Snackbar.LENGTH_SHORT).show();
+                    edPhoneCustomer.setError("Vui lòng nhập số điện thoại");
+
+                }
+                if (edEmailCustomer.getText().toString().equals("")){
+//                    Snackbar.make(view,"Vui lòng nhập Email", Snackbar.LENGTH_SHORT).show();
+                    edEmailCustomer.setError("Vui lòng nhập Email");
+
+                }
+                if (edPhoneCustomer.getText().toString().equals("")){
+//                    Snackbar.make(view,"Vui lòng nhập số điện thoại", Snackbar.LENGTH_SHORT).show();
+                    edPhoneCustomer.setError("Vui lòng nhập số điện thoại");
+                }
+                if (edBirthCustomer.getText().toString().equals("")){
+                    edBirthCustomer.setError("Vui lòng nhập năm sinh");
                     return;
                 }
                 for(int i =0;i<arrayList.size();i++){
@@ -101,19 +127,22 @@ public class CustomerFragment extends Fragment {
                     }
                 }
                 if(edPhoneCustomer.getText().length()!=10){
-                    Toast.makeText(getActivity(), "SĐT không hợp lệ", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "SĐT không hợp lệ", Toast.LENGTH_SHORT).show();
+                    edPhoneCustomer.setError("SĐT không hợp lệ");
                     return;
                 }
                 String email = edEmailCustomer.getText().toString();
                 if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                    Toast.makeText(getActivity(), "email không hợp lệ", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "email không hợp lệ", Toast.LENGTH_SHORT).show();
+                    edEmailCustomer.setError("Email không hợp lệ");
                     return;
                 }
                 Calendar calendar = Calendar.getInstance();
                 int yearNow = calendar.get(Calendar.YEAR);
                 int birth = Integer.parseInt(edBirthCustomer.getText().toString());
                 if((yearNow-birth)<18){
-                    Toast.makeText(getActivity(), "Năm sinh không hợp lệ", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Năm sinh không hợp lệ", Toast.LENGTH_SHORT).show();
+                    edBirthCustomer.setError("Năm sinh không hợp lệ");
                     return;
                 }
                 Customer customer1 = new Customer(edNameCustomer.getText().toString(),edPhoneCustomer.getText().toString(),email,birth);

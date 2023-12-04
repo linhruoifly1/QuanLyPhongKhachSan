@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:background="@drawable/radius"
         android:hint="Tìm phòng"
+        android:drawableStart="@drawable/icon_search"
         android:padding="10dp"
         android:layout_height="50dp"/>
     <androidx.recyclerview.widget.RecyclerView

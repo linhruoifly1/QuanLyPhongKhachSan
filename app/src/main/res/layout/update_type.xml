@@ -18,7 +18,7 @@
         android:id="@+id/edNameTypeUpdate"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/radius"
+        android:background="@drawable/boder"
         android:hint="Nhập tên loại phòng"
         android:layout_marginBottom="10dp"/>
     <LinearLayout
@@ -34,17 +34,17 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:backgroundTint="#000000"
+            android:background="@drawable/boderbutton"
             android:layout_marginRight="20dp"/>
+
         <Button
             android:id="@+id/btnCancelTypeUpdate"
-            android:layout_width="100dp"
+            android:layout_width="98dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/boderbutton"
             android:text="HỦY"
-            android:textSize="18sp"
             android:textColor="@color/white"
-
-            android:backgroundTint="#000000"
-            android:textStyle="bold"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

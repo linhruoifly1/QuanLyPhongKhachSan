@@ -144,6 +144,7 @@ public class RoomFragment extends Fragment {
             public void onClick(View v) {
                 if(edNumberRoom.getText().length()==0){
                     edNumberRoom.setError("Không bỏ trống số phòng");
+                    return;
                 }
                 if(edPriceRoom.getText().length()==0){
                     edPriceRoom.setError("Không bỏ trống giá phòng");

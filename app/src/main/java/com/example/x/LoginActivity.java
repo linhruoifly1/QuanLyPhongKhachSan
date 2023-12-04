@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.x.DAO.ReceptionistDAO;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
@@ -73,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if(receptionistDAO.checkLogin(inputUser,inputPass)){
                 Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+
                 rememberUser(inputUser,inputPass,chkRemember.isChecked());
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 intent.putExtra("user",inputUser);

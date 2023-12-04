@@ -118,8 +118,8 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.viewHolder> {
         btnUpdateTypeNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edNameTypeUpdate.getText().length() == 0) {
-                    Toast.makeText(context, "Không được để trống", Toast.LENGTH_SHORT).show();
+                if (edNameTypeUpdate.getText().toString().equals("")) {
+                    edNameTypeUpdate.setError("Vui lòng điền tên loại");
                     return;
                 }
 //                for(int i =0;i<arrayList.size();i++){

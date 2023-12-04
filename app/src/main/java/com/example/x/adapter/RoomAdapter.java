@@ -147,8 +147,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.viewHolder>{
         btnUpdateRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edNumberRoom.getText().length()==0 || edPriceRoom.getText().length()==0){
-                    Toast.makeText(context, "Không được để trống", Toast.LENGTH_SHORT).show();
+                if(edNumberRoom.getText().toString().equals("")){
+                    edNumberRoom.setError("Vui lòng nhập số phòng");
+                    return;
+                }
+                if (edPriceRoom.getText().toString().equals("")){
+                    edPriceRoom.setError("Vui lòng nhập giá phòng");
                     return;
                 }
 //                for(int i =0;i<arrayList.size();i++){

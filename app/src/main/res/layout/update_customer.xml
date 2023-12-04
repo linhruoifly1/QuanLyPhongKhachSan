@@ -9,17 +9,45 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thêm loại phòng"
+        android:text="Sửa Thông Tin Khách Hàng"
         android:textSize="30dp"
         android:textStyle="bold"
         android:layout_marginBottom="20dp"/>
+
+    <EditText
+        android:id="@+id/edNameCustomerUp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/boder"
+        android:hint="Nhập tên khách hàng"
+        android:paddingStart="10dp" />
     <EditText
         android:paddingStart="10dp"
-        android:id="@+id/edNameTypeAdd"
+        android:id="@+id/edPhoneCustomerUp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
+        android:inputType="phone"
+        android:maxLength="10"
         android:background="@drawable/boder"
-        android:hint="Nhập tên loại phòng"
+        android:hint="Nhập số điện thoại khách hàng"
+        android:layout_marginBottom="10dp"/>
+    <EditText
+        android:paddingStart="10dp"
+        android:id="@+id/edEmailCustomerUp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/boder"
+        android:hint="Nhập email khách hàng"
+        android:layout_marginBottom="10dp"/>
+    <EditText
+        android:paddingStart="10dp"
+        android:id="@+id/edBirthCustomerUp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/boder"
+        android:inputType="number"
+        android:hint="Nhập năm sinh khách hàng"
         android:layout_marginBottom="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,22 +55,22 @@
         android:orientation="horizontal"
         android:gravity="center">
         <Button
-            android:id="@+id/btnAddTypeNew"
+            android:id="@+id/btnUpCustomer"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="THÊM"
-            android:textColor="@color/white"
             android:textSize="18sp"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:background="@drawable/boderbutton"
             android:layout_marginRight="20dp"/>
         <Button
-            android:id="@+id/btnCancelTypeNew"
+            android:id="@+id/btnCancelCustomerUp"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:text="HỦY"
             android:textSize="18sp"
+            android:textColor="@color/white"
             android:background="@drawable/boderbutton"
             android:textStyle="bold"/>
     </LinearLayout>

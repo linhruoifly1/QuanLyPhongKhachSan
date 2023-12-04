@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
-        android:layout_marginTop="40sp"
+        android:layout_marginTop="20sp"
         android:text="Mật khẩu cũ"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -45,7 +45,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtmkCu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
             android:background="@drawable/boder"
             android:inputType="textPassword"
             android:padding="10dp" />
@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="10sp"
         android:text="Mật khẩu mới"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -78,7 +78,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtmkMoi"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
             android:background="@drawable/boder"
             android:inputType="textPassword"
             android:padding="10dp" />
@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="10sp"
         android:text="Xác nhận mật khẩu mới"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -112,7 +112,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtxacNhan"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="40sp"
             android:background="@drawable/boder"
             android:inputType="textPassword"
             android:padding="10dp" />
@@ -137,7 +137,7 @@
 
         android:layout_gravity="center"
 
-        android:layout_marginTop="30sp"
+        android:layout_marginTop="10sp"
 
         android:background="@drawable/boderbutton"
 

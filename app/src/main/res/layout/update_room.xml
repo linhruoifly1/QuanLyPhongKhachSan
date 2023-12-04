@@ -19,7 +19,7 @@
         android:id="@+id/tv_roomID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="fedfsdf"
+        android:text="Mã Phòng"
         android:textStyle="bold"
         android:textSize="18sp"
         android:layout_marginStart="10dp"/>
@@ -27,7 +27,7 @@
         android:id="@+id/spinnerTypeUpdate"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/radius"/>
+        android:background="@drawable/boder"/>
 
     <EditText
         android:id="@+id/edNumberRoomUpdate"
@@ -37,7 +37,7 @@
         android:hint="Số phòng"
         android:inputType="number"
         android:paddingStart="10dp"
-        android:background="@drawable/radius"/>
+        android:background="@drawable/boder"/>
     <EditText
         android:id="@+id/edPriceRoomUpdate"
         android:layout_marginTop="10dp"
@@ -46,7 +46,7 @@
         android:hint="Giá phòng"
         android:inputType="number"
         android:paddingStart="10dp"
-        android:background="@drawable/radius"/>
+        android:background="@drawable/boder"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,16 +61,17 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:backgroundTint="#000000"
+            android:background="@drawable/boderbutton"
             android:layout_marginRight="20dp"/>
+
         <Button
             android:id="@+id/btnCancelRoomUpdate"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/boderbutton"
             android:text="HỦY"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:backgroundTint="#000000"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

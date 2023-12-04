@@ -12,6 +12,7 @@
         android:layout_height="50dp"
         android:background="@drawable/radius"
         android:hint="Tìm kiếm"
+        android:drawableStart="@drawable/icon_search"
         android:padding="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
