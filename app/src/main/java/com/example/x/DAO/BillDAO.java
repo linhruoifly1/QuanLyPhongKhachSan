@@ -63,6 +63,12 @@ public class BillDAO {
         database.execSQL(sql,new String[]{String.valueOf(id)});
         return true;
     }
+    public boolean changeStatusCancel(int id){
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        String sql = "update bill set status=2 where id=?";
+        database.execSQL(sql,new String[]{String.valueOf(id)});
+        return true;
+    }
     public boolean updateSumCost(int cost, int id){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         String sql = "update bill set sumCost=? where id=?";

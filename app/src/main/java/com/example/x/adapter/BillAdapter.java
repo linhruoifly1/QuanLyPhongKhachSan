@@ -98,9 +98,15 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                     return true;
                 }
             });
-        }else{
+        }else if(statusBill==1){
             holder.tvStatusBill.setText("Đã thanh toán");
             holder.tvStatusBill.setTextColor(Color.BLUE);
+            holder.imgRoomBill.setVisibility(View.INVISIBLE);
+            holder.imgDeleteBill.setVisibility(View.INVISIBLE);
+            holder.imgStatusBill.setVisibility(View.INVISIBLE);
+        }else{
+            holder.tvStatusBill.setText("Huỷ");
+            holder.tvStatusBill.setTextColor(Color.YELLOW);
             holder.imgRoomBill.setVisibility(View.INVISIBLE);
             holder.imgDeleteBill.setVisibility(View.INVISIBLE);
             holder.imgStatusBill.setVisibility(View.INVISIBLE);
@@ -181,18 +187,18 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Cảnh báo !!!");
                 builder.setIcon(R.drawable.warning);
-                builder.setMessage("Bạn muốn xóa không?");
+                builder.setMessage("Xác nhận hủy?");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(billDAO.delete(bill.getId())){
+                        if(billDAO.changeStatusCancel(bill.getId())){
                             arrayList.clear();
                             arrayList.addAll(billDAO.getAll());
                             notifyDataSetChanged();
-                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Thành công", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
