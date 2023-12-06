@@ -50,6 +50,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -93,10 +94,10 @@ public class BillFragment extends Fragment {
         billDAO = new BillDAO(getContext());
         arrayList = billDAO.getAll();
         arrayList1 = billDAO.getAll();
+        Collections.reverse(arrayList);
         rcvBill.setLayoutManager(new GridLayoutManager(getContext(), 1));
         adapter = new BillAdapter(getContext(), arrayList);
         rcvBill.setAdapter(adapter);
-
         fltBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

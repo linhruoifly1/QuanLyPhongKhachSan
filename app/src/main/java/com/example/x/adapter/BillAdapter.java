@@ -1,12 +1,10 @@
 package com.example.x.adapter;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +25,7 @@ import com.example.x.DAO.HardBillDAO;
 import com.example.x.DAO.ReceptionistDAO;
 import com.example.x.DAO.RoomDAO;
 import com.example.x.DAO.ServiceDAO;
+import com.example.x.MainActivity;
 import com.example.x.R;
 import com.example.x.model.Bill;
 import com.example.x.model.Customer;
@@ -80,9 +79,8 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
         Service service = serviceDAO.getId(String.valueOf(bill.getIdService()));
         holder.tvServiceBill.setText(service.getName());
         // lấy ngày giờ lúc tọa hóa đơn
-        String timeNow = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
-        String dateNow = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        holder.tvCheckIn.setText(bill.getCheckIn()+" "+timeNow+" UTC");
+
+        holder.tvCheckIn.setText(bill.getCheckIn()+" 14:00 UTC");
         holder.tvCheckOut.setText(bill.getCheckOut()+" 12:00 UTC");
         int costService = service.getPrice();
         holder.tvCostService.setText("$ "+costService);
@@ -90,7 +88,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
         if(statusBill==0){
             holder.tvStatusBill.setText("Chưa thanh toán");
             holder.tvStatusBill.setTextColor(Color.RED);
-            holder.tvRealCheckOut.setVisibility(View.INVISIBLE);
             holder.imgRoomBill.setVisibility(View.VISIBLE);
             holder.imgDeleteBill.setVisibility(View.VISIBLE);
             holder.imgStatusBill.setVisibility(View.VISIBLE);
@@ -107,7 +104,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
             holder.imgRoomBill.setVisibility(View.INVISIBLE);
             holder.imgDeleteBill.setVisibility(View.INVISIBLE);
             holder.imgStatusBill.setVisibility(View.INVISIBLE);
-            holder.tvRealCheckOut.setVisibility(View.VISIBLE);
         }
         // Chọn thêm phòng trong hóa đơn, có thể chọn nhiều phòng
         holder.imgRoomBill.setOnClickListener(new View.OnClickListener() {
@@ -224,7 +220,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                     public void onClick(DialogInterface dialog, int which) {
                         if(billDAO.changeStatus(bill.getId())){
                             //lấy ngày giờ lúc thay đổi trạng thái là giờ thanh toán và trả phòng
-                            holder.tvRealCheckOut.setText(dateNow+" "+timeNow+" UTC");
                             ArrayList<Room> roomArrayList = roomDAO.getRoomInBill(bill.getId());
                             for(int i = 0; i<roomArrayList.size();i++){
                                 Room room = roomArrayList.get(i);
@@ -260,7 +255,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
     }
 
     public class viewHolder extends RecyclerView.ViewHolder{
-        TextView tvIdBill,tvCustomerBill,tvReceptionistBill,tvCheckIn,tvCheckOut,tvRealCheckOut,tvCostRoom,tvCostService,tvVAT,tvStatusBill,tvSumCost,tvServiceBill;
+        TextView tvIdBill,tvCustomerBill,tvReceptionistBill,tvCheckIn,tvCheckOut,tvCostRoom,tvCostService,tvVAT,tvStatusBill,tvSumCost,tvServiceBill;
         ImageView imgRoomBill,imgDeleteBill,imgStatusBill;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -270,7 +265,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
             tvServiceBill = itemView.findViewById(R.id.tvServiceBill);
             tvCheckIn = itemView.findViewById(R.id.tvCheckIn);
             tvCheckOut = itemView.findViewById(R.id.tvCheckOut);
-            tvRealCheckOut = itemView.findViewById(R.id.tvRealCheckOut);
             tvCostRoom = itemView.findViewById(R.id.tvCostRoom);
             tvCostService = itemView.findViewById(R.id.tvCostService);
             tvVAT = itemView.findViewById(R.id.tvVAT);
