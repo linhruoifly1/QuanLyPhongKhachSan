@@ -94,10 +94,10 @@ public class BillFragment extends Fragment {
         billDAO = new BillDAO(getContext());
         arrayList = billDAO.getAll();
         arrayList1 = billDAO.getAll();
-        Collections.reverse(arrayList);
         rcvBill.setLayoutManager(new GridLayoutManager(getContext(), 1));
         adapter = new BillAdapter(getContext(), arrayList);
         rcvBill.setAdapter(adapter);
+        Collections.reverse(arrayList);
         fltBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
