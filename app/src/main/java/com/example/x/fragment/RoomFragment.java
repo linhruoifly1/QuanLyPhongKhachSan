@@ -81,9 +81,7 @@ public class RoomFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 for (Room room1: arrayList1) {
-                    if(String.valueOf(room1.getNumber()).contains(s.toString())){
-                        arrayList.add(room1);
-                    }else if(room1.getStatus()==0 && "sẵn sàng".contains(s.toString())){
+                    if(room1.getStatus()==0 && "sẵn sàng".contains(s.toString())){
                         arrayList.add(room1);
                     }else if(room1.getStatus()==1 && "có khách".contains(s.toString())){
                         arrayList.add(room1);

@@ -1,6 +1,7 @@
 package com.example.x.adapter;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.x.AddBillActivity;
 import com.example.x.DAO.BillDAO;
 import com.example.x.DAO.CustomerDAO;
 import com.example.x.DAO.HardBillDAO;
@@ -36,7 +39,10 @@ import com.example.x.model.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
@@ -48,7 +54,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
     private ReceptionistDAO receptionistDAO;
     private RoomDAO roomDAO;
     private HardBillDAO hardBillDAO;
-    private int idRoom;
+    private int idRoom,idCustomer,idService;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public BillAdapter(Context context, ArrayList<Bill> arrayList) {
         this.context = context;
@@ -193,9 +199,15 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(billDAO.changeStatusCancel(bill.getId())){
+                            ArrayList<Room> roomArrayList = roomDAO.getRoomInBill(bill.getId());
+                            for(int i = 0; i<roomArrayList.size();i++){
+                                Room room = roomArrayList.get(i);
+                                roomDAO.changeOnStatus(room.getId());
+                            }
                             arrayList.clear();
                             arrayList.addAll(billDAO.getAll());
                             notifyDataSetChanged();
+                            Collections.reverse(arrayList);
                             Toast.makeText(context, "Thành công", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(context, "Thất bại", Toast.LENGTH_SHORT).show();
@@ -234,6 +246,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                             arrayList.clear();
                             arrayList.addAll(billDAO.getAll());
                             notifyDataSetChanged();
+                            Collections.reverse(arrayList);
                             Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(context, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
@@ -253,6 +266,106 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
     }
 
     private void openDiaLogUpdate(Bill bill) {
+        AlertDialog.Builder builder =new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.update_bill,null);
+        builder.setView(view);
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        Spinner spinnerCustomer = view.findViewById(R.id.spinnerCustomerUpdate);
+        Spinner spinnerService = view.findViewById(R.id.spinnerServiceUpdate);
+        EditText edCheckOutUpdate = view.findViewById(R.id.edCheckOutUpdate);
+        Button btnUpdate = view.findViewById(R.id.btnUpdateBillNew);
+        Button btnCancel = view.findViewById(R.id.btnCancelBillUpdate);
+        Intent intent = ((MainActivity)context).getIntent();
+        String user = intent.getStringExtra("user");
+        if (user==null){
+            return;
+        }
+        Receptionist receptionist = receptionistDAO.getUsername(user);
+        edCheckOutUpdate.setText(bill.getCheckOut());
+        ArrayList<Customer> customerArrayList = customerDAO.getAll();
+        CustomerSpinnerAdapter customerSpinnerAdapter = new CustomerSpinnerAdapter(context,customerArrayList);
+        spinnerCustomer.setAdapter(customerSpinnerAdapter);
+        for(int i = 0;i<customerArrayList.size();i++){
+            if(customerArrayList.get(i).getId()==bill.getIdCustomer()){
+                spinnerCustomer.setSelection(i);
+            }
+        }
+        ArrayList<Service> serviceArrayList = serviceDAO.getAll();
+        ServiceSpinnerAdapter  serviceSpinnerAdapter = new ServiceSpinnerAdapter(context,serviceArrayList);
+        spinnerService.setAdapter(serviceSpinnerAdapter);
+        for(int i = 0;i<serviceArrayList.size();i++){
+            if(serviceArrayList.get(i).getId()==bill.getIdService()){
+                spinnerService.setSelection(i);
+            }
+        }
+        spinnerCustomer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                idCustomer = customerArrayList.get(i).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinnerService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                idService = serviceArrayList.get(i).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        edCheckOutUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth);
+                        edCheckOutUpdate.setText(sdf.format(calendar.getTime()));
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Toast.makeText(context, "Hủy bỏ chỉnh sửa", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bill.setCheckOut(edCheckOutUpdate.getText().toString());
+                bill.setIdReceptionist(receptionist.getId());
+                bill.setIdCustomer(idCustomer);
+                bill.setIdService(idService);
+                if(billDAO.update(bill)){
+                    arrayList.clear();
+                    arrayList.addAll(billDAO.getAll());
+                    notifyDataSetChanged();
+                    Collections.reverse(arrayList);
+                    Toast.makeText(context, "Chỉnh sửa thành công", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }else{
+                    Toast.makeText(context, "Chỉnh sửa thất bại", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 
     @Override

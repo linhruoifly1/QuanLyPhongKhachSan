@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.x.DAO.TypeDAO;
 import com.example.x.R;
 import com.example.x.model.Room;
 import com.example.x.model.Type;
@@ -36,11 +37,17 @@ public class RoomSpinnerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //set view
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_spiner,parent,false);
-        TextView tvItem = view.findViewById(R.id.tvNameSpinner);
+        View view = LayoutInflater.from(context).inflate(R.layout.spinner_room,parent,false);
+        TextView tvNumberRoom = view.findViewById(R.id.tvNumberRoomSpinner);
+        TextView tvTypeRoom = view.findViewById(R.id.tvNameTypeRoomSpinner);
+        TextView tvPriceRoom = view.findViewById(R.id.tvPriceRoomSpinner);
         Room room = arrayList.get(position);
         if(room != null){
-            tvItem.setText(""+room.getNumber());
+            tvNumberRoom.setText(""+room.getNumber());
+            TypeDAO typeDAO = new TypeDAO(context);
+            Type type = typeDAO.getId(String.valueOf(room.getIdType()));
+            tvTypeRoom.setText(type.getName());
+            tvPriceRoom.setText(""+room.getPrice());
         }
         return view;
     }
