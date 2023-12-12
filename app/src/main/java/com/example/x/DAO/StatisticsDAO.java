@@ -35,6 +35,8 @@ public class StatisticsDAO {
         String sql = "select idRoom,type.id, count(idRoom) as quantity from hardBill " +
                 "inner join room on hardBill.idRoom = room.id " +
                 "inner join type on room.idType = type.id " +
+                "inner join bill on hardBill.idBill = bill.id "+
+                "where bill.status = 1 "+
                 "group by idRoom order by quantity desc limit 10";
         ArrayList<TopRoom> list = new ArrayList<>();
         Cursor cursor = database.rawQuery(sql,null);
@@ -52,6 +54,7 @@ public class StatisticsDAO {
     public ArrayList<TopService> getTopService(){
         String sql = "select idService, count(idService) as quantity from bill " +
                 "inner join service on bill.idService = service.id " +
+                " where bill.status = 1 "+
                 "group by idService order by quantity desc limit 10";
         ArrayList<TopService> list = new ArrayList<>();
         Cursor cursor = database.rawQuery(sql,null);

@@ -165,6 +165,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                             hardBillArrayList.addAll(hardBillDAO.getAll());
                             hardBillAdapter.notifyDataSetChanged();
                             notifyDataSetChanged();
+                            Collections.reverse(hardBillArrayList);
                             dialog.dismiss();
                             Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
                         }else{
@@ -175,6 +176,14 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                 });
             }
         });
+        ArrayList<Room> roomArrayList = roomDAO.getNumberRoomInBill(bill.getId());
+        String numberRoom= "";
+        for(int i=0;i<roomArrayList.size();i++){
+            Room room = roomArrayList.get(i);
+            numberRoom+=String.valueOf(room.getNumber());
+            numberRoom+=" ";
+        }
+        holder.tvNumberRoomBill.setText(numberRoom);
         // tổng tiền phòng theo số ngày thuê
         int costRoom = hardBillDAO.getCostRoom(bill.getId())*billDAO.getNumberDate(bill.getId());
         holder.tvCostRoom.setText("$ " +costRoom);
@@ -374,7 +383,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
     }
 
     public class viewHolder extends RecyclerView.ViewHolder{
-        TextView tvIdBill,tvCustomerBill,tvReceptionistBill,tvCheckIn,tvCheckOut,tvCostRoom,tvCostService,tvVAT,tvStatusBill,tvSumCost,tvServiceBill;
+        TextView tvIdBill,tvCustomerBill,tvReceptionistBill,tvCheckIn,tvCheckOut,tvCostRoom,tvCostService,tvVAT,tvStatusBill,tvSumCost,tvServiceBill,tvNumberRoomBill;
         ImageView imgRoomBill,imgDeleteBill,imgStatusBill;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -384,6 +393,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
             tvServiceBill = itemView.findViewById(R.id.tvServiceBill);
             tvCheckIn = itemView.findViewById(R.id.tvCheckIn);
             tvCheckOut = itemView.findViewById(R.id.tvCheckOut);
+            tvNumberRoomBill = itemView.findViewById(R.id.tvNumberRoomBill);
             tvCostRoom = itemView.findViewById(R.id.tvCostRoom);
             tvCostService = itemView.findViewById(R.id.tvCostService);
             tvVAT = itemView.findViewById(R.id.tvVAT);

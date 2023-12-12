@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +18,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.x.DAO.RoomDAO;
 import com.example.x.DAO.ServiceDAO;
+import com.example.x.DAO.TypeDAO;
 import com.example.x.R;
 import com.example.x.adapter.ServiceAdapter;
+import com.example.x.model.Customer;
+import com.example.x.model.HardBill;
+import com.example.x.model.Room;
 import com.example.x.model.Service;
 import com.example.x.model.Type;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,8 +35,10 @@ import java.util.ArrayList;
 public class ServiceFragment extends Fragment {
     private RecyclerView rcvService;
     private FloatingActionButton fltService;
+    private EditText edSearchService;
     private ServiceAdapter adapter;
     private ArrayList<Service> arrayList;
+    private ArrayList<Service> arrayList1;
     private Service service;
     private ServiceDAO serviceDAO;
     @Override
@@ -44,8 +53,10 @@ public class ServiceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rcvService = view.findViewById(R.id.rcvService);
         fltService = view.findViewById(R.id.fltService);
+        edSearchService = view.findViewById(R.id.edSearchService);
         serviceDAO = new ServiceDAO(getContext());
         arrayList = serviceDAO.getAll();
+        arrayList1 = serviceDAO.getAll();
         rcvService.setLayoutManager(new GridLayoutManager(getContext(),1));
         adapter = new ServiceAdapter(getContext(),arrayList);
         rcvService.setAdapter(adapter);
@@ -54,6 +65,28 @@ public class ServiceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 openDiaLogInsert();
+            }
+        });
+        edSearchService.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                arrayList.clear();
+                for (Service service1 : arrayList1){
+                    if(service1.getName().contains(charSequence.toString())){
+                        arrayList.add(service1);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }

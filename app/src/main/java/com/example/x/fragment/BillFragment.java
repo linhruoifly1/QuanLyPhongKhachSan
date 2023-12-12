@@ -131,29 +131,18 @@ public class BillFragment extends Fragment {
                             arrayList.add(bill);
                         }
                     }
-//                    for (Receptionist receptionist: receptionists) {
-//                        if(receptionist.getName().contains(s.toString()) && bill.getIdCustomer()==receptionist.getId()){
-//                            arrayList.add(bill);
-//                        }
-//                    }
                 }
                 adapter.notifyDataSetChanged();
-//                for(Bill bill : arrayList1){
-//                    if(bill.getStatus()==0 && "chưa thanh toán".contains(s.toString())){
-//                        arrayList.add(bill);
-//                    }else if(bill.getStatus()==1 && "đã thanh toán".contains(s.toString())){
-//                        arrayList.add(bill);
-//                    }else if(bill.getStatus()==2 && "hủy".contains(s.toString())){
-//                        arrayList.add(bill);
-//                    }else if(bill.getCheckIn().contains(s.toString())){
-//                        arrayList.add(bill);
-//                    }else if(bill.getCheckOut().contains(s.toString())){
-//                        arrayList.add(bill);
-//                    }else if(String.valueOf(bill.getSumCost()).contains(s.toString())){
-//                        arrayList.add(bill);
-//                    }
-//                }
-//                adapter.notifyDataSetChanged();
+                for(Bill bill : arrayList1){
+                    if(bill.getStatus()==0 && "chưa thanh toán".contains(s.toString())){
+                        arrayList.add(bill);
+                    }else if(bill.getStatus()==1 && "đã thanh toán".contains(s.toString())){
+                        arrayList.add(bill);
+                    }else if(bill.getStatus()==2 && "hủy".contains(s.toString())){
+                        arrayList.add(bill);
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
 
             @Override

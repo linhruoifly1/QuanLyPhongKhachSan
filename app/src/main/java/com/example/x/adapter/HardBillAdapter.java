@@ -27,6 +27,7 @@ import com.example.x.model.HardBill;
 import com.example.x.model.Room;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHolder>{
     private Context context;
@@ -152,6 +153,7 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
                     arrayList.clear();
                     arrayList.addAll(hardBillDAO.getAll());
                     notifyDataSetChanged();
+                    Collections.reverse(arrayList);
                     dialog.dismiss();
                     Toast.makeText(context, "Sửa thành công", Toast.LENGTH_SHORT).show();
                 }else {

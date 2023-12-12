@@ -5,7 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ServiceFragment"
     android:padding="10dp">
+    <EditText
+        android:id="@+id/edSearchService"
+        android:layout_width="match_parent"
+        android:background="@drawable/radius"
+        android:hint="Tìm kiếm"
+        android:drawableStart="@drawable/icon_search"
+        android:padding="10dp"
+        android:layout_height="50dp"/>
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="60dp"
         android:id="@+id/rcvService"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

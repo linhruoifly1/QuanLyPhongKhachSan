@@ -47,7 +47,7 @@ public class RoomSpinnerAdapter extends BaseAdapter {
             TypeDAO typeDAO = new TypeDAO(context);
             Type type = typeDAO.getId(String.valueOf(room.getIdType()));
             tvTypeRoom.setText(type.getName());
-            tvPriceRoom.setText(""+room.getPrice());
+            tvPriceRoom.setText("$ "+room.getPrice());
         }
         return view;
     }

@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
 import android.content.Context;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.example.x.model.Customer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.viewHolder>{
     private Context context;
@@ -70,14 +72,12 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.viewHo
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         View view = inflater.inflate(R.layout.update_customer,null);
         // ánh xạ
-
          edtnameCustomer = view.findViewById(R.id.edNameCustomerUp);
          edtphoneCustomer = view.findViewById(R.id.edPhoneCustomerUp);
          edtEmailCustomer = view.findViewById(R.id.edEmailCustomerUp);
          edtBirthCustomer = view.findViewById(R.id.edBirthCustomerUp);
         Button btnUpdateCustomer = view.findViewById(R.id.btnUpCustomer);
         Button btnCanleCustomer = view.findViewById(R.id.btnCancelCustomerUp);
-
         edtnameCustomer.setText(customer.getName());
         edtphoneCustomer.setText(customer.getPhone());
         edtEmailCustomer.setText(customer.getEmail());
@@ -117,7 +117,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.viewHo
                                 test = false;
                             }
 
-                            if(edtphoneCustomer.getText().length()!=10){
+                            if(!Patterns.PHONE.matcher(edtphoneCustomer.getText().toString()).matches()){
                                 edtphoneCustomer.setError("SĐT không hợp lệ");
                                 test = false;
                             }
@@ -151,7 +151,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.viewHo
                             if (customerDAO.update(customer)) {
                                 arrayList.clear();
                                 arrayList.addAll(customerDAO.getAll());
-                                notifyDataSetChanged(); // Thông báo cho adapter về sự thay đổi trong tập dữ liệu
+                                notifyDataSetChanged();// Thông báo cho adapter về sự thay đổi trong tập dữ liệu
+                                Collections.reverse(arrayList);
                                 dialog.dismiss();
                                 Toast.makeText(context, "Sửa thành công", Toast.LENGTH_SHORT).show();
                             } else {

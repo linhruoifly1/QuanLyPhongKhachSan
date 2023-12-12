@@ -74,6 +74,22 @@ public class RoomDAO {
         }
         return list;
     }
+    public ArrayList<Room> getNumberRoomInBill(int id){
+        ArrayList<Room> list = new ArrayList<>();
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        String sql = "select * from room inner join hardBill on room.id = hardBill.idRoom where idBill=?";
+        Cursor cursor = database.rawQuery(sql, new String[]{String.valueOf(id)});
+        while (cursor.moveToNext()){
+            Room room=new Room();
+            room.setId(cursor.getInt(0));
+            room.setIdType(cursor.getInt(1));
+            room.setNumber(cursor.getInt(2));
+            room.setStatus(cursor.getInt(3));
+            room.setPrice(cursor.getInt(4));
+            list.add(room);
+        }
+        return list;
+    }
     public boolean delete(int id){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         long row = database.delete("room","id=?",new String[]{String.valueOf(id)});

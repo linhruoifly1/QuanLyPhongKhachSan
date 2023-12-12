@@ -61,6 +61,7 @@ public class CustomerFragment extends Fragment {
         adapter = new CustomerAdapter(getContext(),arrayList);
         rcvCustomer.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        Collections.reverse(arrayList);
         fltCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,6 +178,7 @@ public class CustomerFragment extends Fragment {
                     arrayList.clear();
                     arrayList.addAll(customerDAO.getAll());
                     adapter.notifyDataSetChanged();
+                    Collections.reverse(arrayList);
                     dialog.dismiss();
                     Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                 }else{
