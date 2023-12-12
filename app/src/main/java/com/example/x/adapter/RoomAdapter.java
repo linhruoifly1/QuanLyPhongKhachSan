@@ -152,7 +152,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.viewHolder>{
                     return;
                 }
                 if (edPriceRoom.getText().toString().equals("")){
-                    edPriceRoom.setError("Vui lòng nhập giá phòng");
+                    edPriceRoom.setError("Vui lòng nhập giá");
                     return;
                 }
 //                for(int i =0;i<arrayList.size();i++){
