@@ -137,11 +137,11 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Giờ ra thực tế: "
+                android:text="Phòng thuê: "
                 android:textStyle="bold"
                 android:textSize="12dp"/>
             <TextView
-                android:id="@+id/tvRealCheckOut"
+                android:id="@+id/tvNumberRoomBill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Thái Hậu Nguyên Sinh"

@@ -92,7 +92,7 @@ public class RevenueFragment extends Fragment {
             public void onClick(View v) {
                 String startDate = edtStar.getText().toString();
                 String endDate = edtEnd.getText().toString();
-                txtDoanhThu.setText("Doanh Thu: " +statisticsDAO.getRevenue(startDate,endDate) +"$ ");
+                txtDoanhThu.setText("Doanh Thu: $ " +statisticsDAO.getRevenue(startDate,endDate));
             }
         });
         return  view;

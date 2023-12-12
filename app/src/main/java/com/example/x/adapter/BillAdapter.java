@@ -1,17 +1,17 @@
 package com.example.x.adapter;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -21,12 +21,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.x.AddBillActivity;
 import com.example.x.DAO.BillDAO;
 import com.example.x.DAO.CustomerDAO;
 import com.example.x.DAO.HardBillDAO;
 import com.example.x.DAO.ReceptionistDAO;
 import com.example.x.DAO.RoomDAO;
 import com.example.x.DAO.ServiceDAO;
+import com.example.x.MainActivity;
 import com.example.x.R;
 import com.example.x.model.Bill;
 import com.example.x.model.Customer;
@@ -37,7 +39,10 @@ import com.example.x.model.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
@@ -49,7 +54,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
     private ReceptionistDAO receptionistDAO;
     private RoomDAO roomDAO;
     private HardBillDAO hardBillDAO;
-    private int idRoom;
+    private int idRoom,idCustomer,idService;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public BillAdapter(Context context, ArrayList<Bill> arrayList) {
         this.context = context;
@@ -80,9 +85,8 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
         Service service = serviceDAO.getId(String.valueOf(bill.getIdService()));
         holder.tvServiceBill.setText(service.getName());
         // lấy ngày giờ lúc tọa hóa đơn
-        String timeNow = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
-        String dateNow = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        holder.tvCheckIn.setText(bill.getCheckIn()+" "+timeNow+" UTC");
+
+        holder.tvCheckIn.setText(bill.getCheckIn()+" 14:00 UTC");
         holder.tvCheckOut.setText(bill.getCheckOut()+" 12:00 UTC");
         int costService = service.getPrice();
         holder.tvCostService.setText("$ "+costService);
@@ -90,7 +94,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
         if(statusBill==0){
             holder.tvStatusBill.setText("Chưa thanh toán");
             holder.tvStatusBill.setTextColor(Color.RED);
-            holder.tvRealCheckOut.setVisibility(View.INVISIBLE);
             holder.imgRoomBill.setVisibility(View.VISIBLE);
             holder.imgDeleteBill.setVisibility(View.VISIBLE);
             holder.imgStatusBill.setVisibility(View.VISIBLE);
@@ -101,13 +104,18 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                     return true;
                 }
             });
-        }else{
+        }else if(statusBill==1){
             holder.tvStatusBill.setText("Đã thanh toán");
             holder.tvStatusBill.setTextColor(Color.BLUE);
             holder.imgRoomBill.setVisibility(View.INVISIBLE);
             holder.imgDeleteBill.setVisibility(View.INVISIBLE);
             holder.imgStatusBill.setVisibility(View.INVISIBLE);
-            holder.tvRealCheckOut.setVisibility(View.VISIBLE);
+        }else{
+            holder.tvStatusBill.setText("Huỷ");
+            holder.tvStatusBill.setTextColor(Color.YELLOW);
+            holder.imgRoomBill.setVisibility(View.INVISIBLE);
+            holder.imgDeleteBill.setVisibility(View.INVISIBLE);
+            holder.imgStatusBill.setVisibility(View.INVISIBLE);
         }
         // Chọn thêm phòng trong hóa đơn, có thể chọn nhiều phòng
         holder.imgRoomBill.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +165,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                             hardBillArrayList.addAll(hardBillDAO.getAll());
                             hardBillAdapter.notifyDataSetChanged();
                             notifyDataSetChanged();
+                            Collections.reverse(hardBillArrayList);
                             dialog.dismiss();
                             Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
                         }else{
@@ -167,6 +176,14 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                 });
             }
         });
+        ArrayList<Room> roomArrayList = roomDAO.getNumberRoomInBill(bill.getId());
+        String numberRoom= "";
+        for(int i=0;i<roomArrayList.size();i++){
+            Room room = roomArrayList.get(i);
+            numberRoom+=String.valueOf(room.getNumber());
+            numberRoom+=" ";
+        }
+        holder.tvNumberRoomBill.setText(numberRoom);
         // tổng tiền phòng theo số ngày thuê
         int costRoom = hardBillDAO.getCostRoom(bill.getId())*billDAO.getNumberDate(bill.getId());
         holder.tvCostRoom.setText("$ " +costRoom);
@@ -185,18 +202,24 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Cảnh báo !!!");
                 builder.setIcon(R.drawable.warning);
-                builder.setMessage("Bạn muốn xóa không?");
+                builder.setMessage("Xác nhận hủy?");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(billDAO.delete(bill.getId())){
+                        if(billDAO.changeStatusCancel(bill.getId())){
+                            ArrayList<Room> roomArrayList = roomDAO.getRoomInBill(bill.getId());
+                            for(int i = 0; i<roomArrayList.size();i++){
+                                Room room = roomArrayList.get(i);
+                                roomDAO.changeOnStatus(room.getId());
+                            }
                             arrayList.clear();
                             arrayList.addAll(billDAO.getAll());
                             notifyDataSetChanged();
-                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                            Collections.reverse(arrayList);
+                            Toast.makeText(context, "Thành công", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -224,7 +247,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                     public void onClick(DialogInterface dialog, int which) {
                         if(billDAO.changeStatus(bill.getId())){
                             //lấy ngày giờ lúc thay đổi trạng thái là giờ thanh toán và trả phòng
-                            holder.tvRealCheckOut.setText(dateNow+" "+timeNow+" UTC");
                             ArrayList<Room> roomArrayList = roomDAO.getRoomInBill(bill.getId());
                             for(int i = 0; i<roomArrayList.size();i++){
                                 Room room = roomArrayList.get(i);
@@ -233,6 +255,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
                             arrayList.clear();
                             arrayList.addAll(billDAO.getAll());
                             notifyDataSetChanged();
+                            Collections.reverse(arrayList);
                             Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(context, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
@@ -252,6 +275,106 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
     }
 
     private void openDiaLogUpdate(Bill bill) {
+        AlertDialog.Builder builder =new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.update_bill,null);
+        builder.setView(view);
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        Spinner spinnerCustomer = view.findViewById(R.id.spinnerCustomerUpdate);
+        Spinner spinnerService = view.findViewById(R.id.spinnerServiceUpdate);
+        EditText edCheckOutUpdate = view.findViewById(R.id.edCheckOutUpdate);
+        Button btnUpdate = view.findViewById(R.id.btnUpdateBillNew);
+        Button btnCancel = view.findViewById(R.id.btnCancelBillUpdate);
+        Intent intent = ((MainActivity)context).getIntent();
+        String user = intent.getStringExtra("user");
+        if (user==null){
+            return;
+        }
+        Receptionist receptionist = receptionistDAO.getUsername(user);
+        edCheckOutUpdate.setText(bill.getCheckOut());
+        ArrayList<Customer> customerArrayList = customerDAO.getAll();
+        CustomerSpinnerAdapter customerSpinnerAdapter = new CustomerSpinnerAdapter(context,customerArrayList);
+        spinnerCustomer.setAdapter(customerSpinnerAdapter);
+        for(int i = 0;i<customerArrayList.size();i++){
+            if(customerArrayList.get(i).getId()==bill.getIdCustomer()){
+                spinnerCustomer.setSelection(i);
+            }
+        }
+        ArrayList<Service> serviceArrayList = serviceDAO.getAll();
+        ServiceSpinnerAdapter  serviceSpinnerAdapter = new ServiceSpinnerAdapter(context,serviceArrayList);
+        spinnerService.setAdapter(serviceSpinnerAdapter);
+        for(int i = 0;i<serviceArrayList.size();i++){
+            if(serviceArrayList.get(i).getId()==bill.getIdService()){
+                spinnerService.setSelection(i);
+            }
+        }
+        spinnerCustomer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                idCustomer = customerArrayList.get(i).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinnerService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                idService = serviceArrayList.get(i).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        edCheckOutUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth);
+                        edCheckOutUpdate.setText(sdf.format(calendar.getTime()));
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Toast.makeText(context, "Hủy bỏ chỉnh sửa", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bill.setCheckOut(edCheckOutUpdate.getText().toString());
+                bill.setIdReceptionist(receptionist.getId());
+                bill.setIdCustomer(idCustomer);
+                bill.setIdService(idService);
+                if(billDAO.update(bill)){
+                    arrayList.clear();
+                    arrayList.addAll(billDAO.getAll());
+                    notifyDataSetChanged();
+                    Collections.reverse(arrayList);
+                    Toast.makeText(context, "Chỉnh sửa thành công", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }else{
+                    Toast.makeText(context, "Chỉnh sửa thất bại", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 
     @Override
@@ -260,7 +383,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
     }
 
     public class viewHolder extends RecyclerView.ViewHolder{
-        TextView tvIdBill,tvCustomerBill,tvReceptionistBill,tvCheckIn,tvCheckOut,tvRealCheckOut,tvCostRoom,tvCostService,tvVAT,tvStatusBill,tvSumCost,tvServiceBill;
+        TextView tvIdBill,tvCustomerBill,tvReceptionistBill,tvCheckIn,tvCheckOut,tvCostRoom,tvCostService,tvVAT,tvStatusBill,tvSumCost,tvServiceBill,tvNumberRoomBill;
         ImageView imgRoomBill,imgDeleteBill,imgStatusBill;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -270,7 +393,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.viewHolder>{
             tvServiceBill = itemView.findViewById(R.id.tvServiceBill);
             tvCheckIn = itemView.findViewById(R.id.tvCheckIn);
             tvCheckOut = itemView.findViewById(R.id.tvCheckOut);
-            tvRealCheckOut = itemView.findViewById(R.id.tvRealCheckOut);
+            tvNumberRoomBill = itemView.findViewById(R.id.tvNumberRoomBill);
             tvCostRoom = itemView.findViewById(R.id.tvCostRoom);
             tvCostService = itemView.findViewById(R.id.tvCostService);
             tvVAT = itemView.findViewById(R.id.tvVAT);

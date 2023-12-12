@@ -36,6 +36,7 @@ import com.example.x.DAO.BillDAO;
 import com.example.x.DAO.CustomerDAO;
 import com.example.x.DAO.ReceptionistDAO;
 import com.example.x.DAO.ServiceDAO;
+import com.example.x.DAO.TypeDAO;
 import com.example.x.R;
 import com.example.x.adapter.BillAdapter;
 import com.example.x.adapter.CustomerAdapter;
@@ -44,12 +45,15 @@ import com.example.x.adapter.ServiceSpinnerAdapter;
 import com.example.x.model.Bill;
 import com.example.x.model.Customer;
 import com.example.x.model.Receptionist;
+import com.example.x.model.Room;
 import com.example.x.model.Service;
+import com.example.x.model.Type;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -69,10 +73,10 @@ public class BillFragment extends Fragment {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK) {
-
                         arrayList.clear();
                         arrayList.addAll(billDAO.getAll());
                         adapter.notifyDataSetChanged();
+                        Collections.reverse(arrayList);
                     }
                 }
             }
@@ -96,7 +100,9 @@ public class BillFragment extends Fragment {
         rcvBill.setLayoutManager(new GridLayoutManager(getContext(), 1));
         adapter = new BillAdapter(getContext(), arrayList);
         rcvBill.setAdapter(adapter);
-
+        adapter.notifyDataSetChanged();
+        Collections.reverse(arrayList);
+        Collections.reverse(arrayList1);
         fltBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +120,29 @@ public class BillFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                arrayList.clear();
+                CustomerDAO customerDAO = new CustomerDAO(getContext());
+                ArrayList<Customer> customers = customerDAO.getAll();
+                ReceptionistDAO receptionistDAO = new ReceptionistDAO(getContext());
+                ArrayList<Receptionist> receptionists = receptionistDAO.getAll();
+                for (Bill bill : arrayList1) {
+                    for (Customer customer: customers) {
+                        if(customer.getName().contains(s.toString()) && bill.getIdCustomer()==customer.getId()){
+                            arrayList.add(bill);
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                for(Bill bill : arrayList1){
+                    if(bill.getStatus()==0 && "chưa thanh toán".contains(s.toString())){
+                        arrayList.add(bill);
+                    }else if(bill.getStatus()==1 && "đã thanh toán".contains(s.toString())){
+                        arrayList.add(bill);
+                    }else if(bill.getStatus()==2 && "hủy".contains(s.toString())){
+                        arrayList.add(bill);
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
 
             @Override

@@ -37,12 +37,12 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class AddBillActivity extends AppCompatActivity {
-    Spinner spinnerCustomer, spinnerService, spinnerRoom;
+    Spinner spinnerCustomer, spinnerService;
     EditText edCheckIn, edCheckOut;
     Button btnCancel, btnAdd;
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    private int idCustomer, idService, idReceptionist, costService;
+    private int idCustomer, idService, idReceptionist;
     BillDAO billDAO;
     private static final int ADD_BILL_REQUEST_CODE = 1;
 
@@ -100,7 +100,7 @@ public class AddBillActivity extends AppCompatActivity {
         }
         Receptionist receptionist = receptionistDAO.getUsername(username);
         idReceptionist = receptionist.getId();
-        // thêm giờ check in
+        // thêm ngày check in
         String checkIn = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new java.util.Date());
         edCheckIn.setText(checkIn);
         edCheckOut.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +142,7 @@ public class AddBillActivity extends AppCompatActivity {
                 bill1.setIdService(idService);
                 bill1.setIdCustomer(idCustomer);
                 bill1.setStatus(0);
-                bill1.setVAT(8);
+                bill1.setVAT(10);
                 bill1.setCheckOut(edCheckOut.getText().toString());
                 // Trước khi kết thúc AddBillActivity, gửi kết quả trở lại
                 if (billDAO.insert(bill1) > 0) {

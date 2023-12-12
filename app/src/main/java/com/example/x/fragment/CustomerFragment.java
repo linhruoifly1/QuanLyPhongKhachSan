@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class CustomerFragment extends Fragment {
     private RecyclerView rcvCustomer;
@@ -52,14 +56,37 @@ public class CustomerFragment extends Fragment {
         customerDAO = new CustomerDAO(getContext());
         arrayList = customerDAO.getAll();
         arrayList1 = customerDAO.getAll();
+        Collections.reverse(arrayList);
         rcvCustomer.setLayoutManager(new GridLayoutManager(getContext(),1));
         adapter = new CustomerAdapter(getContext(),arrayList);
         rcvCustomer.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        Collections.reverse(arrayList);
         fltCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDiaLogInsert(customer);
+            }
+        });
+        edSearchCustomer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                arrayList.clear();
+                for (Customer customer1 : arrayList1){
+                    if(customer1.getName().contains(charSequence.toString())){
+                        arrayList.add(customer1);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
@@ -126,13 +153,13 @@ public class CustomerFragment extends Fragment {
                         return;
                     }
                 }
-                if(edPhoneCustomer.getText().length()!=10){
+                if(!Patterns.PHONE.matcher(edPhoneCustomer.getText().toString()).matches()){
 //                    Toast.makeText(getActivity(), "SĐT không hợp lệ", Toast.LENGTH_SHORT).show();
                     edPhoneCustomer.setError("SĐT không hợp lệ");
                     return;
                 }
                 String email = edEmailCustomer.getText().toString();
-                if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
 //                    Toast.makeText(getActivity(), "email không hợp lệ", Toast.LENGTH_SHORT).show();
                     edEmailCustomer.setError("Email không hợp lệ");
                     return;
@@ -150,6 +177,7 @@ public class CustomerFragment extends Fragment {
                     arrayList.clear();
                     arrayList.addAll(customerDAO.getAll());
                     adapter.notifyDataSetChanged();
+                    Collections.reverse(arrayList);
                     dialog.dismiss();
                     Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                 }else{

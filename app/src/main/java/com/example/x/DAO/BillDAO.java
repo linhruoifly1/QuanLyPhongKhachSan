@@ -35,11 +35,7 @@ public class BillDAO {
         values.put("idCustomer",bill.getIdCustomer());
         values.put("idReceptionist",bill.getIdReceptionist());
         values.put("idService",bill.getIdService());
-        values.put("checkIn",bill.getCheckIn());
         values.put("checkOut",bill.getCheckOut());
-        values.put("VAT",bill.getVAT());
-        values.put("status",bill.getStatus());
-        values.put("sumCost",bill.getSumCost());
         long row = database.update("bill",values,"id=?",new String[]{String.valueOf(bill.getId())});
         return row>0;
     }
@@ -60,6 +56,12 @@ public class BillDAO {
     public boolean changeStatus(int id){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         String sql = "update bill set status=1 where id=?";
+        database.execSQL(sql,new String[]{String.valueOf(id)});
+        return true;
+    }
+    public boolean changeStatusCancel(int id){
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        String sql = "update bill set status=2 where id=?";
         database.execSQL(sql,new String[]{String.valueOf(id)});
         return true;
     }

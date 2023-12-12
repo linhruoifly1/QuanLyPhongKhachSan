@@ -18,28 +18,32 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.x.DAO.BillDAO;
 import com.example.x.DAO.HardBillDAO;
 import com.example.x.DAO.RoomDAO;
 import com.example.x.R;
+import com.example.x.model.Bill;
 import com.example.x.model.HardBill;
 import com.example.x.model.Room;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHolder>{
     private Context context;
     private ArrayList<HardBill> arrayList;
     HardBillDAO hardBillDAO;
     RoomDAO roomDAO;
+    BillDAO billDAO;
 
     private int idRoom;
-    private int quantyPeople;
 
     public HardBillAdapter(Context context, ArrayList<HardBill> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         hardBillDAO = new HardBillDAO(context);
         roomDAO = new RoomDAO(context);
+        billDAO = new BillDAO(context);
     }
     @NonNull
     @Override
@@ -56,14 +60,16 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
         Room room = roomDAO.getId(String.valueOf(hardBill.getIdRoom()));
         holder.tvNumberRoomHard.setText(""+room.getNumber());
         holder.tvQuantityPeople.setText(""+hardBill.getQuantityPeople());
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                updateHardBill(hardBill);
-                return false;
-            }
-        });
+        Bill bill = billDAO.getId(String.valueOf(hardBill.getIdBill()));
+        if(bill.getStatus()==0) {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    updateHardBill(hardBill);
+                    return false;
+                }
+            });
+        }
     }
 
     @Override
@@ -147,6 +153,7 @@ public class HardBillAdapter extends RecyclerView.Adapter<HardBillAdapter.viewHo
                     arrayList.clear();
                     arrayList.addAll(hardBillDAO.getAll());
                     notifyDataSetChanged();
+                    Collections.reverse(arrayList);
                     dialog.dismiss();
                     Toast.makeText(context, "Sửa thành công", Toast.LENGTH_SHORT).show();
                 }else {
