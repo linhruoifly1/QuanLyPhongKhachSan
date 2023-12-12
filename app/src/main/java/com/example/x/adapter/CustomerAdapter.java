@@ -128,8 +128,10 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.viewHo
                             }
 
                             try{
+                                Calendar calendar = Calendar.getInstance();
+                                int yearNow = calendar.get(Calendar.YEAR);
                                 int tuoi = Integer.parseInt(edtBirthCustomer.getText().toString());
-                                if(tuoi<18){
+                                if((yearNow-tuoi)<18){
                                     edtBirthCustomer.setError("Bạn không đủ tuổi đăng ký");
                                     test = false;
                                 }

@@ -84,7 +84,6 @@ public class CustomerFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
