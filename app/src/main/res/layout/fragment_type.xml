@@ -3,8 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.TypeFragment">
+    tools:context=".fragment.TypeFragment"
+    android:padding="10dp">
+    <EditText
+        android:id="@+id/edSearchType"
+        android:layout_width="match_parent"
+        android:background="@drawable/radius"
+        android:hint="Tìm phòng"
+        android:drawableStart="@drawable/icon_search"
+        android:padding="10dp"
+        android:layout_height="50dp"/>
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="60dp"
         android:id="@+id/rcvType"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

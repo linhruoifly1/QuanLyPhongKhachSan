@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +29,11 @@ import java.util.ArrayList;
 public class    TypeFragment extends Fragment {
     private RecyclerView rcvType;
     private FloatingActionButton fltType;
+    private EditText edSearchType;
     private TypeAdapter adapter;
     private TypeDAO typeDAO;
     private ArrayList<Type> arrayList;
+    private ArrayList<Type> arrayList1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,8 +45,10 @@ public class    TypeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rcvType = view.findViewById(R.id.rcvType);
         fltType = view.findViewById(R.id.fltType);
+        edSearchType = view.findViewById(R.id.edSearchType);
         typeDAO = new TypeDAO(getContext());
         arrayList = typeDAO.getAll();
+        arrayList1 = typeDAO.getAll();
         rcvType.setLayoutManager(new GridLayoutManager(getContext(),1));
         adapter = new TypeAdapter(getContext(),arrayList);
         rcvType.setAdapter(adapter);
@@ -51,6 +57,29 @@ public class    TypeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 OpenDiaLogInsert();
+            }
+        });
+        edSearchType.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                arrayList.clear();
+                for (Type type: arrayList1
+                     ) {
+                    if(type.getName().contains(charSequence.toString())){
+                        arrayList.add(type);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }

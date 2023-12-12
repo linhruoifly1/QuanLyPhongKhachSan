@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.RevenueFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +25,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/boder"
-            android:inputType="date"
+            android:inputType="none"
+            android:focusable="false"
+            android:cursorVisible="false"
+            android:clickable="false"
             android:hint="Chọn ngày bắt đầu"
             android:layout_marginLeft="10sp"
             android:padding="10dp"
@@ -52,6 +56,10 @@
             android:background="@drawable/boder"
             android:layout_marginLeft="10sp"
             android:hint="Chọn ngày kết thúc"
+            android:inputType="none"
+            android:focusable="false"
+            android:cursorVisible="false"
+            android:clickable="false"
             android:padding="10sp"
             android:paddingEnd="100dp"
             />
@@ -74,10 +82,12 @@
     <TextView
         android:id="@+id/txtdoanhThu"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30sp"
-        android:paddingLeft="40sp"
+        android:gravity="center_horizontal"
         android:textColor="#E11212"
+        android:textSize="30dp"
+        android:textStyle="bold"
         />
 
 
